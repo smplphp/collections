@@ -34,6 +34,10 @@ infection: vendor/bin/infection infection.json
 infection-report: vendor/bin/infection infection.json
 	./vendor/bin/infection --only-covered --threads=8 --logger-html='build/mutation/infection.html'
 
+# Run the full static analysis suite
+static:
+	make psalm phpstan
+
 # Run the full test suite
 test:
 	make phpunit-report infection psalm phpstan
