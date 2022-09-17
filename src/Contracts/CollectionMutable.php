@@ -59,7 +59,7 @@ interface CollectionMutable extends Collection
     /**
      * Remove all elements that do not pass the provided criteria.
      *
-     * @param \Smpl\Collections\Contracts\Predicate<E>|callable(E $element):bool $criteria
+     * @param \Smpl\Collections\Contracts\Predicate<E>|callable(E):bool $criteria
      *
      * @return bool Returns true if the collection was changed.
      */
