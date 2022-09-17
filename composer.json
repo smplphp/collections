@@ -1,6 +1,6 @@
 {
-  "name": "smplphp/skeleton",
-  "description": "A simple modern PHP skeleton library",
+  "name": "smplphp/collections",
+  "description": "A simple, modern PHP 8 collections library, providing a number of data-structures all wrapped around arrays",
   "minimum-stability": "stable",
   "license": "MIT",
   "type": "library",
@@ -22,13 +22,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Smpl\\Skeleton\\": "src/",
-      "Smpl\\Meta\\Skeleton\\": "meta/"
+      "Smpl\\Collections\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Smpl\\Skeleton\\Tests\\": "tests/"
+      "Smpl\\Collections\\Tests\\": "tests/"
     }
   },
   "config": {
