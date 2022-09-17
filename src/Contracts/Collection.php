@@ -2,6 +2,7 @@
 
 namespace Smpl\Collections\Contracts;
 
+use Countable;
 use IteratorAggregate;
 
 /**
@@ -12,7 +13,7 @@ use IteratorAggregate;
  *
  * @template E of mixed
  */
-interface Collection extends IteratorAggregate
+interface Collection extends IteratorAggregate, Countable
 {
     /**
      * Check if the collection contains the provided element.
