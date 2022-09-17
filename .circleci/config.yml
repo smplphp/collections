@@ -1,0 +1,53 @@
+# PHP CircleCI 2.0 configuration file
+# See: https://circleci.com/docs/2.0/language-php/
+version: 2.1
+
+orbs:
+  codecov: codecov/codecov@3.0.0
+
+jobs:
+  build:
+    docker:
+      - image: cimg/php:8.1.2
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-
+
+      - run:
+          name: "Composer install"
+          command: composer install -n --prefer-dist
+
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.json" }}
+          paths:
+            - ./vendor
+
+      - run:
+          name: "Run unit tests"
+          command: phpdbg -qrr ./vendor/bin/phpunit --coverage-clover build/coverage.xml --log-junit build/junit.xml
+          environment:
+            XDEBUG_MODE: coverage
+
+      - run:
+          name: "Psalm"
+          command: ./vendor/bin/psalm --no-cache --shepherd
+
+      - run:
+          name: "PHPStan"
+          command: ./vendor/bin/phpstan analyse -c phpstan.neon
+
+      - run:
+          name: "Mutation testing"
+          command: phpdbg -qrr ./vendor/bin/infection --only-covered --threads=8
+          environment:
+            XDEBUG_MODE: coverage
+
+      - codecov/upload:
+          file: build/coverage.xml
+
+      - store_test_results:
+          path: build
