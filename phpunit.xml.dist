@@ -8,6 +8,7 @@
             <directory suffix=".php">./src</directory>
         </include>
         <exclude>
+            <directory>./src/Contracts</directory>
             <file>./src/Support/Collections.php</file>
             <file>./src/Support/Predicates.php</file>
             <file>./src/Support/Comparators.php</file>
