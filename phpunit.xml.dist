@@ -8,9 +8,9 @@
             <directory suffix=".php">./src</directory>
         </include>
         <exclude>
-            <file>./src/Collections.php</file>
-            <file>./src/Predicates.php</file>
-            <file>./src/Comparators.php</file>
+            <file>./src/Support/Collections.php</file>
+            <file>./src/Support/Predicates.php</file>
+            <file>./src/Support/Comparators.php</file>
         </exclude>
     </coverage>
     <testsuites>
