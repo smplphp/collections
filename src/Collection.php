@@ -5,6 +5,8 @@ namespace Smpl\Collections;
 
 use ArrayIterator;
 use Smpl\Collections\Contracts\Predicate;
+use Smpl\Collections\Support\Collections;
+use Smpl\Collections\Support\Predicates;
 use Traversable;
 
 /**
@@ -195,9 +197,9 @@ class Collection implements Contracts\CollectionMutable
      * @return bool
      *
      * @uses \Smpl\Collections\Collection::removeIf()
-     * @uses \Smpl\Collections\Predicates::contains()
+     * @uses \Smpl\Collections\Support\Predicates::contains()
      * @uses \Smpl\Collections\Predicates\ContainsPredicate
-     * @uses \Smpl\Collections\Collections::collectImmutable()
+     * @uses \Smpl\Collections\Support\Collections::collectImmutable()
      * @uses \Smpl\Collections\ImmutableCollection
      */
     public function retainAll(iterable $elements): bool

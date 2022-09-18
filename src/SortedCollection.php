@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Smpl\Collections;
 
 use Smpl\Collections\Contracts\Comparator;
+use Smpl\Collections\Support\Comparators;
 
 /**
  * Sorted Collection
@@ -27,7 +28,7 @@ class SortedCollection extends Collection
      * @param \Smpl\Collections\Contracts\Comparator<E>|callable(E, E):int|null $comparator
      * @param iterable<E>                                                       $elements
      *
-     * @uses \Smpl\Collections\Comparators::ensureInstance()
+     * @uses \Smpl\Collections\Support\Comparators::ensureInstance()
      * @uses \Smpl\Collections\Comparators\DefaultComparator
      */
     public function __construct(Comparator|callable|null $comparator = null, iterable $elements = [])

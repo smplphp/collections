@@ -1,11 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Smpl\Collections;
+namespace Smpl\Collections\Support;
 
 use Smpl\Collections\Comparators\CallableComparator;
 use Smpl\Collections\Comparators\ComparableComparator;
 use Smpl\Collections\Comparators\DefaultComparator;
+use Smpl\Collections\Contracts;
 
 /**
  * Comparators Helper Class

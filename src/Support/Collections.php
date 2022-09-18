@@ -1,7 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Smpl\Collections;
+namespace Smpl\Collections\Support;
+
+use Smpl\Collections\Collection;
+use Smpl\Collections\Contracts;
+use Smpl\Collections\ImmutableCollection;
 
 /**
  * Collections Helper Class

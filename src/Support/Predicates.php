@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Smpl\Collections;
+namespace Smpl\Collections\Support;
 
+use Smpl\Collections\Contracts;
 use Smpl\Collections\Contracts\Predicate;
 use Smpl\Collections\Predicates\CallablePredicate;
 use Smpl\Collections\Predicates\ContainsPredicate;
@@ -100,7 +101,7 @@ final class Predicates
      *
      * @param array<\Smpl\Collections\Contracts\Predicate<V>|callable(V):bool> $predicates
      *
-     * @return list<\Smpl\Collections\Contracts\Predicate<V>>
+     * @return Predicate
      */
     public static function ensureInstances(array $predicates): array
     {

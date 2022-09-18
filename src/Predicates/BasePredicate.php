@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace Smpl\Collections\Predicates;
 
 use Smpl\Collections\Contracts\Predicate;
-use Smpl\Collections\Predicates;
 use Smpl\Collections\Predicates\Logical\AndPredicate;
 use Smpl\Collections\Predicates\Logical\NotPredicate;
 use Smpl\Collections\Predicates\Logical\OrPredicate;
+use Smpl\Collections\Support\Predicates;
 
 /**
  * Base Predicate
