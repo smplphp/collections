@@ -26,7 +26,7 @@ class Collection implements Contracts\CollectionMutable
     /**
      * @param iterable<E> $elements
      */
-    public function __construct(iterable $elements)
+    public function __construct(iterable $elements = [])
     {
         $this->addAll($elements);
     }
