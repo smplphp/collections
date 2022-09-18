@@ -84,7 +84,7 @@ class Collection implements Contracts\CollectionMutable
     /**
      * @param E $element
      *
-     * @return $this
+     * @return static
      */
     public function add(mixed $element): static
     {
