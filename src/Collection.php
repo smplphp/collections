@@ -139,14 +139,16 @@ class Collection implements Contracts\CollectionMutable
     {
         $found = false;
 
-        do {
+        while(true) {
             $index = array_search($element, $this->elements, true);
 
-            if ($index !== false) {
-                unset($this->elements[$index]);
-                $found = true;
+            if ($index === false) {
+                break;
             }
-        } while ($index !== false);
+
+            unset($this->elements[$index]);
+            $found = true;
+        }
 
         return $found;
     }
