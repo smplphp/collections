@@ -101,7 +101,7 @@ final class Predicates
      *
      * @param array<\Smpl\Collections\Contracts\Predicate<V>|callable(V):bool> $predicates
      *
-     * @return Predicate
+     * @return list<\Smpl\Collections\Contracts\Predicate<V>>
      */
     public static function ensureInstances(array $predicates): array
     {
