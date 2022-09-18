@@ -21,7 +21,7 @@ class Collection implements Contracts\CollectionMutable
     /**
      * @var list<E>
      */
-    private array $elements = [];
+    protected array $elements = [];
 
     /**
      * @param iterable<E> $elements
