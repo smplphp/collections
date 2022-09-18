@@ -35,6 +35,8 @@ class Collection implements Contracts\CollectionMutable
      * @param E $element
      *
      * @return bool
+     *
+     * @uses \in_array()
      */
     public function contains(mixed $element): bool
     {
@@ -45,6 +47,8 @@ class Collection implements Contracts\CollectionMutable
      * @param iterable<E> $elements
      *
      * @return bool
+     *
+     * @uses \Smpl\Collections\Collection::contains()
      */
     public function containsAll(iterable $elements): bool
     {
@@ -59,6 +63,8 @@ class Collection implements Contracts\CollectionMutable
 
     /**
      * @return bool
+     *
+     * @uses \empty()
      */
     public function isEmpty(): bool
     {
@@ -67,6 +73,8 @@ class Collection implements Contracts\CollectionMutable
 
     /**
      * @return int
+     *
+     * @uses \count()
      */
     public function count(): int
     {
@@ -96,6 +104,8 @@ class Collection implements Contracts\CollectionMutable
      * @param iterable<E> $elements
      *
      * @return static
+     *
+     * @uses \Smpl\Collections\Collection::add()
      */
     public function addAll(iterable $elements): static
     {
@@ -119,6 +129,9 @@ class Collection implements Contracts\CollectionMutable
      * @param E $element
      *
      * @return bool
+     *
+     * @uses \array_search()
+     * @uses \unset()
      */
     public function remove(mixed $element): bool
     {
@@ -140,6 +153,8 @@ class Collection implements Contracts\CollectionMutable
      * @param iterable<E> $elements
      *
      * @return bool
+     *
+     * @uses \Smpl\Collections\Collection::remove()
      */
     public function removeAll(iterable $elements): bool
     {
@@ -158,6 +173,8 @@ class Collection implements Contracts\CollectionMutable
      * @param \Smpl\Collections\Contracts\Predicate<E>|callable(E):bool $criteria
      *
      * @return bool
+     *
+     * @uses \Smpl\Collections\Collection::remove()
      */
     public function removeIf(callable|Predicate $criteria): bool
     {
@@ -176,6 +193,12 @@ class Collection implements Contracts\CollectionMutable
      * @param iterable<E> $elements
      *
      * @return bool
+     *
+     * @uses \Smpl\Collections\Collection::removeIf()
+     * @uses \Smpl\Collections\Predicates::contains()
+     * @uses \Smpl\Collections\Predicates\ContainsPredicate
+     * @uses \Smpl\Collections\Collections::collectImmutable()
+     * @uses \Smpl\Collections\ImmutableCollection
      */
     public function retainAll(iterable $elements): bool
     {
@@ -196,6 +219,8 @@ class Collection implements Contracts\CollectionMutable
 
     /**
      * @return \Traversable<int, E>
+     *
+     * @uses \ArrayIterator
      */
     public function getIterator(): Traversable
     {
