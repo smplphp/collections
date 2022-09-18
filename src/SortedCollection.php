@@ -25,16 +25,16 @@ class SortedCollection extends Collection
     private $comparator;
 
     /**
-     * @param \Smpl\Collections\Contracts\Comparator<E>|callable(E, E):int|null $comparator
      * @param iterable<E>                                                       $elements
+     * @param \Smpl\Collections\Contracts\Comparator<E>|callable(E, E):int|null $comparator
      *
      * @uses \Smpl\Collections\Support\Comparators::ensureInstance()
      * @uses \Smpl\Collections\Comparators\DefaultComparator
      */
-    public function __construct(Comparator|callable|null $comparator = null, iterable $elements = [])
+    public function __construct(iterable $elements = [], Comparator|callable|null $comparator = null)
     {
-        parent::__construct($elements);
         $this->comparator = Comparators::ensureInstance($comparator);
+        parent::__construct($elements);
     }
 
     /**
