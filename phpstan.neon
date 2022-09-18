@@ -9,6 +9,4 @@ parameters:
     ignoreErrors:
         - message: '#Unsafe usage of new static\(\)#'
           path: src/Collection.php
-        - message: '#Result of \|\| is always false\.#'
-          path: src/Comparators/ComparableComparator.php
         - '#PHPDoc tag \@return with type (.*) is not subtype of native type static\((.*)\)\.#'
