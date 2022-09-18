@@ -65,6 +65,7 @@ class SortedCollection extends Collection
     public function remove(mixed $element): bool
     {
         if (parent::remove($element)) {
+            /** @infection-ignore-all  */
             $this->sort();
 
             return true;
@@ -81,5 +82,15 @@ class SortedCollection extends Collection
     private function sort(): void
     {
         usort($this->elements, $this->comparator);
+    }
+
+    /**
+     * Get the comparator the collection is using.
+     *
+     * @return \Smpl\Collections\Contracts\Comparator<E>
+     */
+    public function getComparator(): Contracts\Comparator
+    {
+        return $this->comparator;
     }
 }
