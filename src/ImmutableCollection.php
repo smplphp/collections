@@ -25,7 +25,7 @@ class ImmutableCollection implements Contracts\Collection
     /**
      * @param iterable<E> $elements
      */
-    public function __construct(iterable $elements)
+    public function __construct(iterable $elements = [])
     {
         foreach ($elements as $element) {
             $this->elements[] = $element;
