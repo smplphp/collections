@@ -205,7 +205,7 @@ class Collection implements Contracts\CollectionMutable
     public function retainAll(iterable $elements): bool
     {
         return $this->removeIf(
-            Predicates::contains(Collections::collectImmutable($elements))
+            Predicates::contains(Collections::collectImmutable($elements))->negate()
         );
     }
 
