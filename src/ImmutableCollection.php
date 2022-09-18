@@ -36,6 +36,8 @@ class ImmutableCollection implements Contracts\Collection
      * @param E $element
      *
      * @return bool
+     *
+     * @uses \in_array()
      */
     public function contains(mixed $element): bool
     {
@@ -46,6 +48,8 @@ class ImmutableCollection implements Contracts\Collection
      * @param iterable<E> $elements
      *
      * @return bool
+     *
+     * @uses \Smpl\Collections\ImmutableCollection::contains()
      */
     public function containsAll(iterable $elements): bool
     {
@@ -60,6 +64,8 @@ class ImmutableCollection implements Contracts\Collection
 
     /**
      * @return bool
+     *
+     * @uses \empty()
      */
     public function isEmpty(): bool
     {
@@ -68,6 +74,8 @@ class ImmutableCollection implements Contracts\Collection
 
     /**
      * @return int
+     *
+     * @uses \count()
      */
     public function count(): int
     {
@@ -84,6 +92,8 @@ class ImmutableCollection implements Contracts\Collection
 
     /**
      * @return \Traversable<int, E>
+     *
+     * @uses \ArrayIterator
      */
     public function getIterator(): Traversable
     {
