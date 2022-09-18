@@ -100,7 +100,7 @@ class Collection implements Contracts\CollectionMutable
     public function addAll(iterable $elements): static
     {
         foreach ($elements as $element) {
-            $this->elements[] = $element;
+            $this->add($element);
         }
 
         return $this;
