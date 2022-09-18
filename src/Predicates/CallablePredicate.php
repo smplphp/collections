@@ -6,9 +6,9 @@ namespace Smpl\Collections\Predicates;
 use Smpl\Collections\Contracts\Collection;
 
 /**
- * In Collection Predicate
+ * Callable Predicate
  *
- * A predicate that checks for a values existence within a provided collection.
+ * A predicate that wraps a callable.
  *
  * @template V of mixed
  * @template-extends \Smpl\Collections\Predicates\BasePredicate<V>
