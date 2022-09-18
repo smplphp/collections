@@ -10,6 +10,7 @@
         <exclude>
             <file>./src/Collections.php</file>
             <file>./src/Predicates.php</file>
+            <file>./src/Comparators.php</file>
         </exclude>
     </coverage>
     <testsuites>
