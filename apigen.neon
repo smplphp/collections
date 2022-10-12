@@ -1,0 +1,32 @@
+parameters:
+  # string[], passed as arguments in CLI, e.g. ['src']
+  paths: [
+    'src'
+  ]
+
+  # string[], --include in CLI, included files mask, e.g. ['*.php']
+  include: ['*.php']
+
+  # string[], --exclude in CLI, excluded files mask, e.g. ['tests/**']
+  exclude: [
+    'vendor/**',
+    'tests/**'
+  ]
+
+  # bool, should protected members be excluded?
+  excludeProtected: false
+
+  # bool, should private members be excluded?
+  excludePrivate: true
+
+  # string[], list of tags used for excluding class-likes and members
+  excludeTagged: ['internal']
+
+  # string, --output in CLI
+  outputDir: 'build/docs'
+
+  # string | null, --theme in CLI
+  themeDir: null
+
+  # string, --title in CLI
+  title: 'SMPL Collections API Documentation'
