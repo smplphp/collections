@@ -7,6 +7,4 @@ parameters:
         - tests
     checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
-        - message: '#Unsafe usage of new static\(\)#'
-          path: src/Collection.php
-        - '#PHPDoc tag \@return with type (.*) is not subtype of native type static\((.*)\)\.#'
+        - '#^Method Smpl\\Collections\\ImmutableCollection\:\:copy\(\) should return Smpl\\Collections\\ImmutableCollection\<NE\> but returns Smpl\\Collections\\ImmutableCollection\<mixed\>\.$#'
