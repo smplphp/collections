@@ -40,6 +40,7 @@ abstract class BaseImmutableCollection implements Collection
         if (is_array($elements)) {
             // If the provided elements is just an array, we can
             // set its values as the current elements, and just count that.
+            /** @infection-ignore-all */
             $newElements = array_values($elements);
             $count       = count($newElements);
         } else {
@@ -135,6 +136,14 @@ abstract class BaseImmutableCollection implements Collection
      */
     public function toArray(): array
     {
-        return $this->elements;
+        /**
+         * The combined effort of this call and the `array_values` call in
+         * the constructor means that this will always return a list, but we
+         * have to have this here for static analysis and mutation testing.
+         *
+         * @psalm-suppress RedundantFunctionCall
+         * @infection-ignore-all
+         */
+        return array_values($this->elements);
     }
 }
