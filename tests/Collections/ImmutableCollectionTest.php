@@ -289,4 +289,24 @@ class ImmutableCollectionTest extends TestCase
         self::assertSame([1, 2, 3], $modifiedCopy->toArray());
         self::assertNotSame($this->collection->toArray(), $modifiedCopy->toArray());
     }
+
+    /**
+     * @test
+     */
+    public function knowsWhenItIsEmpty(): void
+    {
+        self::assertTrue((new ImmutableCollection())->isEmpty());
+        self::assertFalse($this->collection->isEmpty());
+    }
+
+    /**
+     * @test
+     */
+    public function canBeConvertedIntoAnArrayList(): void
+    {
+        $elements = $this->collection->toArray();
+
+        self::assertSame(count($elements), $this->collection->count());
+        self::assertTrue(array_is_list($elements));
+    }
 }
