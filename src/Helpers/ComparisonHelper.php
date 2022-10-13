@@ -53,4 +53,29 @@ final class ComparisonHelper
 
         return self::MORE_THAN;
     }
+
+    /**
+     * Flip a Signum
+     *
+     * Flips the signum value of a number, so negatives are more than and positives
+     * are less than.
+     *
+     * @param int|float $number
+     *
+     * @return int<-1, 1>
+     */
+    public static function flip(int|float $number): int
+    {
+        $signum = self::signum($number);
+
+        if ($signum === self::LESS_THAN) {
+            return self::MORE_THAN;
+        }
+
+        if ($signum === self::MORE_THAN) {
+            return self::LESS_THAN;
+        }
+
+        return self::EQUAL_TO;
+    }
 }
