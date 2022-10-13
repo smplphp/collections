@@ -7,10 +7,19 @@ A simple, modern PHP 8 collections library, providing a number of data-structure
 ![Packagist Version](https://img.shields.io/packagist/v/smplphp/collections)
 ![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/smplphp/collections)
 ![GitHub](https://img.shields.io/github/license/smplphp/collections)
+![Psalm Level](https://shepherd.dev/github/smplphp/collections/level.svg)
+
+Main:
+
 [![codecov](https://codecov.io/gh/smplphp/collections/branch/main/graph/badge.svg?token=FHJ41NQMTA)](https://codecov.io/gh/smplphp/collections)
 [![CircleCI](https://circleci.com/gh/smplphp/collections/tree/main.svg?style=shield)](https://circleci.com/gh/smplphp/collections/tree/main)
-![Psalm Level](https://shepherd.dev/github/smplphp/collections/level.svg)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fsmplphp%2Fcollections%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/smplphp/collections/main)
+
+Develop:
+
+[![codecov](https://codecov.io/gh/smplphp/collections/branch/develop/graph/badge.svg?token=FHJ41NQMTA)](https://codecov.io/gh/smplphp/collections)
+[![CircleCI](https://circleci.com/gh/smplphp/collections/tree/develop.svg?style=shield)](https://circleci.com/gh/smplphp/collections/tree/develop)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fsmplphp%2Fcollections%2Fdevelop)](https://dashboard.stryker-mutator.io/reports/github.com/smplphp/collections/develop)
 
 ## Install
 
