@@ -27,15 +27,11 @@ interface Collection extends Enumerable
      * the collection, but the exact method of determining this will be down
      * to the individual implementation.
      *
-     * If the $comparator argument is provided, the implementor must use it to
-     * determine the equality of elements.
-     *
-     * @param E                                              $element
-     * @param \Smpl\Collections\Contracts\Comparator<E>|null $comparator
+     * @param E $element
      *
      * @return bool
      */
-    public function contains(mixed $element, ?Comparator $comparator = null): bool;
+    public function contains(mixed $element): bool;
 
     /**
      * Check if this collection contains all provided elements.
@@ -50,12 +46,11 @@ interface Collection extends Enumerable
      * If the $comparator argument is provided, the implementor must use it to
      * determine the equality of elements.
      *
-     * @param iterable<E>                                    $elements
-     * @param \Smpl\Collections\Contracts\Comparator<E>|null $comparator
+     * @param iterable<E> $elements
      *
      * @return bool
      */
-    public function containsAll(iterable $elements, ?Comparator $comparator = null): bool;
+    public function containsAll(iterable $elements): bool;
 
     /**
      * Create a copy of this collection.
@@ -89,4 +84,21 @@ interface Collection extends Enumerable
      * @return bool
      */
     public function isEmpty(): bool;
+
+    /**
+     * Get this collections' comparator.
+     *
+     * Get the comparator that this collection uses to compare elements. Some
+     * implementations will fall back to a default implementation, whereas
+     * others will have their own logic for comparing values.
+     *
+     * This method is analogous with {@see \Smpl\Collections\Contracts\ComparesValues::getComparator()},
+     * but this contract does not extend that one, because the comparator
+     * cannot be changed once the collection has been created.
+     *
+     * @return \Smpl\Collections\Contracts\Comparator<E>|null
+     *
+     * @see \Smpl\Collections\Contracts\ComparesValues::getComparator()
+     */
+    public function getComparator(): ?Comparator;
 }

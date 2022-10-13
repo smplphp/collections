@@ -7,6 +7,7 @@ use ArrayIterator;
 use PHPUnit\Framework\TestCase;
 use Smpl\Collections\Comparators\BaseComparator;
 use Smpl\Collections\Comparators\IdenticalComparator;
+use Smpl\Collections\Contracts\Collection;
 use Smpl\Collections\Contracts\Comparator;
 use Smpl\Collections\Helpers\ComparisonHelper;
 use Smpl\Collections\ImmutableCollection;
@@ -20,7 +21,7 @@ class ImmutableCollectionTest extends TestCase
     /**
      * @var int[]
      */
-    private array $elements;
+    private array $elements = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,];
 
     /**
      * @var \Smpl\Collections\ImmutableCollection
@@ -29,7 +30,6 @@ class ImmutableCollectionTest extends TestCase
 
     public function setUp(): void
     {
-        $this->elements   = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,];
         $this->collection = new ImmutableCollection($this->elements);
     }
 
@@ -111,22 +111,25 @@ class ImmutableCollectionTest extends TestCase
                     : ComparisonHelper::signum($result);
             }
         };
+        $creator               = function (Comparator $comparator): ImmutableCollection {
+            return new ImmutableCollection($this->elements, $comparator);
+        };
 
         return [
-            'Identical to 0'             => [0, false, $identicalComparator],
-            'Identical to 1'             => [1, true, $identicalComparator],
-            'Identical to 2'             => [2, true, $identicalComparator],
-            'Identical to 3'             => [3, true, $identicalComparator],
-            'Identical to 0 as a string' => ['0', false, $identicalComparator],
-            'Identical to 1 as a string' => ['1', false, $identicalComparator],
-            'Identical to 2 as a string' => ['2', false, $identicalComparator],
-            'Identical to 3 as a string' => ['3', false, $identicalComparator],
-            'Divisible by 1'             => [1, true, $divisibleByComparator],
-            'Divisible by 2'             => [2, true, $divisibleByComparator],
-            'Divisible by 3'             => [3, true, $divisibleByComparator],
-            'Divisible by 11'            => [11, false, $divisibleByComparator],
-            'Divisible by 14'            => [14, false, $divisibleByComparator],
-            'Divisible by 15'            => [15, false, $divisibleByComparator],
+            'Identical to 0'             => [0, false, $creator($identicalComparator)],
+            'Identical to 1'             => [1, true, $creator($identicalComparator)],
+            'Identical to 2'             => [2, true, $creator($identicalComparator)],
+            'Identical to 3'             => [3, true, $creator($identicalComparator)],
+            'Identical to 0 as a string' => ['0', false, $creator($identicalComparator)],
+            'Identical to 1 as a string' => ['1', false, $creator($identicalComparator)],
+            'Identical to 2 as a string' => ['2', false, $creator($identicalComparator)],
+            'Identical to 3 as a string' => ['3', false, $creator($identicalComparator)],
+            'Divisible by 1'             => [1, true, $creator($divisibleByComparator)],
+            'Divisible by 2'             => [2, true, $creator($divisibleByComparator)],
+            'Divisible by 3'             => [3, true, $creator($divisibleByComparator)],
+            'Divisible by 11'            => [11, false, $creator($divisibleByComparator)],
+            'Divisible by 14'            => [14, false, $creator($divisibleByComparator)],
+            'Divisible by 15'            => [15, false, $creator($divisibleByComparator)],
         ];
     }
 
@@ -134,9 +137,9 @@ class ImmutableCollectionTest extends TestCase
      * @test
      * @dataProvider collectionContainsComparatorProvider
      */
-    public function knowsWhatItContainsWithComparator(int|string $value, bool $result, Comparator $comparator): void
+    public function knowsWhatItContainsWithComparator(int|string $value, bool $result, Collection $collection): void
     {
-        $this->assertEquals($result, $this->collection->contains($value, $comparator));
+        $this->assertEquals($result, $collection->contains($value));
     }
 
     public function collectionContainsAllProvider(): array
@@ -176,23 +179,26 @@ class ImmutableCollectionTest extends TestCase
                     : ComparisonHelper::signum($result);
             }
         };
+        $creator               = function (Comparator $comparator): ImmutableCollection {
+            return new ImmutableCollection($this->elements, $comparator);
+        };
 
         return [
-            'Identical to 0, 11, 12'            => [[0, 11, 12], false, $identicalComparator],
-            'Identical to 1, 2, 3'              => [[1, 2, 3], true, $identicalComparator],
-            'Identical to 2, 4, 6'              => [[2, 4, 6], true, $identicalComparator],
-            'Identical to 6, 8, 10'             => [[6, 8, 10], true, $identicalComparator],
-            'Identical to 0, 1, 2'              => [[0, 1, 2], false, $identicalComparator],
-            'Identical to 0, 11, 12 as strings' => [['0', '11', '12'], false, $identicalComparator],
-            'Identical to 1, 2, 3 as strings'   => [['1', '2', '3'], false, $identicalComparator],
-            'Identical to 2, 4, 6 as strings'   => [['2', '4', '6'], false, $identicalComparator],
-            'Identical to 6, 8, 10 as strings'  => [['6', '8', '10'], false, $identicalComparator],
-            'Identical to 0, 1, 2 as strings'   => [['0', '1', '2'], false, $identicalComparator],
-            'Divisible by 1, 2, 3'              => [[1, 2, 3], true, $divisibleByComparator],
-            'Divisible by 2, 4'                 => [[2, 4], true, $divisibleByComparator],
-            'Divisible by 2, 4, 6'              => [[2, 4, 6], true, $divisibleByComparator],
-            'Divisible by 1, 2, 3, 4, 5'        => [[1, 2, 3, 4, 5], true, $divisibleByComparator],
-            'Divisible by 6, 7, 8, 9, 10'       => [[6, 7, 8, 9, 10, 11], false, $divisibleByComparator],
+            'Identical to 0, 11, 12'            => [[0, 11, 12], false, $creator($identicalComparator)],
+            'Identical to 1, 2, 3'              => [[1, 2, 3], true, $creator($identicalComparator)],
+            'Identical to 2, 4, 6'              => [[2, 4, 6], true, $creator($identicalComparator)],
+            'Identical to 6, 8, 10'             => [[6, 8, 10], true, $creator($identicalComparator)],
+            'Identical to 0, 1, 2'              => [[0, 1, 2], false, $creator($identicalComparator)],
+            'Identical to 0, 11, 12 as strings' => [['0', '11', '12'], false, $creator($identicalComparator)],
+            'Identical to 1, 2, 3 as strings'   => [['1', '2', '3'], false, $creator($identicalComparator)],
+            'Identical to 2, 4, 6 as strings'   => [['2', '4', '6'], false, $creator($identicalComparator)],
+            'Identical to 6, 8, 10 as strings'  => [['6', '8', '10'], false, $creator($identicalComparator)],
+            'Identical to 0, 1, 2 as strings'   => [['0', '1', '2'], false, $creator($identicalComparator)],
+            'Divisible by 1, 2, 3'              => [[1, 2, 3], true, $creator($divisibleByComparator)],
+            'Divisible by 2, 4'                 => [[2, 4], true, $creator($divisibleByComparator)],
+            'Divisible by 2, 4, 6'              => [[2, 4, 6], true, $creator($divisibleByComparator)],
+            'Divisible by 1, 2, 3, 4, 5'        => [[1, 2, 3, 4, 5], true, $creator($divisibleByComparator)],
+            'Divisible by 6, 7, 8, 9, 10'       => [[6, 7, 8, 9, 10, 11], false, $creator($divisibleByComparator)],
         ];
     }
 
@@ -200,9 +206,9 @@ class ImmutableCollectionTest extends TestCase
      * @test
      * @dataProvider collectionContainsAllComparatorProvider
      */
-    public function knowsWhatItContainsAllWithComparator(array $value, bool $result, Comparator $comparator): void
+    public function knowsWhatItContainsAllWithComparator(array $value, bool $result, Collection $collection): void
     {
-        $this->assertEquals($result, $this->collection->containsAll($value, $comparator));
+        $this->assertEquals($result, $collection->containsAll($value));
     }
 
     public function collectionCountOfProvider(): array
@@ -250,22 +256,25 @@ class ImmutableCollectionTest extends TestCase
                     : ComparisonHelper::signum($result);
             }
         };
+        $creator               = function (Comparator $comparator): ImmutableCollection {
+            return new ImmutableCollection($this->elements, $comparator);
+        };
 
         return [
-            'Identical to 0'             => [0, 0, $identicalComparator],
-            'Identical to 1'             => [1, 1, $identicalComparator],
-            'Identical to 2'             => [2, 1, $identicalComparator],
-            'Identical to 3'             => [3, 1, $identicalComparator],
-            'Identical to 0 as a string' => ['0', 0, $identicalComparator],
-            'Identical to 1 as a string' => ['1', 0, $identicalComparator],
-            'Identical to 2 as a string' => ['2', 0, $identicalComparator],
-            'Identical to 3 as a string' => ['3', 0, $identicalComparator],
-            'Divisible by 1'             => [1, 10, $divisibleByComparator],
-            'Divisible by 2'             => [2, 5, $divisibleByComparator],
-            'Divisible by 3'             => [3, 3, $divisibleByComparator],
-            'Divisible by 11'            => [11, 0, $divisibleByComparator],
-            'Divisible by 14'            => [14, 0, $divisibleByComparator],
-            'Divisible by 15'            => [15, 0, $divisibleByComparator],
+            'Identical to 0'             => [0, 0, $creator($identicalComparator)],
+            'Identical to 1'             => [1, 1, $creator($identicalComparator)],
+            'Identical to 2'             => [2, 1, $creator($identicalComparator)],
+            'Identical to 3'             => [3, 1, $creator($identicalComparator)],
+            'Identical to 0 as a string' => ['0', 0, $creator($identicalComparator)],
+            'Identical to 1 as a string' => ['1', 0, $creator($identicalComparator)],
+            'Identical to 2 as a string' => ['2', 0, $creator($identicalComparator)],
+            'Identical to 3 as a string' => ['3', 0, $creator($identicalComparator)],
+            'Divisible by 1'             => [1, 10, $creator($divisibleByComparator)],
+            'Divisible by 2'             => [2, 5, $creator($divisibleByComparator)],
+            'Divisible by 3'             => [3, 3, $creator($divisibleByComparator)],
+            'Divisible by 11'            => [11, 0, $creator($divisibleByComparator)],
+            'Divisible by 14'            => [14, 0, $creator($divisibleByComparator)],
+            'Divisible by 15'            => [15, 0, $creator($divisibleByComparator)],
         ];
     }
 
@@ -273,9 +282,9 @@ class ImmutableCollectionTest extends TestCase
      * @test
      * @dataProvider collectionCountOfComparatorProvider
      */
-    public function countsMatchingElementsWithComparator(int|string $value, int $result, Comparator $comparator): void
+    public function countsMatchingElementsWithComparator(int|string $value, int $result, Collection $collection): void
     {
-        $this->assertEquals($result, $this->collection->countOf($value, $comparator));
+        $this->assertEquals($result, $collection->countOf($value));
     }
 
     /**

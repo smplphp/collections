@@ -12,7 +12,7 @@ use Traversable;
 /**
  * Base Immutable Collection
  *
- * This class that forms the base for immutable collections, preventing
+ * This class forms the base for immutable collections, preventing
  * the need to duplicate code and method definitions where inheritance will
  * suffice.
  *
@@ -33,10 +33,17 @@ abstract class BaseImmutableCollection implements Collection
     protected readonly int $count;
 
     /**
+     * @var \Smpl\Collections\Contracts\Comparator<E>|null
+     */
+    protected readonly ?Comparator $comparator;
+
+    /**
      * @param iterable<E> $elements
      */
-    public function __construct(iterable $elements = [])
+    public function __construct(iterable $elements = [], ?Comparator $comparator = null)
     {
+        $this->comparator = $comparator;
+
         if (is_array($elements)) {
             // If the provided elements is just an array, we can
             // set its values as the current elements, and just count that.
@@ -63,33 +70,31 @@ abstract class BaseImmutableCollection implements Collection
     }
 
     /**
-     * @param E                                              $element
-     * @param \Smpl\Collections\Contracts\Comparator<E>|null $comparator
+     * @param E $element
      *
      * @return bool
      */
-    public function contains(mixed $element, ?Comparator $comparator = null): bool
+    public function contains(mixed $element): bool
     {
         if ($this->isEmpty()) {
             return false;
         }
 
-        return IterableHelper::contains($this->elements, $element, $comparator);
+        return IterableHelper::contains($this->elements, $element, $this->comparator);
     }
 
     /**
-     * @param iterable<E>                                    $elements
-     * @param \Smpl\Collections\Contracts\Comparator<E>|null $comparator
+     * @param iterable<E> $elements
      *
      * @return bool
      */
-    public function containsAll(iterable $elements, ?Comparator $comparator = null): bool
+    public function containsAll(iterable $elements): bool
     {
         if ($this->isEmpty()) {
             return false;
         }
 
-        return IterableHelper::containsAll($this->elements, $elements, $comparator);
+        return IterableHelper::containsAll($this->elements, $elements, $this->comparator);
     }
 
     /**
@@ -117,18 +122,17 @@ abstract class BaseImmutableCollection implements Collection
     }
 
     /**
-     * @param mixed                                       $element
-     * @param \Smpl\Collections\Contracts\Comparator|null $comparator
+     * @param mixed $element
      *
      * @return int<0, max>
      */
-    public function countOf(mixed $element, ?Comparator $comparator = null): int
+    public function countOf(mixed $element): int
     {
         if ($this->isEmpty()) {
             return 0;
         }
 
-        return IterableHelper::countOf($this->elements, $element, $comparator);
+        return IterableHelper::countOf($this->elements, $element, $this->comparator);
     }
 
     /**
@@ -145,5 +149,13 @@ abstract class BaseImmutableCollection implements Collection
          * @infection-ignore-all
          */
         return array_values($this->elements);
+    }
+
+    /**
+     * @return \Smpl\Collections\Contracts\Comparator<E>|null
+     */
+    public function getComparator(): ?Comparator
+    {
+        return $this->comparator;
     }
 }

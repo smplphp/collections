@@ -44,12 +44,11 @@ interface Enumerable extends Countable, IteratorAggregate
      * If the $comparator argument is provided, the implementor must use it to
      * determine the equality of elements.
      *
-     * @param E                                              $element
-     * @param \Smpl\Collections\Contracts\Comparator<E>|null $comparator
+     * @param E $element
      *
      * @return int<0, max>
      */
-    public function countOf(mixed $element, ?Comparator $comparator = null): int;
+    public function countOf(mixed $element): int;
 
     /**
      * Get an array representation of the elements in this collection.

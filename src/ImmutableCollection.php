@@ -4,6 +4,10 @@ declare(strict_types=1);
 namespace Smpl\Collections;
 
 /**
+ * Immutable Collection
+ *
+ * The immutable collection implementation.
+ *
  * @template E of mixed
  * @extends \Smpl\Collections\BaseImmutableCollection<E>
  * @psalm-immutable
@@ -28,6 +32,6 @@ final class ImmutableCollection extends BaseImmutableCollection
     {
         $elements ??= $this->elements;
 
-        return new ImmutableCollection($elements);
+        return new ImmutableCollection($elements, $this->getComparator());
     }
 }
