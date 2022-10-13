@@ -158,6 +158,8 @@ final class IterableHelper
      *
      * @uses \Smpl\Collections\Contracts\Collection::toArray()
      * @uses \Traversable::__clone
+     *
+     * @infection-ignore-all
      */
     public static function getImpureSafeIterable(iterable $elements): iterable
     {
