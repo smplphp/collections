@@ -49,6 +49,8 @@ final class IterableHelper
                     return true;
                 }
             }
+
+            return false;
         }
 
         return in_array($element, $iterable, true);
