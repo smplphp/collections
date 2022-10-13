@@ -21,5 +21,11 @@
         <testsuite name="Comparators">
             <directory suffix="Test.php">./tests/Comparators</directory>
         </testsuite>
+        <testsuite name="Helpers">
+            <directory suffix="Test.php">./tests/Helpers</directory>
+        </testsuite>
+        <testsuite name="Iterators">
+            <directory suffix="Test.php">./tests/Iterators</directory>
+        </testsuite>
     </testsuites>
 </phpunit>
