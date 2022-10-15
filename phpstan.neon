@@ -7,4 +7,4 @@ parameters:
         - tests
     checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
-        - '#^Method Smpl\\Collections\\ImmutableCollection\:\:copy\(\) should return Smpl\\Collections\\ImmutableCollection\<NE\> but returns Smpl\\Collections\\ImmutableCollection\<mixed\>\.$#'
+        - '#^Method Smpl\\Collections\\([A-Za-z]*)\:\:copy\(\) should return Smpl\\Collections\\([A-Za-z]*)\<NE\> but returns Smpl\\Collections\\([A-Za-z]*)\<mixed\>\.$#'
