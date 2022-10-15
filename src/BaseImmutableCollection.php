@@ -44,29 +44,19 @@ abstract class BaseImmutableCollection implements Collection
     {
         $this->comparator = $comparator;
 
-        if (is_array($elements)) {
-            // If the provided elements is just an array, we can
-            // set its values as the current elements, and just count that.
-            /** @infection-ignore-all */
-            $newElements = array_values($elements);
-            $count       = count($newElements);
+        if ($elements instanceof Traversable) {
+            /**
+             * @psalm-suppress ImpureFunctionCall
+             * @infection-ignore-all
+             */
+            $elementsArray = iterator_to_array($elements, false);
         } else {
-            // If the provided elements are not in an array, we'll need to
-            // iterable over them and build the count up as we go.
-            $newElements = [];
-            $count       = 0;
-
-            foreach ($elements as $element) {
-                $newElements[] = $element;
-                $count++;
-            }
+            $elementsArray = $elements;
         }
 
-        // These are set here because PHPStan isn't smart enough to know that
-        // only one of the above if/else sections will ever be reached at any
-        // one time.
-        $this->elements = $newElements;
-        $this->count    = $count;
+        /** @infection-ignore-all */
+        $this->elements = array_values($elementsArray);
+        $this->count    = count($elementsArray);
     }
 
     /**
