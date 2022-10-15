@@ -21,6 +21,20 @@ namespace Smpl\Collections\Contracts;
 interface Collection extends Enumerable
 {
     /**
+     * Create a new instance of this collection for the provided elements.
+     *
+     * This method is a variadic static constructor for the collection,
+     * creating a new instance for all the provided elements.
+     *
+     * @template NE of mixed
+     *
+     * @param NE ...$elements
+     *
+     * @return static
+     */
+    public static function of(mixed ...$elements): static;
+
+    /**
      * Check if this collection contains the provided element.
      *
      * This method should return true if the provided element exists within

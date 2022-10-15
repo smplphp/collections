@@ -5,6 +5,7 @@ namespace Smpl\Collections;
 
 use Smpl\Collections\Comparators\IdenticalComparator;
 use Smpl\Collections\Concerns\HasComparator;
+use Smpl\Collections\Concerns\NewCollectionOfElements;
 use Smpl\Collections\Contracts\Comparator;
 use Smpl\Collections\Contracts\MutableCollection;
 use Smpl\Collections\Contracts\Predicate;
@@ -25,7 +26,8 @@ use Traversable;
  */
 abstract class BaseCollection implements MutableCollection
 {
-    use HasComparator;
+    use HasComparator,
+        NewCollectionOfElements;
 
     /**
      * @var list<E>

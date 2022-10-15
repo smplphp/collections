@@ -57,6 +57,18 @@ class CollectionTest extends TestCase
 
     /**
      * @test
+     * @dataProvider collectionCreatesFromIterables
+     */
+    public function createsUsingOfMethod(iterable $elements, int $count): void
+    {
+        $collection = Collection::of(...$elements);
+
+        $this->assertCount($count, $collection);
+        $this->assertTrue($collection->containsAll($elements));
+    }
+
+    /**
+     * @test
      */
     public function emptyCollectionsReturnEarly(): void
     {

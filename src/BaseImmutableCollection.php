@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Smpl\Collections;
 
+use Smpl\Collections\Concerns\NewCollectionOfElements;
 use Smpl\Collections\Contracts\Collection;
 use Smpl\Collections\Contracts\Comparator;
 use Smpl\Collections\Helpers\IterableHelper;
@@ -22,6 +23,8 @@ use Traversable;
  */
 abstract class BaseImmutableCollection implements Collection
 {
+    use NewCollectionOfElements;
+
     /**
      * @var list<E>
      */
