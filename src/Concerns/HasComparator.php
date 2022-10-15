@@ -13,6 +13,7 @@ use Smpl\Collections\Contracts\Comparator;
  * avoiding boilerplate.
  *
  * @template E of mixed
+ * @requires \Smpl\Collections\Contracts\ComparesValues<E>
  */
 trait HasComparator
 {
