@@ -12,6 +12,7 @@ use Smpl\Collections\Comparators\IdenticalComparator;
 use Smpl\Collections\Contracts\Comparator;
 use Smpl\Collections\Contracts\Predicate;
 use Smpl\Collections\Helpers\ComparisonHelper;
+use Smpl\Collections\Iterators\SimpleIterator;
 
 /**
  * @group mutable
@@ -51,8 +52,8 @@ class CollectionTest extends TestCase
     {
         $collection = new Collection($elements);
 
-        $this->assertCount($count, $collection);
-        $this->assertTrue($collection->containsAll($elements));
+        self::assertCount($count, $collection);
+        self::assertTrue($collection->containsAll($elements));
     }
 
     /**
@@ -63,8 +64,18 @@ class CollectionTest extends TestCase
     {
         $collection = Collection::of(...$elements);
 
-        $this->assertCount($count, $collection);
-        $this->assertTrue($collection->containsAll($elements));
+        self::assertCount($count, $collection);
+        self::assertTrue($collection->containsAll($elements));
+    }
+
+    /**
+     * @test
+     */
+    public function usesSimpleIterator(): void
+    {
+        $iterator = $this->collection->getIterator();
+
+        self::assertInstanceOf(SimpleIterator::class, $iterator);
     }
 
     /**
@@ -74,9 +85,9 @@ class CollectionTest extends TestCase
     {
         $collection = new Collection();
 
-        $this->assertFalse($collection->contains('1'));
-        $this->assertFalse($collection->containsAll([1]));
-        $this->assertEquals(0, $collection->countOf(1));
+        self::assertFalse($collection->contains('1'));
+        self::assertFalse($collection->containsAll([1]));
+        self::assertEquals(0, $collection->countOf(1));
     }
 
     public function collectionContainsProvider(): array
@@ -104,7 +115,7 @@ class CollectionTest extends TestCase
      */
     public function knowsWhatItContainsWithoutComparator(int $value, bool $result): void
     {
-        $this->assertEquals($result, $this->collection->contains($value));
+        self::assertEquals($result, $this->collection->contains($value));
     }
 
     public function collectionContainsComparatorProvider(): array
@@ -152,7 +163,7 @@ class CollectionTest extends TestCase
      */
     public function knowsWhatItContainsWithComparator(int|string $value, bool $result, Collection $collection): void
     {
-        $this->assertEquals($result, $collection->contains($value));
+        self::assertEquals($result, $collection->contains($value));
     }
 
     public function collectionContainsAllProvider(): array
@@ -172,7 +183,7 @@ class CollectionTest extends TestCase
      */
     public function knowsWhatItContainsAllWithoutComparator(array $value, bool $result): void
     {
-        $this->assertEquals($result, $this->collection->containsAll($value));
+        self::assertEquals($result, $this->collection->containsAll($value));
     }
 
     public function collectionContainsAllComparatorProvider(): array
@@ -221,7 +232,7 @@ class CollectionTest extends TestCase
      */
     public function knowsWhatItContainsAllWithComparator(array $value, bool $result, Collection $collection): void
     {
-        $this->assertEquals($result, $collection->containsAll($value));
+        self::assertEquals($result, $collection->containsAll($value));
     }
 
     public function collectionCountOfProvider(): array
@@ -249,7 +260,7 @@ class CollectionTest extends TestCase
      */
     public function countsMatchingElementsWithoutComparator(int $value, int $result): void
     {
-        $this->assertEquals($result, $this->collection->contains($value));
+        self::assertEquals($result, $this->collection->contains($value));
     }
 
     public function collectionCountOfComparatorProvider(): array
@@ -297,7 +308,7 @@ class CollectionTest extends TestCase
      */
     public function countsMatchingElementsWithComparator(int|string $value, int $result, Collection $collection): void
     {
-        $this->assertEquals($result, $collection->countOf($value));
+        self::assertEquals($result, $collection->countOf($value));
     }
 
     /**
