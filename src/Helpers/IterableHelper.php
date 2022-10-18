@@ -6,6 +6,7 @@ namespace Smpl\Collections\Helpers;
 use Smpl\Collections\Comparators\IdenticalComparator;
 use Smpl\Collections\Contracts\Collection;
 use Smpl\Collections\Contracts\Comparator;
+use function Smpl\Collections\does_sign_match;
 
 /**
  * Iterable Helper
@@ -45,7 +46,7 @@ final class IterableHelper
     {
         if ($comparator !== null) {
             foreach ($iterable as $existingElement) {
-                if (ComparisonHelper::signum($comparator->compare($existingElement, $element)) === ComparisonHelper::EQUAL_TO) {
+                if (does_sign_match($comparator->compare($existingElement, $element), ComparisonHelper::EQUAL_TO)) {
                     return true;
                 }
             }
@@ -156,8 +157,8 @@ final class IterableHelper
      * @psalm-pure
      * @phpstan-pure
      *
-     * @uses \Smpl\Collections\Contracts\Collection::toArray()
-     * @uses \Traversable::__clone
+     * @uses           \Smpl\Collections\Contracts\Collection::toArray()
+     * @uses           \Traversable::__clone
      *
      * @infection-ignore-all
      */

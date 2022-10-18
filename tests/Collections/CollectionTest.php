@@ -13,6 +13,7 @@ use Smpl\Collections\Contracts\Comparator;
 use Smpl\Collections\Contracts\Predicate;
 use Smpl\Collections\Helpers\ComparisonHelper;
 use Smpl\Collections\Iterators\SimpleIterator;
+use function Smpl\Collections\get_sign;
 
 /**
  * @group mutable
@@ -132,7 +133,7 @@ class CollectionTest extends TestCase
 
                 return $result === $a
                     ? ComparisonHelper::LESS_THAN
-                    : ComparisonHelper::signum($result);
+                    : get_sign($result);
             }
         };
         $creator               = function (Comparator $comparator): Collection {
@@ -200,7 +201,7 @@ class CollectionTest extends TestCase
 
                 return $result === $a
                     ? ComparisonHelper::LESS_THAN
-                    : ComparisonHelper::signum($result);
+                    : get_sign($result);
             }
         };
         $creator               = function (Comparator $comparator): Collection {
@@ -277,7 +278,7 @@ class CollectionTest extends TestCase
 
                 return $result === $a
                     ? ComparisonHelper::LESS_THAN
-                    : ComparisonHelper::signum($result);
+                    : get_sign($result);
             }
         };
         $creator               = function (Comparator $comparator): Collection {

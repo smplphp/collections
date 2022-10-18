@@ -14,6 +14,7 @@ use Smpl\Collections\Contracts\Predicate;
 use Smpl\Collections\Helpers\ComparisonHelper;
 use Smpl\Collections\Iterators\SimpleIterator;
 use Smpl\Collections\Tests\Fixtures\ChainedCollection;
+use function Smpl\Collections\get_sign;
 
 /**
  * @group mutable
@@ -134,7 +135,7 @@ class ChainedCollectionTest extends TestCase
 
                 return $result === $a
                     ? ComparisonHelper::LESS_THAN
-                    : ComparisonHelper::signum($result);
+                    : get_sign($result);
             }
         };
         $creator               = function (Comparator $comparator): ChainedCollection {
@@ -202,7 +203,7 @@ class ChainedCollectionTest extends TestCase
 
                 return $result === $a
                     ? ComparisonHelper::LESS_THAN
-                    : ComparisonHelper::signum($result);
+                    : get_sign($result);
             }
         };
         $creator               = function (Comparator $comparator): ChainedCollection {
@@ -279,7 +280,7 @@ class ChainedCollectionTest extends TestCase
 
                 return $result === $a
                     ? ComparisonHelper::LESS_THAN
-                    : ComparisonHelper::signum($result);
+                    : get_sign($result);
             }
         };
         $creator               = function (Comparator $comparator): ChainedCollection {
