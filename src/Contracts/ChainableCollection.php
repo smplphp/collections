@@ -15,9 +15,9 @@ namespace Smpl\Collections\Contracts;
  *
  * @template I of mixed
  * @template E of mixed
- * @extends \Smpl\Collections\Contracts\MutableCollection<I, E>
+ * @extends \Smpl\Collections\Contracts\Collection<I, E>
  */
-interface ChainableCollection extends MutableCollection
+interface ChainableCollection extends Collection
 {
     /**
      * Push an element onto this collection.

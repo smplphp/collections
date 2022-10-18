@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace Smpl\Collections\Tests\Fixtures;
 
 use Smpl\Collections\Collection;
-use Smpl\Collections\Concerns\DecoratesMutableCollection;
+use Smpl\Collections\Concerns\DecoratesCollection;
 use Smpl\Collections\Contracts\Comparator;
-use Smpl\Collections\Contracts\MutableCollection;
+use Smpl\Collections\Contracts\Collection as CollectionContract;
 
-class DecoratedCollection implements MutableCollection
+class DecoratedCollection implements CollectionContract
 {
-    use DecoratesMutableCollection;
+    use DecoratesCollection;
 
     /**
      * @var \Smpl\Collections\Collection
@@ -32,7 +32,7 @@ class DecoratedCollection implements MutableCollection
         return new static($this->collection->copy($elements));
     }
 
-    protected function delegate(): MutableCollection
+    protected function delegate(): CollectionContract
     {
         return $this->collection;
     }

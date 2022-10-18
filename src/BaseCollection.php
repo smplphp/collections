@@ -7,7 +7,6 @@ use Smpl\Collections\Comparators\IdenticalComparator;
 use Smpl\Collections\Concerns\HasComparator;
 use Smpl\Collections\Concerns\NewCollectionOfElements;
 use Smpl\Collections\Contracts\Comparator;
-use Smpl\Collections\Contracts\MutableCollection;
 use Smpl\Collections\Contracts\Predicate;
 use Smpl\Collections\Helpers\ComparisonHelper;
 use Smpl\Collections\Helpers\IterableHelper;
@@ -22,9 +21,9 @@ use Traversable;
  * suffice.
  *
  * @template E of mixed
- * @implements \Smpl\Collections\Contracts\MutableCollection<int, E>
+ * @implements \Smpl\Collections\Contracts\Collection<int, E>
  */
-abstract class BaseCollection implements MutableCollection
+abstract class BaseCollection implements Contracts\Collection
 {
     use HasComparator,
         NewCollectionOfElements;
@@ -276,7 +275,7 @@ abstract class BaseCollection implements MutableCollection
     public function retainAll(iterable $elements): bool
     {
         $modified   = false;
-        $collection = new ImmutableCollection($elements, $this->getComparator());
+        $collection = new Collection($elements, $this->getComparator());
 
         foreach ($this->elements as $element) {
             if (! $collection->contains($element) && $this->remove($element)) {
