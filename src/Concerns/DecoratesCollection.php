@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Smpl\Collections\Concerns;
 
 use Smpl\Collections\Contracts\Collection;
-use Smpl\Collections\Contracts\Comparator;
 use Smpl\Collections\Contracts\MutableCollection;
-use Smpl\Collections\Contracts\Predicate;
+use Smpl\Utils\Contracts\Comparator;
+use Smpl\Utils\Contracts\Predicate;
 use Traversable;
 
 /**
@@ -152,7 +152,7 @@ trait DecoratesCollection
     }
 
     /**
-     * @param \Smpl\Collections\Contracts\Predicate<E> $filter
+     * @param \Smpl\Utils\Contracts\Predicate<E> $filter
      *
      * @return bool
      */
@@ -172,7 +172,7 @@ trait DecoratesCollection
     }
 
     /**
-     * @return \Smpl\Collections\Contracts\Comparator<E>|null
+     * @return \Smpl\Utils\Contracts\Comparator<E>|null
      */
     public function getComparator(): ?Comparator
     {
@@ -180,7 +180,7 @@ trait DecoratesCollection
     }
 
     /**
-     * @param \Smpl\Collections\Contracts\Comparator<E>|null $comparator
+     * @param \Smpl\Utils\Contracts\Comparator<E>|null $comparator
      *
      * @return static
      */

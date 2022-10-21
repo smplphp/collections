@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Smpl\Collections\Concerns;
 
-use Smpl\Collections\Contracts\Predicate;
+use Smpl\Utils\Contracts\Predicate;
 
 /**
  * Chains Collection Concerns
@@ -76,7 +76,7 @@ trait ChainsCollection
     }
 
     /**
-     * @param \Smpl\Collections\Contracts\Predicate<E> $filter
+     * @param \Smpl\Utils\Contracts\Predicate<E> $filter
      *
      * @return static
      *

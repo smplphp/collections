@@ -18,9 +18,6 @@
         <testsuite name="Collections">
             <directory suffix="Test.php">./tests/Collections</directory>
         </testsuite>
-        <testsuite name="Comparators">
-            <directory suffix="Test.php">./tests/Comparators</directory>
-        </testsuite>
         <testsuite name="Helpers">
             <directory suffix="Test.php">./tests/Helpers</directory>
         </testsuite>

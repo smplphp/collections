@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace Smpl\Collections;
 
-use Smpl\Collections\Comparators\IdenticalComparator;
 use Smpl\Collections\Concerns\HasComparator;
 use Smpl\Collections\Concerns\NewCollectionOfElements;
-use Smpl\Collections\Contracts\Comparator;
-use Smpl\Collections\Contracts\Predicate;
-use Smpl\Collections\Helpers\ComparisonHelper;
 use Smpl\Collections\Helpers\IterableHelper;
 use Smpl\Collections\Iterators\SimpleIterator;
+use Smpl\Utils\Comparators\IdenticalityComparator;
+use Smpl\Utils\Contracts\Comparator;
+use Smpl\Utils\Contracts\Predicate;
+use Smpl\Utils\Helpers\ComparisonHelper;
 use Traversable;
 
 /**
@@ -39,8 +39,8 @@ abstract class BaseCollection implements Contracts\Collection
     protected int $count = 0;
 
     /**
-     * @param iterable<E>|null                               $elements
-     * @param \Smpl\Collections\Contracts\Comparator<E>|null $comparator
+     * @param iterable<E>|null                         $elements
+     * @param \Smpl\Utils\Contracts\Comparator<E>|null $comparator
      *
      * @noinspection PhpDocSignatureInspection
      */
@@ -218,7 +218,7 @@ abstract class BaseCollection implements Contracts\Collection
     public function remove(mixed $element): bool
     {
         $modified   = false;
-        $comparator = $this->getComparator() ?? new IdenticalComparator();
+        $comparator = $this->getComparator() ?? new IdenticalityComparator();
 
         foreach ($this->elements as $index => $existingElement) {
             if ($comparator->compare($existingElement, $element) === ComparisonHelper::EQUAL_TO) {
@@ -249,7 +249,7 @@ abstract class BaseCollection implements Contracts\Collection
     }
 
     /**
-     * @param \Smpl\Collections\Contracts\Predicate<E> $filter
+     * @param \Smpl\Utils\Contracts\Predicate<E> $filter
      *
      * @return bool
      */

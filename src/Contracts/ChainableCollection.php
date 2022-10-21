@@ -2,6 +2,8 @@
 
 namespace Smpl\Collections\Contracts;
 
+use Smpl\Utils\Contracts\Predicate;
+
 /**
  * Chainable Collection Contract
  *
@@ -109,7 +111,7 @@ interface ChainableCollection extends Collection
      * the collection instance is returned regardless of whether the collection
      * was modified.
      *
-     * @param \Smpl\Collections\Contracts\Predicate<E> $filter
+     * @param \Smpl\Utils\Contracts\Predicate<E> $filter
      *
      * @return static
      *

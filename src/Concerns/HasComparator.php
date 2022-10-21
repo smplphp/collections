@@ -3,27 +3,27 @@ declare(strict_types=1);
 
 namespace Smpl\Collections\Concerns;
 
-use Smpl\Collections\Contracts\Comparator;
+use Smpl\Utils\Contracts\Comparator;
 
 /**
  * Has Comparator Concern
  *
  * This concern exists to provide a base implementation of
- * {@see \Smpl\Collections\Contracts\ComparesValues} with the intention of
+ * {@see \Smpl\Utils\Contracts\ComparesValues} with the intention of
  * avoiding boilerplate.
  *
  * @template E of mixed
- * @requires \Smpl\Collections\Contracts\ComparesValues<E>
+ * @requires \Smpl\Utils\Contracts\ComparesValues<E>
  */
 trait HasComparator
 {
     /**
-     * @var \Smpl\Collections\Contracts\Comparator<E>|null
+     * @var \Smpl\Utils\Contracts\Comparator<E>|null
      */
-    private ?Comparator $comparator = null;
+    protected ?Comparator $comparator = null;
 
     /**
-     * @return \Smpl\Collections\Contracts\Comparator<E>|null
+     * @return \Smpl\Utils\Contracts\Comparator<E>|null
      */
     public function getComparator(): ?Comparator
     {
@@ -31,7 +31,7 @@ trait HasComparator
     }
 
     /**
-     * @param \Smpl\Collections\Contracts\Comparator<E>|null $comparator
+     * @param \Smpl\Utils\Contracts\Comparator<E>|null $comparator
      *
      * @return static
      */

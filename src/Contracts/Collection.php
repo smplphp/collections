@@ -2,6 +2,8 @@
 
 namespace Smpl\Collections\Contracts;
 
+use Smpl\Utils\Contracts\Predicate;
+
 /**
  * Collection Contract
  *
@@ -196,7 +198,7 @@ interface Collection extends Enumerable
      * the provided filter, returning true if this collection was modified,
      * false otherwise.
      *
-     * @param \Smpl\Collections\Contracts\Predicate<E> $filter
+     * @param \Smpl\Utils\Contracts\Predicate<E> $filter
      *
      * @return bool
      */

@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace Smpl\Collections\Helpers;
 
-use Smpl\Collections\Comparators\IdenticalComparator;
 use Smpl\Collections\Contracts\Collection;
-use Smpl\Collections\Contracts\Comparator;
-use function Smpl\Collections\does_sign_match;
+use Smpl\Utils\Comparators\IdenticalityComparator;
+use Smpl\Utils\Contracts\Comparator;
+use Smpl\Utils\Helpers\ComparisonHelper;
+use function Smpl\Utils\does_sign_match;
 
 /**
  * Iterable Helper
@@ -29,9 +30,9 @@ final class IterableHelper
      *
      * @template E of mixed
      *
-     * @param array<E>                                       $iterable
-     * @param E                                              $element
-     * @param \Smpl\Collections\Contracts\Comparator<E>|null $comparator
+     * @param array<E>                                 $iterable
+     * @param E                                        $element
+     * @param \Smpl\Utils\Contracts\Comparator<E>|null $comparator
      *
      * @return bool
      *
@@ -39,8 +40,8 @@ final class IterableHelper
      * @phpstan-pure
      *
      * @uses     \in_array()
-     * @uses     \Smpl\Collections\Helpers\ComparisonHelper::signum()
-     * @uses     \Smpl\Collections\Helpers\ComparisonHelper::EQUAL_TO
+     * @uses     \Smpl\Utils\Helpers\ComparisonHelper::signum()
+     * @uses     \Smpl\Utils\Helpers\ComparisonHelper::EQUAL_TO
      */
     public static function contains(array $iterable, mixed $element, ?Comparator $comparator = null): bool
     {
@@ -73,9 +74,9 @@ final class IterableHelper
      *
      * @template E of mixed
      *
-     * @param array<E>                                       $iterable
-     * @param iterable<E>                                    $elements
-     * @param \Smpl\Collections\Contracts\Comparator<E>|null $comparator
+     * @param array<E>                                 $iterable
+     * @param iterable<E>                              $elements
+     * @param \Smpl\Utils\Contracts\Comparator<E>|null $comparator
      *
      * @return bool
      *
@@ -103,27 +104,27 @@ final class IterableHelper
      * Get the number of times the provided element appears in the provided iterable.
      *
      * This method will use the provided comparator, or
-     * {@see \Smpl\Collections\Comparators\IdenticalComparator} to compare each
+     * {@see \Smpl\Utils\Comparators\IdenticalityComparator} to compare each
      * element in the iterable against the provided element, returning the number of matches.
      *
      * @template E of mixed
      *
-     * @param array<E>                                       $iterable
-     * @param E                                              $element
-     * @param \Smpl\Collections\Contracts\Comparator<E>|null $comparator
+     * @param array<E>                                 $iterable
+     * @param E                                        $element
+     * @param \Smpl\Utils\Contracts\Comparator<E>|null $comparator
      *
      * @return int<0, max>
      *
      * @psalm-pure
      * @phpstan-pure
      *
-     * @uses     \Smpl\Collections\Comparators\IdenticalComparator
-     * @uses     \Smpl\Collections\Contracts\Comparator::compare()
-     * @uses     \Smpl\Collections\Helpers\ComparisonHelper::EQUAL_TO
+     * @uses     \Smpl\Utils\Comparators\IdenticalityComparator
+     * @uses     \Smpl\Utils\Contracts\Comparator::compare()
+     * @uses     \Smpl\Utils\Helpers\ComparisonHelper::EQUAL_TO
      */
     public static function countOf(array $iterable, mixed $element, ?Comparator $comparator = null): int
     {
-        $comparator ??= new IdenticalComparator();
+        $comparator ??= new IdenticalityComparator();
         $count      = 0;
 
         foreach ($iterable as $existingElement) {

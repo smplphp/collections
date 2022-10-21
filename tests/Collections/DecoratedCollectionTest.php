@@ -6,15 +6,16 @@ namespace Smpl\Collections\Tests\Collections;
 use ArrayIterator;
 use PHPUnit\Framework\TestCase;
 use Smpl\Collections\Collection;
-use Smpl\Collections\Comparators\BaseComparator;
-use Smpl\Collections\Comparators\EqualComparator;
-use Smpl\Collections\Comparators\IdenticalComparator;
-use Smpl\Collections\Contracts\Comparator;
-use Smpl\Collections\Contracts\Predicate;
-use Smpl\Collections\Helpers\ComparisonHelper;
 use Smpl\Collections\Iterators\SimpleIterator;
 use Smpl\Collections\Tests\Fixtures\DecoratedCollection;
-use function Smpl\Collections\get_sign;
+use Smpl\Utils\Comparators\BaseComparator;
+use Smpl\Utils\Comparators\EqualityComparator;
+use Smpl\Utils\Comparators\IdenticalityComparator;
+use Smpl\Utils\Contracts\Comparator;
+use Smpl\Utils\Contracts\Predicate;
+use Smpl\Utils\Helpers\ComparisonHelper;
+use Smpl\Utils\Predicates\BasePredicate;
+use function Smpl\Utils\get_sign;
 
 /**
  * @group mutable
@@ -123,7 +124,7 @@ class DecoratedCollectionTest extends TestCase
 
     public function collectionContainsComparatorProvider(): array
     {
-        $identicalComparator   = new IdenticalComparator();
+        $identicalComparator   = new IdenticalityComparator();
         $divisibleByComparator = new class extends BaseComparator {
             public function compare(mixed $a, mixed $b): int
             {
@@ -191,7 +192,7 @@ class DecoratedCollectionTest extends TestCase
 
     public function collectionContainsAllComparatorProvider(): array
     {
-        $identicalComparator   = new IdenticalComparator();
+        $identicalComparator   = new IdenticalityComparator();
         $divisibleByComparator = new class extends BaseComparator {
             public function compare(mixed $a, mixed $b): int
             {
@@ -268,7 +269,7 @@ class DecoratedCollectionTest extends TestCase
 
     public function collectionCountOfComparatorProvider(): array
     {
-        $identicalComparator   = new IdenticalComparator();
+        $identicalComparator   = new IdenticalityComparator();
         $divisibleByComparator = new class extends BaseComparator {
             public function compare(mixed $a, mixed $b): int
             {
@@ -416,8 +417,8 @@ class DecoratedCollectionTest extends TestCase
             'Remove 11 (new)'                                  => [11, false, false, 0, false, 0],
             'Remove 10 (exists)'                               => [10, true, false, 0, true, 1],
             'Remove 10 (exists(3))'                            => [10, true, false, 0, true, 4, [10, 10, 10]],
-            'Remove 10 (exists), with equal comparator'        => [10, true, false, 0, true, 1, [], new EqualComparator()],
-            'Remove \'10\' (exists), with equal comparator'    => ['10', true, false, 0, true, 1, [], new EqualComparator()],
+            'Remove 10 (exists), with equal comparator'        => [10, true, false, 0, true, 1, [], new EqualityComparator()],
+            'Remove \'10\' (exists), with equal comparator'    => ['10', true, false, 0, true, 1, [], new EqualityComparator()],
             'Remove \'10\' (exists), without equal comparator' => ['10', false, false, 0, false, 0],
         ];
     }
@@ -481,7 +482,7 @@ class DecoratedCollectionTest extends TestCase
     public function removeIfElementProvider(): array
     {
         return [
-            'Remove values < 3'                      => [new class implements Predicate {
+            'Remove values < 3'                      => [new class extends BasePredicate implements Predicate {
                 public function test(mixed $value): bool
                 {
                     return $value < 3;
@@ -490,7 +491,7 @@ class DecoratedCollectionTest extends TestCase
                                                          true,
                                                          10,
                                                          8],
-            'Remove odd values'                      => [new class implements Predicate {
+            'Remove odd values'                      => [new class extends BasePredicate implements Predicate {
                 public function test(mixed $value): bool
                 {
                     return ($value % 2) !== 0;
@@ -499,7 +500,7 @@ class DecoratedCollectionTest extends TestCase
                                                          true,
                                                          10,
                                                          5],
-            'Remove equal values'                    => [new class implements Predicate {
+            'Remove equal values'                    => [new class extends BasePredicate implements Predicate {
                 public function test(mixed $value): bool
                 {
                     return ($value % 2) === 0;
@@ -508,7 +509,7 @@ class DecoratedCollectionTest extends TestCase
                                                          true,
                                                          10,
                                                          5],
-            'Remove odd values (adding 1,7,10)'      => [new class implements Predicate {
+            'Remove odd values (adding 1,7,10)'      => [new class extends BasePredicate implements Predicate {
                 public function test(mixed $value): bool
                 {
                     return ($value % 2) !== 0;
@@ -518,7 +519,7 @@ class DecoratedCollectionTest extends TestCase
                                                          13,
                                                          6,
                                                          [1, 7, 10]],
-            'Remove equal values (adding 5,13,7,12)' => [new class implements Predicate {
+            'Remove equal values (adding 5,13,7,12)' => [new class extends BasePredicate implements Predicate {
                 public function test(mixed $value): bool
                 {
                     return ($value % 2) === 0;
@@ -528,7 +529,7 @@ class DecoratedCollectionTest extends TestCase
                                                          14,
                                                          8,
                                                          [5, 13, 7, 12]],
-            'Remove values > 10'                     => [new class implements Predicate {
+            'Remove values > 10'                     => [new class extends BasePredicate implements Predicate {
                 public function test(mixed $value): bool
                 {
                     return $value > 10;
