@@ -20,6 +20,7 @@ final class ImmutableCollection extends BaseImmutableCollection
      * @psalm-suppress InvalidReturnType
      * @psalm-suppress InvalidReturnStatement
      * @psalm-suppress MismatchingDocblockReturnType
+     * @psalm-suppress ImpureMethodCall
      *
      * @noinspection   PhpDocSignatureInspection
      * @noinspection   PhpUnnecessaryStaticReferenceInspection

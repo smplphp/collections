@@ -28,6 +28,7 @@ final class ImmutableSet extends BaseImmutableCollection implements Contracts\Se
      * @psalm-suppress InvalidReturnType
      * @psalm-suppress InvalidReturnStatement
      * @psalm-suppress MismatchingDocblockReturnType
+     * @psalm-suppress ImpureMethodCall
      *
      * @noinspection   PhpDocSignatureInspection
      * @noinspection   PhpUnnecessaryStaticReferenceInspection
