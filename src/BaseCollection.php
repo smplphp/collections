@@ -16,9 +16,8 @@ use Traversable;
 /**
  * Base Collection
  *
- * This class forms the base for mutable collections, preventing
- * the need to duplicate code and method definitions where inheritance will
- * suffice.
+ * This class forms the base for collections, preventing the need to duplicate
+ * code and method definitions where inheritance will suffice.
  *
  * @template E of mixed
  * @implements \Smpl\Collections\Contracts\Collection<int, E>
