@@ -8,7 +8,7 @@ parameters:
   checkGenericClassInNonGenericObjectType: false
   ignoreErrors:
     - '#^Method Smpl\\Collections\\([A-Za-z]*)\:\:copy\(\) should return Smpl\\Collections\\([A-Za-z]*)\<NE\> but returns Smpl\\Collections\\([A-Za-z]*)\<mixed\>\.$#'
-    - '#^Method Smpl\\Collections\\SortedCollection\:\:([A-Za-z]*)\(\) should return Smpl\\Collections\\SortedCollection\<E\> but returns Smpl\\Collections\\SortedCollection\<mixed\>\.$#'
-    - '#^Method Smpl\\Collections\\SortedCollection\:\:getComparator\(\) should return Smpl\\Utils\\Contracts\\Comparator\<mixed\> but returns Smpl\\Utils\\Contracts\\Comparator\<mixed\>\|null\.$#'
+    - '#^Method Smpl\\Collections\\Sorted([A-Za-z]*)\:\:([A-Za-z]*)\(\) should return Smpl\\Collections\\Sorted([A-Za-z]*)\<E\> but returns Smpl\\Collections\\Sorted([A-Za-z]*)\<mixed\>\.$#'
+    - '#^Method Smpl\\Collections\\Sorted([A-Za-z]*)\:\:getComparator\(\) should return Smpl\\Utils\\Contracts\\Comparator\<mixed\> but returns Smpl\\Utils\\Contracts\\Comparator\<mixed\>\|null\.$#'
     - message: '#Unsafe usage of new static\(\)#'
       path: src/Concerns/NewCollectionOfElements.php
