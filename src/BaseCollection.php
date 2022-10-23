@@ -167,7 +167,7 @@ abstract class BaseCollection implements Contracts\Collection
      */
     public function addAll(iterable $elements): bool
     {
-        /** @infection-ignore-all  */
+        /** @infection-ignore-all */
         $modified = false;
 
         foreach ($elements as $element) {
@@ -185,7 +185,7 @@ abstract class BaseCollection implements Contracts\Collection
     public function clear(): static
     {
         $this->elements = [];
-        /** @infection-ignore-all  */
+        /** @infection-ignore-all */
         $this->setCount(0);
 
         return $this;

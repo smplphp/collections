@@ -9,7 +9,7 @@ final class UnsupportedOperationException extends Exception
 {
     /**
      * @param class-string $class
-     * @param string $method
+     * @param string       $method
      *
      * @return static
      */

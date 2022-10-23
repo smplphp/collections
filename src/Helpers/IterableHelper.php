@@ -7,6 +7,7 @@ use Smpl\Collections\Contracts\Collection;
 use Smpl\Utils\Comparators\IdenticalityComparator;
 use Smpl\Utils\Contracts\Comparator;
 use Smpl\Utils\Helpers\ComparisonHelper;
+use Traversable;
 use function Smpl\Utils\does_sign_match;
 
 /**
@@ -173,7 +174,7 @@ final class IterableHelper
             return $elements->toArray();
         }
 
-        if ($elements instanceof \Traversable) {
+        if ($elements instanceof Traversable) {
             return clone $elements;
         }
 

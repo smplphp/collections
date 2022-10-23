@@ -16,7 +16,7 @@ use Smpl\Utils\Contracts\Predicate;
  * This class throws {@see \Smpl\Collections\Exceptions\UnsupportedOperationException}
  * exceptions for all methods that would modify this collection.
  *
- * @template E of mixed
+ * @template       E of mixed
  * @extends \Smpl\Collections\BaseCollection<E>
  * @psalm-immutable
  * @psalm-suppress MutableDependency

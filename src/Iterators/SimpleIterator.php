@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Smpl\Collections\Iterators;
 
+use Iterator;
+
 /**
  * Simple Iterator
  *
@@ -14,7 +16,7 @@ namespace Smpl\Collections\Iterators;
  * @implements \Iterator<I, E>
  * @psalm-immutable
  */
-class SimpleIterator implements \Iterator
+class SimpleIterator implements Iterator
 {
     /**
      * @var array<I, E>
