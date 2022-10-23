@@ -54,8 +54,8 @@ interface SortedCollection extends Collection, ComparesValues
      * collection, that are strictly less than $toElement. If $inclusive is
      * true, it will also contain elements that are equal to $toElement.
      *
-     * @param E $toElement
-     * @param bool  $inclusive
+     * @param E    $toElement
+     * @param bool $inclusive
      *
      * @return static
      */
@@ -105,10 +105,10 @@ interface SortedCollection extends Collection, ComparesValues
      * If $toInclusive is set to true, the returned collection will also include
      * elements that are considered equal to $toElement.
      *
-     * @param E $fromElement
-     * @param E $toElement
-     * @param bool  $fromInclusive
-     * @param bool  $toInclusive
+     * @param E    $fromElement
+     * @param E    $toElement
+     * @param bool $fromInclusive
+     * @param bool $toInclusive
      *
      * @return static
      */
@@ -121,8 +121,8 @@ interface SortedCollection extends Collection, ComparesValues
      * collection, that are strictly greater than $fromElement. If $inclusive is
      * true, it will also contain elements that are equal to $fromElement.
      *
-     * @param E $fromElement
-     * @param bool  $inclusive
+     * @param E    $fromElement
+     * @param bool $inclusive
      *
      * @return static
      */

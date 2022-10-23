@@ -37,8 +37,8 @@ trait DecoratesSequence
     abstract protected function delegate(): Sequence;
 
     /**
-     * @param E $element
-     * @param int   $index
+     * @param E   $element
+     * @param int $index
      *
      * @return int|null
      */
@@ -135,7 +135,7 @@ trait DecoratesSequence
 
     /**
      * @param int $offset
-     * @param E $value
+     * @param E   $value
      *
      * @return void
      */
@@ -155,8 +155,8 @@ trait DecoratesSequence
     }
 
     /**
-     * @param int   $index
-     * @param E $element
+     * @param int $index
+     * @param E   $element
      *
      * @return static
      */
@@ -168,7 +168,7 @@ trait DecoratesSequence
     }
 
     /**
-     * @param int      $index
+     * @param int         $index
      * @param iterable<E> $elements
      *
      * @return static
@@ -181,8 +181,8 @@ trait DecoratesSequence
     }
 
     /**
-     * @param int   $index
-     * @param E $element
+     * @param int $index
+     * @param E   $element
      *
      * @return static
      */
@@ -194,7 +194,7 @@ trait DecoratesSequence
     }
 
     /**
-     * @param int      $index
+     * @param int         $index
      * @param iterable<E> $elements
      *
      * @return static
