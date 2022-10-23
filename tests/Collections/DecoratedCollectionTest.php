@@ -597,15 +597,10 @@ class DecoratedCollectionTest extends TestCase
     public function proxiesComparesValuesMethods(): void
     {
         $collection = $this->collection->copy();
-        $comparator = new class implements Comparator {
+        $comparator = new class extends BaseComparator implements Comparator {
             public function compare(mixed $a, mixed $b): int
             {
                 return $a <=> $b;
-            }
-
-            public function __invoke(mixed $a, mixed $b): int
-            {
-                return $this->compare($a, $b);
             }
         };
 
