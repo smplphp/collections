@@ -15,6 +15,7 @@ use Smpl\Utils\Contracts\Comparator;
 use Smpl\Utils\Contracts\Predicate;
 use Smpl\Utils\Helpers\ComparisonHelper;
 use Smpl\Utils\Predicates\BasePredicate;
+use Smpl\Utils\Support\Comparators;
 use function Smpl\Utils\get_sign;
 
 /**
@@ -357,10 +358,12 @@ class SortedCollectionTest extends TestCase
     public function addElementProvider(): array
     {
         return [
-            'Add 11 (new)'       => [11, true, true, 1],
-            'Add 12 (new)'       => [12, true, true, 1],
-            'Add 13 (new)'       => [13, true, true, 1],
-            'Add 10 (duplicate)' => [10, true, true, 2],
+            'Add 11 (new)'       => [11, true, true, 1, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]],
+            'Add 12 (new)'       => [12, true, true, 1, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12]],
+            'Add 13 (new)'       => [13, true, true, 1, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13]],
+            'Add 10 (duplicate)' => [10, true, true, 2, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10]],
+            'Add 3 (duplicate)'  => [3, true, true, 2, [1, 2, 3, 3, 4, 5, 6, 7, 8, 9, 10]],
+            'Add 0 (new)'        => [0, true, true, 1, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]],
         ];
     }
 
@@ -368,13 +371,14 @@ class SortedCollectionTest extends TestCase
      * @test
      * @dataProvider addElementProvider
      */
-    public function canAddElements(int $value, bool $result, bool $contains, int $count): void
+    public function canAddElements(int $value, bool $result, bool $contains, int $count, array $array): void
     {
         $collection = $this->collection->copy();
 
         self::assertEquals($result, $collection->add($value));
         self::assertEquals($contains, $collection->contains($value));
         self::assertEquals($count, $collection->countOf($value));
+        self::assertSame($array, $collection->toArray());
     }
 
     public function addAllElementProvider(): array
@@ -773,5 +777,22 @@ class SortedCollectionTest extends TestCase
         }
 
         self::assertSame($result, $tailset->toArray());
+    }
+
+    /**
+     * @test
+     */
+    public function sortsElementsAfterSettingNewComparator(): void
+    {
+        $collection = $this->collection->copy();
+        $collection->setComparator(new class extends BaseComparator {
+
+            public function compare(mixed $a, mixed $b): int
+            {
+                return ComparisonHelper::flip(Comparators::default()->compare($a, $b));
+            }
+        });
+
+        self::assertSame([10, 9, 8, 7, 6, 5, 4, 3, 2, 1,], $collection->toArray());
     }
 }

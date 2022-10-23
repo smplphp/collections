@@ -15,7 +15,7 @@ use Smpl\Utils\Contracts\Predicate;
  * @template I of mixed
  * @template E of mixed
  * @requires \Smpl\Collections\Contracts\ChainableCollection<I, E>
- * @mixin \Smpl\Collections\Contracts\MutableCollection<I, E>
+ * @mixin \Smpl\Collections\Contracts\Collection<I, E>
  */
 trait ChainsCollection
 {
