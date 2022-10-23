@@ -4,21 +4,19 @@ declare(strict_types=1);
 namespace Smpl\Collections\Concerns;
 
 use Smpl\Collections\Contracts\Collection;
-use Smpl\Collections\Contracts\MutableCollection;
 use Smpl\Utils\Contracts\Comparator;
 use Smpl\Utils\Contracts\Predicate;
 use Traversable;
 
 /**
- * Mutable Collection Decorator Concern
+ * Collection Decorator Concern
  *
  * This concern exists as a helper for decorating the
- * {@see \Smpl\Collections\Contracts\MutableCollection} contract. Adding this to
+ * {@see \Smpl\Collections\Contracts\Collection} contract. Adding this to
  * a class will create a proxy class that delegates method calls to an
  * implementation provided by the implementor.
  *
- * Mutable collection decorators will need to implement the following three
- * methods:
+ * Collection decorators will need to implement the following three methods:
  *
  *  - {@see \Smpl\Collections\Concerns\DecoratesCollection::delegate()}
  *  - {@see \Smpl\Collections\Contracts\Collection::of()}
