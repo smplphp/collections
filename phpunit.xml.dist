@@ -9,14 +9,14 @@
         </include>
         <exclude>
             <directory>./src/Contracts</directory>
-            <file>./src/Support/Collections.php</file>
-            <file>./src/Support/Predicates.php</file>
-            <file>./src/Support/Comparators.php</file>
         </exclude>
     </coverage>
     <testsuites>
         <testsuite name="Collections">
             <directory suffix="Test.php">./tests/Collections</directory>
+        </testsuite>
+        <testsuite name="Exceptions">
+            <directory suffix="Test.php">./tests/Exceptions</directory>
         </testsuite>
         <testsuite name="Helpers">
             <directory suffix="Test.php">./tests/Helpers</directory>
