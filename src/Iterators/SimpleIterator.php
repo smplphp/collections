@@ -16,7 +16,7 @@ use Iterator;
  * @implements \Iterator<I, E>
  * @psalm-immutable
  */
-class SimpleIterator implements Iterator
+final class SimpleIterator implements Iterator
 {
     /**
      * @var array<I, E>
