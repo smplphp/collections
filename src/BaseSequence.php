@@ -28,6 +28,8 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
      *
      * @psalm-suppress MoreSpecificReturnType
      * @psalm-suppress MoreSpecificImplementedParamType
+     *
+     * @throws \Smpl\Collections\Exceptions\OutOfRangeException
      */
     public function find(mixed $element, int $index): ?int
     {
@@ -71,6 +73,8 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
 
     /**
      * @return E|null
+     *
+     * @throws \Smpl\Collections\Exceptions\OutOfRangeException
      */
     public function first(): mixed
     {
@@ -81,6 +85,8 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
      * @param int<-1,max> $index
      *
      * @return E|null
+     *
+     * @throws \Smpl\Collections\Exceptions\OutOfRangeException
      */
     public function get(int $index): mixed
     {
@@ -208,6 +214,8 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
      * @param int<-1,max> $offset
      *
      * @return mixed
+     *
+     * @throws \Smpl\Collections\Exceptions\OutOfRangeException
      */
     public function offsetGet(mixed $offset): mixed
     {
@@ -246,6 +254,8 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
      * @param E   $element
      *
      * @return static
+     *
+     * @throws \Smpl\Collections\Exceptions\OutOfRangeException
      */
     public function put(int $index, mixed $element): static
     {
@@ -275,6 +285,8 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
      * @param iterable<E> $elements
      *
      * @return static
+     *
+     * @throws \Smpl\Collections\Exceptions\OutOfRangeException
      */
     public function putAll(int $index, iterable $elements): static
     {
@@ -310,6 +322,8 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
      * @param E   $element
      *
      * @return static
+     *
+     * @throws \Smpl\Collections\Exceptions\OutOfRangeException
      */
     public function set(int $index, mixed $element): static
     {
@@ -334,6 +348,8 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
      * @param iterable<E> $elements
      *
      * @return static
+     *
+     * @throws \Smpl\Collections\Exceptions\OutOfRangeException
      */
     public function setAll(int $index, iterable $elements): static
     {
@@ -362,6 +378,8 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
      * @param int|null $length
      *
      * @return static
+     *
+     * @throws \Smpl\Collections\Exceptions\OutOfRangeException
      */
     public function subset(int $index, int $length = null): static
     {
@@ -402,6 +420,8 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
      * @param int<0,max> $index
      *
      * @return static
+     *
+     * @throws \Smpl\Collections\Exceptions\OutOfRangeException
      */
     public function unset(int $index): static
     {
