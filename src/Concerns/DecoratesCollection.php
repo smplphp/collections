@@ -29,9 +29,10 @@ use Traversable;
 trait DecoratesCollection
 {
     /**
-     * The mutable collection method calls should be delegated too.
+     * Get the delegate collection.
      *
-     * This method allows this concern
+     * This method allows this concern to proxy method calls to a delegate
+     * collection provided by this method.
      *
      * @return \Smpl\Collections\Contracts\Collection<I, E>
      */

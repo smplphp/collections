@@ -28,11 +28,12 @@ trait DecoratesSequence
     use DecoratesCollection;
 
     /**
-     * The mutable collection method calls should be delegated too.
+     * Get the delegate collection.
      *
-     * This method allows this concern
+     * This method allows this concern to proxy method calls to a delegate
+     * collection provided by this method.
      *
-     * @return \Smpl\Collections\Contracts\Sequence<I>
+     * @return \Smpl\Collections\Contracts\Sequence<E>
      */
     abstract protected function delegate(): Sequence;
 
