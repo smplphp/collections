@@ -454,23 +454,6 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
     }
 
     /**
-     * Get this collections max index.
-     *
-     * This method will return the maximum index for the elements currently
-     * stored in this collection.
-     *
-     * @return int<0, max>
-     *
-     * @internal
-     *
-     * @infection-ignore-all
-     */
-    protected function getMaxIndex(): int
-    {
-        return max(0, $this->count() - 1);
-    }
-
-    /**
      * Check if the provided index is outside this collections range.
      *
      * This method will check to see if $index is within the bounds of

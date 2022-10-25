@@ -299,4 +299,21 @@ abstract class BaseCollection implements Contracts\Collection
 
         return $modified;
     }
+
+    /**
+     * Get this collections max index.
+     *
+     * This method will return the maximum index for the elements currently
+     * stored in this collection.
+     *
+     * @return int<0, max>
+     *
+     * @internal
+     *
+     * @infection-ignore-all
+     */
+    protected function getMaxIndex(): int
+    {
+        return max(0, $this->count() - 1);
+    }
 }
