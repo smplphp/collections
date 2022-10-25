@@ -432,7 +432,7 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
 
         if (! $this->isEmpty()) {
             unset($this->elements[$index]);
-            $this->setCount($this->count - 1);
+            $this->modifyCount(-1);
             /** @infection-ignore-all */
             $this->elements = array_values($this->elements);
         }

@@ -70,6 +70,21 @@ abstract class BaseCollection implements Contracts\Collection
     }
 
     /**
+     * Modify the current count for this collection.
+     *
+     * This method exists to provide an easy way to modify the count for this
+     * collection, without referencing the actual count itself.
+     *
+     * @param int $count
+     *
+     * @return void
+     */
+    protected function modifyCount(int $count): void
+    {
+        $this->setCount($this->count() + $count);
+    }
+
+    /**
      * @param E $element
      *
      * @return bool
@@ -155,7 +170,7 @@ abstract class BaseCollection implements Contracts\Collection
     public function add(mixed $element): bool
     {
         $this->elements[] = $element;
-        $this->setCount($this->count + 1);
+        $this->modifyCount(1);
 
         return true;
     }
@@ -206,7 +221,7 @@ abstract class BaseCollection implements Contracts\Collection
     protected function removeElementByIndex(int $index): void
     {
         unset($this->elements[$index]);
-        $this->setCount($this->count - 1);
+        $this->modifyCount(-1);
     }
 
     /**
