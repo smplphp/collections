@@ -14,43 +14,41 @@ use Smpl\Collections\Sequence;
  */
 class SequenceIteratorTest extends TestCase
 {
-    public function elementIteratorProvider(): array
+    /**
+     * @test
+     */
+    public function iteratesForAllElements(): void
     {
         $iterator = new SequenceIterator(new Sequence([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
 
-        return [
-            'Index 0'  => [$iterator, 0, 0, true],
-            'Index 1'  => [$iterator, 1, 1, true],
-            'Index 2'  => [$iterator, 2, 2, true],
-            'Index 3'  => [$iterator, 3, 3, true],
-            'Index 4'  => [$iterator, 4, 4, true],
-            'Index 5'  => [$iterator, 5, 5, true],
-            'Index 6'  => [$iterator, 6, 6, true],
-            'Index 7'  => [$iterator, 7, 7, true],
-            'Index 8'  => [$iterator, 8, 8, true],
-            'Index 9'  => [$iterator, 9, 9, true],
-            'Index 10' => [$iterator, null, false, false],
-            'Index 11' => [$iterator, null, false, false],
+        $data = [
+            [0, 0, true],
+            [1, 1, true],
+            [2, 2, true],
+            [3, 3, true],
+            [4, 4, true],
+            [5, 5, true],
+            [6, 6, true],
+            [7, 7, true],
+            [8, 8, true],
+            [9, 9, true],
+            [null, false, false],
+            [null, false, false],
         ];
-    }
 
-    /**
-     * @test
-     * @dataProvider elementIteratorProvider
-     */
-    public function iteratesForAllElements(SequenceIterator $iterator, ?int $key, int|bool $current, bool $valid): void
-    {
-        self::assertSame($key, $iterator->key());
-        self::assertSame($valid, $iterator->valid());
+        foreach ($data as [$key, $current, $valid]) {
+            self::assertSame($key, $iterator->key());
+            self::assertSame($valid, $iterator->valid());
 
-        if ($valid === false) {
-            $this->expectException(OutOfRangeException::class);
-            $iterator->current();
-        } else {
-            self::assertSame($current, $iterator->current());
+            if ($valid === false) {
+                $this->expectException(OutOfRangeException::class);
+                $iterator->current();
+            } else {
+                self::assertSame($current, $iterator->current());
+            }
+
+            $iterator->next();
         }
-
-        $iterator->next();
     }
 
     /**
@@ -101,7 +99,8 @@ class SequenceIteratorTest extends TestCase
 
         return [
             'Seek to 3'   => [$iterator, 3, 234],
-            'Seek to 9'   => [$iterator, 8, 9],
+            'Seek to 8'   => [$iterator, 8, 9],
+            'Seek to 9'   => [$iterator, 9, null],
             'Seek to -1'  => [$iterator, -1, null],
             'Seek to 100' => [$iterator, 100, null],
         ];
@@ -119,7 +118,7 @@ class SequenceIteratorTest extends TestCase
                 'The provided index %s is outside the required range of %s <> %s',
                 $index,
                 0,
-                $iterator->count() - 1
+                max($iterator->count() - 1, 0)
             ));
         }
 
@@ -129,13 +128,12 @@ class SequenceIteratorTest extends TestCase
 
     public function putProvider(): array
     {
-        $iterator = new SequenceIterator(new Sequence([1, 4, 7, 234, 9, 5345, 6, 1, 9]));
-
         return [
-            'Put 14 at 3'    => [$iterator, 3, 14, 234],
-            'Put -7000 at 8' => [$iterator, 8, -7000, 1],
-            'Put 9001 at 1'  => [$iterator, -1, 9001, null],
-            'Put 14 at 100'  => [$iterator, 100, 14, null],
+            'Put 14 at 3'            => [[1, 4, 7, 234, 9, 5345, 6, 1, 9], 3, 14, 234],
+            'Put -7000 at 8'         => [[1, 4, 7, 234, 9, 5345, 6, 1, 9], 8, -7000, 9],
+            'Put 9001 at 1'          => [[1, 4, 7, 234, 9, 5345, 6, 1, 9], -1, 9001, null],
+            'Put 14 at 100'          => [[1, 4, 7, 234, 9, 5345, 6, 1, 9], 100, 14, null],
+            'Put 34 at 0 when empty' => [[], 0, 34, null],
         ];
     }
 
@@ -143,15 +141,17 @@ class SequenceIteratorTest extends TestCase
      * @test
      * @dataProvider putProvider
      */
-    public function canPutAtCurrentIndex(SequenceIterator $iterator, int $index, int $element, ?int $displacedElement): void
+    public function canPutAtCurrentIndex(array $elements, int $index, int $element, ?int $displacedElement): void
     {
+        $iterator = new SequenceIterator(new Sequence($elements));
+
         if ($displacedElement === null) {
             $this->expectException(OutOfRangeException::class);
             $this->expectExceptionMessage(sprintf(
                 'The provided index %s is outside the required range of %s <> %s',
                 $index,
                 0,
-                $iterator->count() - 1
+                max($iterator->count() - 1, 0)
             ));
         }
 
@@ -188,7 +188,7 @@ class SequenceIteratorTest extends TestCase
                 'The provided index %s is outside the required range of %s <> %s',
                 $index,
                 0,
-                $iterator->count() - 1
+                max($iterator->count() - 1, 0)
             ));
         }
 
@@ -227,7 +227,7 @@ class SequenceIteratorTest extends TestCase
                 'The provided index %s is outside the required range of %s <> %s',
                 $index,
                 0,
-                $iterator->count() - 1
+                max($iterator->count() - 1, 0)
             ));
         }
 
@@ -269,7 +269,7 @@ class SequenceIteratorTest extends TestCase
                 'The provided index %s is outside the required range of %s <> %s',
                 $index,
                 0,
-                $iterator->count() - 1
+                max($iterator->count() - 1, 0)
             ));
         }
 
@@ -343,7 +343,7 @@ class SequenceIteratorTest extends TestCase
                 'The provided index %s is outside the required range of %s <> %s',
                 $index,
                 0,
-                $iterator->count() - 1
+                max($iterator->count() - 1, 0)
             ));
         }
 

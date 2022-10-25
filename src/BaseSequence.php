@@ -7,7 +7,6 @@ namespace Smpl\Collections;
 use Smpl\Collections\Contracts\Set;
 use Smpl\Collections\Exceptions\OutOfRangeException;
 use Smpl\Collections\Iterators\SequenceIterator;
-use Traversable;
 use function Smpl\Utils\is_sign_equal_to;
 
 /**

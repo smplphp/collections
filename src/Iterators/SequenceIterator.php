@@ -101,6 +101,7 @@ final class SequenceIterator implements Iterator, SeekableIterator, Countable
      */
     public function seek(int $offset): void
     {
+        /** @infection-ignore-all  */
         if ($offset < 0 || $offset >= $this->sequence->count()) {
             throw OutOfRangeException::index($offset, 0, $this->getMaxIndex());
         }
@@ -252,6 +253,6 @@ final class SequenceIterator implements Iterator, SeekableIterator, Countable
      */
     private function getMaxIndex(): int
     {
-        return max(0, $this->count() - 1);
+        return max(0, ($this->count() - 1));
     }
 }
