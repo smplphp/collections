@@ -1,0 +1,63 @@
+<?php
+declare(strict_types=1);
+
+namespace Smpl\Collections;
+
+/**
+ * Stack
+ *
+ * A collection designed to hold elements to be processed. It is a basic
+ * extension of {@see \Smpl\Collections\Contracts\Collection}.
+ *
+ * This is a LIFO (last-in-first-out) implementation of the
+ * {@see \Smpl\Collections\Contracts\Queue} contract.
+ *
+ * @template E of mixed
+ * @extends \Smpl\Collections\BaseCollection<E>
+ * @implements \Smpl\Collections\Contracts\Queue<E>
+ */
+final class Stack extends BaseCollection implements Contracts\Queue
+{
+    /**
+     * @template       NE of mixed
+     *
+     * @param iterable<NE|E>|null $elements
+     *
+     * @return \Smpl\Collections\Stack<NE>
+     *
+     * @psalm-suppress InvalidReturnType
+     * @psalm-suppress InvalidReturnStatement
+     * @psalm-suppress MismatchingDocblockReturnType
+     *
+     * @noinspection   PhpDocSignatureInspection
+     * @noinspection   PhpUnnecessaryStaticReferenceInspection
+     */
+    public function copy(iterable $elements = null): static
+    {
+        return new Stack($elements ?? $this->elements, $this->getComparator());
+    }
+
+    /**
+     * @return E|null
+     */
+    public function peek(): mixed
+    {
+        return $this->elements[$this->getMaxIndex()] ?? null;
+    }
+
+    /**
+     * @return E|null
+     */
+    public function poll(): mixed
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        $element = array_pop($this->elements);
+
+        $this->modifyCount(-1);
+
+        return $element;
+    }
+}
