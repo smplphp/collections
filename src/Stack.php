@@ -9,14 +9,13 @@ namespace Smpl\Collections;
  * A collection designed to hold elements to be processed. It is a basic
  * extension of {@see \Smpl\Collections\Contracts\Collection}.
  *
- * This is a LIFO (last-in-first-out) implementation of the
- * {@see \Smpl\Collections\Contracts\Queue} contract.
+ * This is a LIFO (last-in-first-out) implementation.
  *
  * @template E of mixed
  * @extends \Smpl\Collections\BaseCollection<E>
- * @implements \Smpl\Collections\Contracts\Queue<E>
+ * @implements \Smpl\Collections\Contracts\Stack<E>
  */
-final class Stack extends BaseCollection implements Contracts\Queue
+final class Stack extends BaseCollection implements Contracts\Stack
 {
     /**
      * @template       NE of mixed
@@ -40,7 +39,7 @@ final class Stack extends BaseCollection implements Contracts\Queue
     /**
      * @return E|null
      */
-    public function peek(): mixed
+    public function peekLast(): mixed
     {
         return $this->elements[$this->getMaxIndex()] ?? null;
     }
@@ -48,7 +47,7 @@ final class Stack extends BaseCollection implements Contracts\Queue
     /**
      * @return E|null
      */
-    public function poll(): mixed
+    public function pollLast(): mixed
     {
         if ($this->isEmpty()) {
             return null;

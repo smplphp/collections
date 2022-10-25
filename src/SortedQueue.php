@@ -45,7 +45,7 @@ final class SortedQueue extends BaseCollection implements Contracts\Queue, Contr
     /**
      * @return E|null
      */
-    public function peek(): mixed
+    public function peekFirst(): mixed
     {
         return $this->elements[0] ?? null;
     }
@@ -53,7 +53,7 @@ final class SortedQueue extends BaseCollection implements Contracts\Queue, Contr
     /**
      * @return E|null
      */
-    public function poll(): mixed
+    public function pollFirst(): mixed
     {
         if ($this->isEmpty()) {
             return null;

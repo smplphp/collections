@@ -90,7 +90,7 @@ class QueueTest extends TestCase
         self::assertFalse($collection->contains('1'));
         self::assertFalse($collection->containsAll([1]));
         self::assertEquals(0, $collection->countOf(1));
-        self::assertNull($collection->poll());
+        self::assertNull($collection->pollFirst());
     }
 
     public function queueContainsProvider(): array
@@ -600,8 +600,8 @@ class QueueTest extends TestCase
         self::assertCount(count($this->elements), $queue);
 
         foreach ($this->elements as $element) {
-            self::assertSame($element, $queue->peek());
-            self::assertSame($element, $queue->poll());
+            self::assertSame($element, $queue->peekFirst());
+            self::assertSame($element, $queue->pollFirst());
         }
 
         self::assertCount(0, $queue);

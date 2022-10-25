@@ -18,7 +18,6 @@ use function Smpl\Utils\get_sign;
 
 /**
  * @group mutable
- * @group queue
  * @group stack
  */
 class StackTest extends TestCase
@@ -91,7 +90,7 @@ class StackTest extends TestCase
         self::assertFalse($collection->contains('1'));
         self::assertFalse($collection->containsAll([1]));
         self::assertEquals(0, $collection->countOf(1));
-        self::assertNull($collection->poll());
+        self::assertNull($collection->pollLast());
     }
 
     public function queueContainsProvider(): array
@@ -602,8 +601,8 @@ class StackTest extends TestCase
         self::assertCount(count($this->elements), $queue);
 
         foreach ($elements as $element) {
-            self::assertSame($element, $queue->peek());
-            self::assertSame($element, $queue->poll());
+            self::assertSame($element, $queue->peekLast());
+            self::assertSame($element, $queue->pollLast());
         }
 
         self::assertCount(0, $queue);

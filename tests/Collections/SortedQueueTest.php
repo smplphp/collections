@@ -100,7 +100,7 @@ class SortedQueueTest extends TestCase
         self::assertNull($collection->lower(0));
         self::assertCount(0, $collection->subset(0, 0));
         self::assertCount(0, $collection->tailset(0));
-        self::assertNull($collection->poll());
+        self::assertNull($collection->pollFirst());
     }
 
     public function collectionContainsProvider(): array
@@ -808,8 +808,8 @@ class SortedQueueTest extends TestCase
         self::assertCount(count($elements), $queue);
 
         foreach ($elements as $element) {
-            self::assertSame($element, $queue->peek());
-            self::assertSame($element, $queue->poll());
+            self::assertSame($element, $queue->peekFirst());
+            self::assertSame($element, $queue->pollFirst());
         }
 
         self::assertCount(0, $queue);
