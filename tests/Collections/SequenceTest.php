@@ -7,6 +7,7 @@ use ArrayIterator;
 use PHPUnit\Framework\TestCase;
 use Smpl\Collections\Collection;
 use Smpl\Collections\Exceptions\OutOfRangeException;
+use Smpl\Collections\Iterators\SequenceIterator;
 use Smpl\Collections\Iterators\SimpleIterator;
 use Smpl\Collections\Sequence;
 use Smpl\Utils\Comparators\BaseComparator;
@@ -81,6 +82,16 @@ class SequenceTest extends TestCase
         $iterator = $this->sequence->getIterator();
 
         self::assertInstanceOf(SimpleIterator::class, $iterator);
+    }
+
+    /**
+     * @test
+     */
+    public function hasSequenceIterator(): void
+    {
+        $iterator = $this->sequence->getSequenceIterator();
+
+        self::assertInstanceOf(SequenceIterator::class, $iterator);
     }
 
     /**

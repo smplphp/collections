@@ -6,6 +6,8 @@ namespace Smpl\Collections;
 
 use Smpl\Collections\Contracts\Set;
 use Smpl\Collections\Exceptions\OutOfRangeException;
+use Smpl\Collections\Iterators\SequenceIterator;
+use Traversable;
 use function Smpl\Utils\is_sign_equal_to;
 
 /**
@@ -437,6 +439,19 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
         }
 
         return $this;
+    }
+
+    /**
+     * Get an iterator for this collection.
+     *
+     * This method returns an iterator specifically created for iterating
+     * sequences.
+     *
+     * @return \Smpl\Collections\Iterators\SequenceIterator<E>
+     */
+    public function getSequenceIterator(): SequenceIterator
+    {
+        return new SequenceIterator($this);
     }
 
     /**
