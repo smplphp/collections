@@ -10,5 +10,7 @@ parameters:
     - '#^Method Smpl\\Collections\\([A-Za-z]*)\:\:copy\(\) should return Smpl\\Collections\\([A-Za-z]*)\<NE\> but returns Smpl\\Collections\\([A-Za-z]*)\<mixed\>\.$#'
     - '#^Method Smpl\\Collections\\Sorted([A-Za-z]*)\:\:([A-Za-z]*)\(\) should return Smpl\\Collections\\Sorted([A-Za-z]*)\<E\> but returns Smpl\\Collections\\Sorted([A-Za-z]*)\<mixed\>\.$#'
     - '#^Method Smpl\\Collections\\Sorted([A-Za-z]*)\:\:getComparator\(\) should return Smpl\\Utils\\Contracts\\Comparator\<mixed\> but returns Smpl\\Utils\\Contracts\\Comparator\<mixed\>\|null\.$#'
+    - '#^PHPDoc type array\<int, Smpl\\Collections\\Support\\PrioritisedElement\<E\>\> of property Smpl\\Collections\\PriorityQueue\:\:\$elements is not covariant with PHPDoc type array\<int, E\> of overridden property Smpl\\Collections\\BaseCollection\<E\>\:\:\$elements\.$#'
+    - '#^Parameter \#3 \$comparator of static method Smpl\\Collections\\Helpers\\IterableHelper\:\:([A-Za-z]*)\(\) expects Smpl\\Utils\\Contracts\\Comparator\<E\|Smpl\\Collections\\Support\\PrioritisedElement\<E\>\>\|null, Smpl\\Collections\\Support\\PrioritisedElementComparator given\.$#'
     - message: '#Unsafe usage of new static\(\)#'
       path: src/Concerns/NewCollectionOfElements.php
