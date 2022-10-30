@@ -19,14 +19,14 @@ use function Smpl\Utils\is_sign_equal_to;
 /**
  * Priority Queue
  *
- * This is an extension of {@see \Smpl\Collections\Contracts\Queue} that allows
+ * This is an extension of {@see \Smpl\Collections\Contracts\Stack} that allows
  * you to add elements with a priority.
  *
  * @template E of mixed
  * @extends \Smpl\Collections\BaseCollection<E>
- * @implements \Smpl\Collections\Contracts\PriorityQueue<E>
+ * @implements \Smpl\Collections\Contracts\PriorityStack<E>
  */
-final class PriorityQueue extends BaseCollection implements Contracts\PriorityQueue
+final class PriorityStack extends BaseCollection implements Contracts\PriorityStack
 {
     /**
      * @var list<\Smpl\Collections\Support\PrioritisedElement<E>>
@@ -171,30 +171,26 @@ final class PriorityQueue extends BaseCollection implements Contracts\PriorityQu
     /**
      * @return E|null
      */
-    public function peekFirst(): mixed
+    public function peekLast(): mixed
     {
-        if ($this->isEmpty()) {
-            return null;
-        }
-
-        return $this->elements[0]->getElement();
+        return ($this->elements[$this->getMaxIndex()] ?? null)?->getElement();
     }
 
     /**
      * @return E|null
      */
-    public function pollFirst(): mixed
+    public function pollLast(): mixed
     {
         if ($this->isEmpty()) {
             return null;
         }
 
-        /** @infection-ignore-all */
-        $element = array_shift($this->elements)?->getElement();
+        /** @var PrioritisedElement<E> $element */
+        $element = array_pop($this->elements);
 
         $this->modifyCount(-1);
 
-        return $element;
+        return $element->getElement();
     }
 
     /**
@@ -269,7 +265,7 @@ final class PriorityQueue extends BaseCollection implements Contracts\PriorityQu
      * @param iterable<NE>|null $elements
      * @param int|null          $flags
      *
-     * @return \Smpl\Collections\PriorityQueue<NE|E>
+     * @return \Smpl\Collections\PriorityStack<NE|E>
      *
      * @psalm-suppress InvalidReturnType
      * @psalm-suppress InvalidReturnStatement
@@ -280,7 +276,7 @@ final class PriorityQueue extends BaseCollection implements Contracts\PriorityQu
      */
     public function copy(iterable $elements = null, ?int $flags = null): static
     {
-        return new PriorityQueue($elements ?? $this->toArray(), $this->getComparator(), $flags ?? $this->flags);
+        return new PriorityStack($elements ?? $this->toArray(), $this->getComparator(), $flags ?? $this->flags);
     }
 
     /**
@@ -375,15 +371,15 @@ final class PriorityQueue extends BaseCollection implements Contracts\PriorityQu
         }
 
         if (($flags & self::ASC_ORDER) === self::ASC_ORDER && ($flags & self::DESC_ORDER) === self::DESC_ORDER) {
-            throw InvalidArgumentException::priorityQueueFlagsOrder();
+            throw InvalidArgumentException::priorityStackFlagsOrder();
         }
 
         if (($flags & self::NO_PRIORITY_FIRST) === self::NO_PRIORITY_FIRST && ($flags & self::NO_PRIORITY_LAST) === self::NO_PRIORITY_LAST) {
-            throw InvalidArgumentException::priorityQueueFlagsPlacement();
+            throw InvalidArgumentException::priorityStackFlagsPlacement();
         }
 
         if (($flags & self::NULL_VALUE_FIRST) === self::NULL_VALUE_FIRST && ($flags & self::NULL_VALUE_LAST) === self::NULL_VALUE_LAST) {
-            throw InvalidArgumentException::priorityQueueFlagsNull();
+            throw InvalidArgumentException::priorityStackFlagsNull();
         }
 
         return $flags;
