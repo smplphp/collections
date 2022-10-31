@@ -7,10 +7,6 @@ namespace Smpl\Collections;
 
 use Smpl\Collections\Concerns\PrioritisesElements;
 use Smpl\Collections\Support\PrioritisedElement;
-use Smpl\Utils\Comparators\IdenticalityComparator;
-use Smpl\Utils\Contracts\Comparator;
-use Smpl\Utils\Contracts\Predicate;
-use Smpl\Utils\Helpers\ComparisonHelper;
 
 /**
  * Priority Stack
@@ -21,7 +17,7 @@ use Smpl\Utils\Helpers\ComparisonHelper;
  * This isn't a LIFE (last-in-first-out) implementation, instead elements
  * added to the stack are ordered using their priority.
  *
- * @template E of mixed
+ * @template       E of mixed
  * @extends \Smpl\Collections\BaseCollection<E>
  * @implements \Smpl\Collections\Contracts\PriorityStack<E>
  *

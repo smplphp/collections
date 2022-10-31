@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 namespace Smpl\Collections;
 
-use Iterator;
-use Smpl\Collections\Iterators\SimpleIterator;
-
 /**
  * Deque
  *

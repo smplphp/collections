@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Smpl\Collections\Support;
 
 use Smpl\Collections\Contracts\PrioritisedCollection;
-use Smpl\Collections\Contracts\PriorityQueue;
 use Smpl\Utils\Comparators\BaseComparator;
 use Smpl\Utils\Helpers\ComparisonHelper;
 use function Smpl\Utils\get_sign;

@@ -36,7 +36,7 @@ interface PriorityDeque extends PriorityQueue, PriorityStack, Deque
      * Because elements are ordered based on their priority, this method is no
      * different to {@see \Smpl\Collections\Contracts\PriorityDeque::add()}.
      *
-     * @param E $element
+     * @param E              $element
      * @param int|false|null $priority
      *
      * @return bool
@@ -66,7 +66,7 @@ interface PriorityDeque extends PriorityQueue, PriorityStack, Deque
      * Because elements are ordered based on their priority, this method is no
      * different to {@see \Smpl\Collections\Contracts\PriorityDeque::add()}.
      *
-     * @param E $element
+     * @param E              $element
      * @param int|false|null $priority
      *
      * @return bool

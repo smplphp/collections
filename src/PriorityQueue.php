@@ -6,18 +6,6 @@ declare(strict_types=1);
 namespace Smpl\Collections;
 
 use Smpl\Collections\Concerns\PrioritisesElements;
-use Smpl\Collections\Contracts\PrioritisedCollection;
-use Smpl\Collections\Exceptions\InvalidArgumentException;
-use Smpl\Collections\Helpers\IterableHelper;
-use Smpl\Collections\Support\PrioritisedElement;
-use Smpl\Collections\Support\PrioritisedElementComparator;
-use Smpl\Collections\Support\PriorityComparator;
-use Smpl\Utils\Comparators\IdenticalityComparator;
-use Smpl\Utils\Contracts\Comparator;
-use Smpl\Utils\Contracts\Predicate;
-use Smpl\Utils\Helpers\ComparisonHelper;
-use Smpl\Utils\Support\Comparators;
-use function Smpl\Utils\is_sign_equal_to;
 
 /**
  * Priority Queue
@@ -28,7 +16,7 @@ use function Smpl\Utils\is_sign_equal_to;
  * This isn't a FIFO (first-in-first-out) implementation, instead elements
  * added to the queue are ordered using their priority.
  *
- * @template E of mixed
+ * @template       E of mixed
  * @extends \Smpl\Collections\BaseCollection<E>
  * @implements \Smpl\Collections\Contracts\PriorityQueue<E>
  *
