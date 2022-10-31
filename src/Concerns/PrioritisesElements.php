@@ -3,13 +3,17 @@ declare(strict_types=1);
 
 namespace Smpl\Collections\Concerns;
 
+use Smpl\Collections\Collection;
 use Smpl\Collections\Contracts\PrioritisedCollection;
 use Smpl\Collections\Exceptions\InvalidArgumentException;
 use Smpl\Collections\Helpers\IterableHelper;
 use Smpl\Collections\Support\PrioritisedElement;
 use Smpl\Collections\Support\PrioritisedElementComparator;
 use Smpl\Collections\Support\PriorityComparator;
+use Smpl\Utils\Comparators\IdenticalityComparator;
 use Smpl\Utils\Contracts\Comparator;
+use Smpl\Utils\Contracts\Predicate;
+use Smpl\Utils\Helpers\ComparisonHelper;
 use Smpl\Utils\Support\Comparators;
 use function Smpl\Utils\is_sign_equal_to;
 
@@ -34,6 +38,24 @@ trait PrioritisesElements
      * @var int
      */
     protected int $flags;
+
+    /**
+     * @param iterable<E>|iterable<\Smpl\Collections\Support\PrioritisedElement<E>>|null $elements
+     * @param \Smpl\Utils\Contracts\Comparator|null                                      $comparator
+     * @param int                                                                        $flags
+     *
+     * @noinspection PhpDocSignatureInspection
+     */
+    public function __construct(iterable $elements = null, ?Comparator $comparator = null, int $flags = null)
+    {
+        $this->flags = $this->normaliseFlags($flags);
+
+        if ($elements !== null) {
+            $this->addAll($elements);
+        }
+
+        $this->setComparator($comparator);
+    }
 
     /**
      * @param E              $element
@@ -174,6 +196,64 @@ trait PrioritisesElements
     }
 
     /**
+     * @param E $element
+     *
+     * @return bool
+     */
+    public function remove(mixed $element): bool
+    {
+        $modified   = false;
+        $comparator = $this->getComparator() ?? new IdenticalityComparator();
+
+        foreach ($this->elements as $index => $existingElement) {
+            if ($comparator->compare($existingElement->getElement(), $element) === ComparisonHelper::EQUAL_TO) {
+                $this->removeElementByIndex($index);
+                $modified = true;
+            }
+        }
+
+        return $modified;
+    }
+
+    /**
+     * @param \Smpl\Utils\Contracts\Predicate<E> $filter
+     *
+     * @return bool
+     */
+    public function removeIf(Predicate $filter): bool
+    {
+        $modified = false;
+
+        foreach ($this->elements as $index => $element) {
+            if ($filter->test($element->getElement())) {
+                $this->removeElementByIndex($index);
+                $modified = true;
+            }
+        }
+
+        return $modified;
+    }
+
+    /**
+     * @param iterable<E> $elements
+     *
+     * @return bool
+     */
+    public function retainAll(iterable $elements): bool
+    {
+        $modified   = false;
+        $collection = new Collection($elements, $this->getComparator());
+
+        foreach ($this->elements as $element) {
+            if (! $collection->contains($element->getElement()) && $this->remove($element->getElement())) {
+                $modified = true;
+            }
+        }
+
+        return $modified;
+    }
+
+    /**
      * @return \Smpl\Collections\Support\PrioritisedElementComparator
      */
     private function getPrioritisedElementComparator(): PrioritisedElementComparator
@@ -262,14 +342,14 @@ trait PrioritisesElements
     }
 
     /**
-     * @param E        $element
-     * @param int|null $priority
+     * @param E|\Smpl\Collections\Support\PrioritisedElement<E> $element
+     * @param int|null                                          $priority
      *
      * @return \Smpl\Collections\Support\PrioritisedElement
      */
     private function wrapElement(mixed $element, ?int $priority): PrioritisedElement
     {
-        return new PrioritisedElement($element, $priority);
+        return $element instanceof PrioritisedElement ? $element : new PrioritisedElement($element, $priority);
     }
 
     /**

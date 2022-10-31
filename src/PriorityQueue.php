@@ -25,6 +25,9 @@ use function Smpl\Utils\is_sign_equal_to;
  * This is an extension of {@see \Smpl\Collections\Contracts\Queue} that allows
  * you to add elements with a priority.
  *
+ * This isn't a FIFO (first-in-first-out) implementation, instead elements
+ * added to the queue are ordered using their priority.
+ *
  * @template E of mixed
  * @extends \Smpl\Collections\BaseCollection<E>
  * @implements \Smpl\Collections\Contracts\PriorityQueue<E>
@@ -43,26 +46,6 @@ final class PriorityQueue extends BaseCollection implements Contracts\PriorityQu
      * @psalm-suppress NonInvariantDocblockPropertyType
      */
     protected array $elements;
-
-    /**
-     * @param iterable<E>|null                      $elements
-     * @param \Smpl\Utils\Contracts\Comparator|null $comparator
-     * @param int                                   $flags
-     *
-     * @noinspection PhpDocSignatureInspection
-     * @noinspection MagicMethodsValidityInspection
-     * @noinspection PhpMissingParentConstructorInspection
-     */
-    public function __construct(iterable $elements = null, ?Comparator $comparator = null, int $flags = null)
-    {
-        $this->flags = $this->normaliseFlags($flags);
-
-        if ($elements !== null) {
-            $this->addAll($elements);
-        }
-
-        $this->setComparator($comparator);
-    }
 
     /**
      * @return E|null
@@ -91,64 +74,6 @@ final class PriorityQueue extends BaseCollection implements Contracts\PriorityQu
         $this->modifyCount(-1);
 
         return $element;
-    }
-
-    /**
-     * @param E $element
-     *
-     * @return bool
-     */
-    public function remove(mixed $element): bool
-    {
-        $modified   = false;
-        $comparator = $this->getComparator() ?? new IdenticalityComparator();
-
-        foreach ($this->elements as $index => $existingElement) {
-            if ($comparator->compare($existingElement->getElement(), $element) === ComparisonHelper::EQUAL_TO) {
-                $this->removeElementByIndex($index);
-                $modified = true;
-            }
-        }
-
-        return $modified;
-    }
-
-    /**
-     * @param \Smpl\Utils\Contracts\Predicate<E> $filter
-     *
-     * @return bool
-     */
-    public function removeIf(Predicate $filter): bool
-    {
-        $modified = false;
-
-        foreach ($this->elements as $index => $element) {
-            if ($filter->test($element->getElement())) {
-                $this->removeElementByIndex($index);
-                $modified = true;
-            }
-        }
-
-        return $modified;
-    }
-
-    /**
-     * @param iterable<E> $elements
-     *
-     * @return bool
-     */
-    public function retainAll(iterable $elements): bool
-    {
-        $modified   = false;
-        $collection = new Collection($elements, $this->getComparator());
-
-        foreach ($this->elements as $element) {
-            if (! $collection->contains($element->getElement()) && $this->remove($element->getElement())) {
-                $modified = true;
-            }
-        }
-
-        return $modified;
     }
 
     /**
