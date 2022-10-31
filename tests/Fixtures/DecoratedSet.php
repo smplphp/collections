@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Smpl\Collections\Tests\Fixtures;
 
-use Smpl\Collections\Concerns\DecoratesSet;
 use Smpl\Collections\Contracts\Set as SetContract;
+use Smpl\Collections\Decorators\DecoratesSet;
 use Smpl\Collections\Set;
 use Smpl\Utils\Contracts\Comparator;
 

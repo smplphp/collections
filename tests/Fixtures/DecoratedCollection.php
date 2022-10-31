@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Smpl\Collections\Tests\Fixtures;
 
 use Smpl\Collections\Collection;
-use Smpl\Collections\Concerns\DecoratesCollection;
 use Smpl\Collections\Contracts\Collection as CollectionContract;
+use Smpl\Collections\Decorators\DecoratesCollection;
 use Smpl\Utils\Contracts\Comparator;
 
 class DecoratedCollection implements CollectionContract

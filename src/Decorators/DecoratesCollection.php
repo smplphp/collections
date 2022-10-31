@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Smpl\Collections\Concerns;
+namespace Smpl\Collections\Decorators;
 
 use Smpl\Collections\Contracts\Collection;
 use Smpl\Utils\Contracts\Comparator;

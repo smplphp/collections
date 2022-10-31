@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Smpl\Collections\Tests\Fixtures;
 
-use Smpl\Collections\Concerns\DecoratesSequence;
 use Smpl\Collections\Contracts\Sequence as SequenceContract;
+use Smpl\Collections\Decorators\DecoratesSequence;
 use Smpl\Collections\Sequence;
 use Smpl\Utils\Contracts\Comparator;
 
