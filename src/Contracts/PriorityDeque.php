@@ -3,10 +3,15 @@
 namespace Smpl\Collections\Contracts;
 
 /**
+ * Priority Deque Contract
+ *
+ * This is an extension of {@see \Smpl\Collections\Contracts\Deque} that allows
+ * you to add elements with a priority.
+ *
  * @template E of mixed
- * @extends \Smpl\Collections\Contracts\Deque<E>
  * @extends \Smpl\Collections\Contracts\PriorityQueue<E>
  * @extends \Smpl\Collections\Contracts\PriorityStack<E>
+ * @extends \Smpl\Collections\Contracts\Deque<E>
  */
 interface PriorityDeque extends PriorityQueue, PriorityStack, Deque
 {
@@ -27,6 +32,9 @@ interface PriorityDeque extends PriorityQueue, PriorityStack, Deque
      * If $element is already present in the collection, and $priority isn't
      * false, the priority of the existing element should be updated. In all
      * other cases, false should be treated the same as null.
+     *
+     * Because elements are ordered based on their priority, this method is no
+     * different to {@see \Smpl\Collections\Contracts\PriorityDeque::add()}.
      *
      * @param E $element
      * @param int|false|null $priority
@@ -55,6 +63,9 @@ interface PriorityDeque extends PriorityQueue, PriorityStack, Deque
      * false, the priority of the existing element should be updated. In all
      * other cases, false should be treated the same as null.
      *
+     * Because elements are ordered based on their priority, this method is no
+     * different to {@see \Smpl\Collections\Contracts\PriorityDeque::add()}.
+     *
      * @param E $element
      * @param int|false|null $priority
      *
@@ -75,7 +86,7 @@ interface PriorityDeque extends PriorityQueue, PriorityStack, Deque
      *
      * @return \Smpl\Collections\Contracts\PriorityQueue<E>
      */
-    public function asQueue(): PriorityQueue;
+    public function asPriorityQueue(): PriorityQueue;
 
     /**
      * Get this deque as a priority stack.
@@ -88,5 +99,5 @@ interface PriorityDeque extends PriorityQueue, PriorityStack, Deque
      *
      * @return \Smpl\Collections\Contracts\PriorityStack<E>
      */
-    public function asStack(): PriorityStack;
+    public function asPriorityStack(): PriorityStack;
 }
