@@ -8,7 +8,7 @@ namespace Smpl\Collections\Contracts;
  * @extends \Smpl\Collections\Contracts\PriorityQueue<E>
  * @extends \Smpl\Collections\Contracts\PriorityStack<E>
  */
-interface PriorityDeque extends Deque, PriorityQueue, PriorityStack
+interface PriorityDeque extends PriorityQueue, PriorityStack, Deque
 {
     /**
      * Ensure that the first element in this collection contains the provided element.
