@@ -25,10 +25,9 @@ use Smpl\Collections\Iterators\SimpleIterator;
  * or "first" for more controlled handling.
  *
  * @template E of mixed
- * @extends \Smpl\Collections\BaseCollection<E>
- * @implements \Smpl\Collections\Contracts\Deque<E>
+ * @extends \Smpl\Collections\BaseDeque<E>
  */
-final class Deque extends BaseCollection implements Contracts\Deque
+final class Deque extends BaseDeque
 {
     /**
      * @template       NE of mixed
@@ -47,123 +46,5 @@ final class Deque extends BaseCollection implements Contracts\Deque
     public function copy(iterable $elements = null): static
     {
         return new Deque($elements ?? $this->elements, $this->getComparator());
-    }
-
-    /**
-     * @return E|null
-     */
-    public function peekFirst(): mixed
-    {
-        return $this->elements[0] ?? null;
-    }
-
-    /**
-     * @return E|null
-     */
-    public function pollFirst(): mixed
-    {
-        if ($this->isEmpty()) {
-            return null;
-        }
-
-        $element = array_shift($this->elements);
-
-        $this->modifyCount(-1);
-
-        return $element;
-    }
-
-    /**
-     * @return E|null
-     */
-    public function peekLast(): mixed
-    {
-        return $this->elements[$this->getMaxIndex()] ?? null;
-    }
-
-    /**
-     * @return E|null
-     */
-    public function pollLast(): mixed
-    {
-        if ($this->isEmpty()) {
-            return null;
-        }
-
-        $element = array_pop($this->elements);
-
-        $this->modifyCount(-1);
-
-        return $element;
-    }
-
-    /**
-     * @param E $element
-     *
-     * @return bool
-     */
-    public function addFirst(mixed $element): bool
-    {
-        array_unshift($this->elements, $element);
-
-        return true;
-    }
-
-    /**
-     * @param E $element
-     *
-     * @return bool
-     */
-    public function addLast(mixed $element): bool
-    {
-        return $this->add($element);
-    }
-
-    /**
-     * @return \Smpl\Collections\Contracts\Queue
-     */
-    public function asQueue(): Contracts\Queue
-    {
-        return new Queue($this->elements, $this->getComparator());
-    }
-
-    /**
-     * @return \Smpl\Collections\Contracts\Stack
-     */
-    public function asStack(): Contracts\Stack
-    {
-        return new Stack($this->elements, $this->getComparator());
-    }
-
-    /**
-     * @return E|null
-     */
-    public function peek(): mixed
-    {
-        return $this->peekFirst();
-    }
-
-    /**
-     * @return E|null
-     */
-    public function poll(): mixed
-    {
-        return $this->pollFirst();
-    }
-
-    /**
-     * @return \Iterator<int, E>
-     */
-    public function ascendingIterator(): Iterator
-    {
-        return new SimpleIterator($this->elements);
-    }
-
-    /**
-     * @return \Iterator<int, E>
-     */
-    public function descendingIterator(): Iterator
-    {
-        return new SimpleIterator(array_reverse($this->elements));
     }
 }
