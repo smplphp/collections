@@ -755,15 +755,15 @@ class PriorityStackTest extends TestCase
         return [
             'Ascending & Descending order'             => [
                 PriorityStack::ASC_ORDER | PriorityStack::DESC_ORDER,
-                'Invalid PriorityStack flags, cannot be ordered both descending as ascending',
+                'Invalid PrioritisedCollection flags, cannot be ordered both descending as ascending',
             ],
             'No priority first & No priority last'     => [
                 PriorityStack::NO_PRIORITY_FIRST | PriorityStack::NO_PRIORITY_LAST,
-                'Invalid PriorityStack flags, cannot have no priority items at the start and end',
+                'Invalid PrioritisedCollection flags, cannot have no priority items at the start and end',
             ],
             'Null elements first & Null elements last' => [
                 PriorityStack::NULL_VALUE_FIRST | PriorityStack::NULL_VALUE_LAST,
-                'Invalid PriorityStack flags, cannot have null items at the start and end',
+                'Invalid PrioritisedCollection flags, cannot have null items at the start and end',
             ],
         ];
     }

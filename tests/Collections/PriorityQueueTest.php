@@ -753,15 +753,15 @@ class PriorityQueueTest extends TestCase
         return [
             'Ascending & Descending order'             => [
                 PriorityQueue::ASC_ORDER | PriorityQueue::DESC_ORDER,
-                'Invalid PriorityQueue flags, cannot be ordered both descending as ascending',
+                'Invalid PrioritisedCollection flags, cannot be ordered both descending as ascending',
             ],
             'No priority first & No priority last'     => [
                 PriorityQueue::NO_PRIORITY_FIRST | PriorityQueue::NO_PRIORITY_LAST,
-                'Invalid PriorityQueue flags, cannot have no priority items at the start and end',
+                'Invalid PrioritisedCollection flags, cannot have no priority items at the start and end',
             ],
             'Null elements first & Null elements last' => [
                 PriorityQueue::NULL_VALUE_FIRST | PriorityQueue::NULL_VALUE_LAST,
-                'Invalid PriorityQueue flags, cannot have null items at the start and end',
+                'Invalid PrioritisedCollection flags, cannot have null items at the start and end',
             ],
         ];
     }

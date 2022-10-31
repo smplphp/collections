@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Smpl\Collections;
 
+use Smpl\Collections\Contracts\PrioritisedCollection;
 use Smpl\Collections\Exceptions\InvalidArgumentException;
 use Smpl\Collections\Helpers\IterableHelper;
 use Smpl\Collections\Support\PrioritisedElement;
@@ -80,7 +81,7 @@ final class PriorityQueue extends BaseCollection implements Contracts\PriorityQu
     public function add(mixed $element, int|false|null $priority = null): bool
     {
         /** @infection-ignore-all */
-        if (($this->flags & self::NO_NULL) && $element === null) {
+        if (($this->flags & PrioritisedCollection::NO_NULL) && $element === null) {
             throw InvalidArgumentException::notNullable();
         }
 
@@ -110,7 +111,7 @@ final class PriorityQueue extends BaseCollection implements Contracts\PriorityQu
 
         foreach ($elements as $element) {
             /** @infection-ignore-all */
-            if (($this->flags & self::NO_NULL) && $element === null) {
+            if (($this->flags & PrioritisedCollection::NO_NULL) && $element === null) {
                 throw InvalidArgumentException::notNullable();
             }
 
@@ -365,25 +366,37 @@ final class PriorityQueue extends BaseCollection implements Contracts\PriorityQu
         }
 
         // Default to ascending order
-        if (($flags & self::ASC_ORDER) === 0 && ($flags & self::DESC_ORDER) === 0) {
-            $flags |= self::ASC_ORDER;
+        if (($flags & PrioritisedCollection::ASC_ORDER) === 0 && ($flags & PrioritisedCollection::DESC_ORDER) === 0) {
+            $flags |= PrioritisedCollection::ASC_ORDER;
         }
 
         // Default to elements without priority being at the end
-        if (($flags & self::NO_PRIORITY_FIRST) === 0 && ($flags & self::NO_PRIORITY_LAST) === 0) {
-            $flags |= self::NO_PRIORITY_LAST;
+        if (($flags & PrioritisedCollection::NO_PRIORITY_FIRST) === 0 && ($flags & PrioritisedCollection::NO_PRIORITY_LAST) === 0) {
+            $flags |= PrioritisedCollection::NO_PRIORITY_LAST;
         }
 
-        if (($flags & self::ASC_ORDER) === self::ASC_ORDER && ($flags & self::DESC_ORDER) === self::DESC_ORDER) {
-            throw InvalidArgumentException::priorityQueueFlagsOrder();
+        // If both ascending and descending order have been provided, error
+        if (
+            ($flags & PrioritisedCollection::ASC_ORDER) === PrioritisedCollection::ASC_ORDER
+            && ($flags & PrioritisedCollection::DESC_ORDER) === PrioritisedCollection::DESC_ORDER
+        ) {
+            throw InvalidArgumentException::priorityFlagsOrder();
         }
 
-        if (($flags & self::NO_PRIORITY_FIRST) === self::NO_PRIORITY_FIRST && ($flags & self::NO_PRIORITY_LAST) === self::NO_PRIORITY_LAST) {
-            throw InvalidArgumentException::priorityQueueFlagsPlacement();
+        // If both no priority first and last have been provided, error
+        if (
+            ($flags & PrioritisedCollection::NO_PRIORITY_FIRST) === PrioritisedCollection::NO_PRIORITY_FIRST
+            && ($flags & PrioritisedCollection::NO_PRIORITY_LAST) === PrioritisedCollection::NO_PRIORITY_LAST
+        ) {
+            throw InvalidArgumentException::priorityFlagsPlacement();
         }
 
-        if (($flags & self::NULL_VALUE_FIRST) === self::NULL_VALUE_FIRST && ($flags & self::NULL_VALUE_LAST) === self::NULL_VALUE_LAST) {
-            throw InvalidArgumentException::priorityQueueFlagsNull();
+        // If both null value first and last have been provided, error
+        if (
+            ($flags & PrioritisedCollection::NULL_VALUE_FIRST) === PrioritisedCollection::NULL_VALUE_FIRST
+            && ($flags & PrioritisedCollection::NULL_VALUE_LAST) === PrioritisedCollection::NULL_VALUE_LAST
+        ) {
+            throw InvalidArgumentException::priorityFlagsNull();
         }
 
         return $flags;
