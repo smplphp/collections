@@ -1,9 +1,11 @@
 <?php
+/** @noinspection TraitsPropertiesConflictsInspection */
 /** @noinspection PhpUnnecessaryStaticReferenceInspection */
 declare(strict_types=1);
 
 namespace Smpl\Collections;
 
+use Smpl\Collections\Concerns\PrioritisesElements;
 use Smpl\Collections\Contracts\PrioritisedCollection;
 use Smpl\Collections\Exceptions\InvalidArgumentException;
 use Smpl\Collections\Helpers\IterableHelper;
@@ -26,29 +28,21 @@ use function Smpl\Utils\is_sign_equal_to;
  * @template E of mixed
  * @extends \Smpl\Collections\BaseCollection<E>
  * @implements \Smpl\Collections\Contracts\PriorityQueue<E>
+ *
+ * @psalm-suppress MixedArgument
+ * @psalm-suppress MixedAssignment
+ * @psalm-suppress MixedReturnStatement
+ * @psalm-suppress MixedInferredReturnType
  */
 final class PriorityQueue extends BaseCollection implements Contracts\PriorityQueue
 {
+    use PrioritisesElements;
+
     /**
      * @var list<\Smpl\Collections\Support\PrioritisedElement<E>>
      * @psalm-suppress NonInvariantDocblockPropertyType
      */
     protected array $elements;
-
-    /**
-     * @var \Smpl\Collections\Support\PrioritisedElementComparator|null
-     */
-    protected ?PrioritisedElementComparator $prioritisedElementComparator;
-
-    /**
-     * @var \Smpl\Collections\Support\PriorityComparator
-     */
-    protected PriorityComparator $priorityComparator;
-
-    /**
-     * @var int
-     */
-    protected int $flags;
 
     /**
      * @param iterable<E>|null                      $elements
@@ -68,105 +62,6 @@ final class PriorityQueue extends BaseCollection implements Contracts\PriorityQu
         }
 
         $this->setComparator($comparator);
-    }
-
-    /**
-     * @param E              $element
-     * @param int|false|null $priority
-     *
-     * @return bool
-     *
-     * @throws \Smpl\Collections\Exceptions\InvalidArgumentException
-     */
-    public function add(mixed $element, int|false|null $priority = null): bool
-    {
-        /** @infection-ignore-all */
-        if (($this->flags & PrioritisedCollection::NO_NULL) && $element === null) {
-            throw InvalidArgumentException::notNullable();
-        }
-
-        if ($priority === false) {
-            $priority = null;
-        }
-
-        $this->elements[] = $this->wrapElement($element, $priority);
-        $this->modifyCount(1);
-
-        $this->prioritiseElements();
-
-        return true;
-    }
-
-    /**
-     * @param iterable<E>    $elements
-     * @param int|false|null $priority
-     *
-     * @return bool
-     */
-    public function addAll(iterable $elements, int|false|null $priority = null): bool
-    {
-        if ($priority === false) {
-            $priority = null;
-        }
-
-        foreach ($elements as $element) {
-            /** @infection-ignore-all */
-            if (($this->flags & PrioritisedCollection::NO_NULL) && $element === null) {
-                throw InvalidArgumentException::notNullable();
-            }
-
-            $this->elements[] = $this->wrapElement($element, $priority);
-            $this->modifyCount(1);
-        }
-
-        $this->prioritiseElements();
-
-        return true;
-    }
-
-    /**
-     * @param E $element
-     *
-     * @return bool
-     */
-    public function contains(mixed $element): bool
-    {
-        if ($this->isEmpty()) {
-            return false;
-        }
-
-        /** @psalm-suppress InvalidArgument */
-        return IterableHelper::contains($this->elements, $element, $this->getPrioritisedElementComparator());
-    }
-
-    /**
-     * @param iterable<E> $elements
-     *
-     * @return bool
-     */
-    public function containsAll(iterable $elements): bool
-    {
-        if ($this->isEmpty()) {
-            return false;
-        }
-
-        /** @psalm-suppress InvalidArgument */
-        return IterableHelper::containsAll($this->elements, $elements, $this->getPrioritisedElementComparator());
-    }
-
-    /**
-     * @param E $element
-     *
-     * @return int<0,max>
-     */
-    public function countOf(mixed $element): int
-    {
-        if ($this->isEmpty()) {
-            return 0;
-        }
-
-        /** @psalm-suppress InvalidArgument */
-        return IterableHelper::countOf($this->elements, $element, $this->getPrioritisedElementComparator());
     }
 
     /**
@@ -257,14 +152,6 @@ final class PriorityQueue extends BaseCollection implements Contracts\PriorityQu
     }
 
     /**
-     * @return list<E>
-     */
-    public function toArray(): array
-    {
-        return array_map(static fn(PrioritisedElement $element) => $element->getElement(), $this->elements);
-    }
-
-    /**
      * @template       NE of mixed
      *
      * @param iterable<NE>|null $elements
@@ -282,151 +169,5 @@ final class PriorityQueue extends BaseCollection implements Contracts\PriorityQu
     public function copy(iterable $elements = null, ?int $flags = null): static
     {
         return new PriorityQueue($elements ?? $this->toArray(), $this->getComparator(), $flags ?? $this->flags);
-    }
-
-    /**
-     * @param \Smpl\Utils\Contracts\Comparator|null $comparator
-     *
-     * @return static
-     *
-     * @psalm-suppress MethodSignatureMismatch
-     */
-    public function setComparator(?Comparator $comparator = null): static
-    {
-        if ($comparator !== null) {
-            /** @infection-ignore-all */
-            $this->getPrioritisedElementComparator()->setComparator($comparator);
-        } else {
-            $this->prioritisedElementComparator = null;
-        }
-
-        parent::setComparator($comparator);
-
-        return $this;
-    }
-
-    /**
-     * @param E $element
-     *
-     * @return int|null|false
-     */
-    public function priority(mixed $element): int|null|false
-    {
-        $comparator = $this->getPrioritisedElementComparator();
-
-        foreach ($this->elements as $existingElement) {
-            if (is_sign_equal_to($comparator->compare($existingElement, $element))) {
-                return $existingElement->getPriority();
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @return \Smpl\Collections\Support\PrioritisedElementComparator
-     */
-    private function getPrioritisedElementComparator(): PrioritisedElementComparator
-    {
-        if (! isset($this->prioritisedElementComparator)) {
-            /**
-             * @psalm-suppress PossiblyNullArgument
-             * @psalm-suppress InvalidArgument
-             * @infection-ignore-all
-             */
-            $this->prioritisedElementComparator = new PrioritisedElementComparator(
-                $this->getComparator() ?? Comparators::identicality()
-            );
-        }
-
-        return $this->prioritisedElementComparator;
-    }
-
-    /**
-     * @return \Smpl\Collections\Support\PriorityComparator
-     */
-    private function getPriorityComparator(): PriorityComparator
-    {
-        if (! isset($this->priorityComparator)) {
-            $this->priorityComparator = new PriorityComparator($this->flags);
-        }
-
-        return $this->priorityComparator;
-    }
-
-    /**
-     * @param int|null $flags
-     *
-     * @return int
-     */
-    private function normaliseFlags(?int $flags): int
-    {
-        if ($flags === null) {
-            $flags = 0;
-        }
-
-        // Default to ascending order
-        if (($flags & PrioritisedCollection::ASC_ORDER) === 0 && ($flags & PrioritisedCollection::DESC_ORDER) === 0) {
-            $flags |= PrioritisedCollection::ASC_ORDER;
-        }
-
-        // Default to elements without priority being at the end
-        if (($flags & PrioritisedCollection::NO_PRIORITY_FIRST) === 0 && ($flags & PrioritisedCollection::NO_PRIORITY_LAST) === 0) {
-            $flags |= PrioritisedCollection::NO_PRIORITY_LAST;
-        }
-
-        // If both ascending and descending order have been provided, error
-        if (
-            ($flags & PrioritisedCollection::ASC_ORDER) === PrioritisedCollection::ASC_ORDER
-            && ($flags & PrioritisedCollection::DESC_ORDER) === PrioritisedCollection::DESC_ORDER
-        ) {
-            throw InvalidArgumentException::priorityFlagsOrder();
-        }
-
-        // If both no priority first and last have been provided, error
-        if (
-            ($flags & PrioritisedCollection::NO_PRIORITY_FIRST) === PrioritisedCollection::NO_PRIORITY_FIRST
-            && ($flags & PrioritisedCollection::NO_PRIORITY_LAST) === PrioritisedCollection::NO_PRIORITY_LAST
-        ) {
-            throw InvalidArgumentException::priorityFlagsPlacement();
-        }
-
-        // If both null value first and last have been provided, error
-        if (
-            ($flags & PrioritisedCollection::NULL_VALUE_FIRST) === PrioritisedCollection::NULL_VALUE_FIRST
-            && ($flags & PrioritisedCollection::NULL_VALUE_LAST) === PrioritisedCollection::NULL_VALUE_LAST
-        ) {
-            throw InvalidArgumentException::priorityFlagsNull();
-        }
-
-        return $flags;
-    }
-
-    /**
-     * @return void
-     */
-    private function prioritiseElements(): void
-    {
-        /** @psalm-suppress InvalidArgument */
-        usort($this->elements, $this->getPriorityComparator());
-    }
-
-    /**
-     * @param E        $element
-     * @param int|null $priority
-     *
-     * @return \Smpl\Collections\Support\PrioritisedElement
-     */
-    private function wrapElement(mixed $element, ?int $priority): PrioritisedElement
-    {
-        return new PrioritisedElement($element, $priority);
-    }
-
-    /**
-     * @return int
-     */
-    public function flags(): int
-    {
-        return $this->flags;
     }
 }
