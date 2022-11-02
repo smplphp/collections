@@ -6,7 +6,7 @@ namespace Smpl\Collections;
 use Smpl\Collections\Concerns\SortsCollection;
 
 /**
- * SortedQueue
+ * Sorted Queue
  *
  * A collection designed to hold elements to be processed. It is a basic
  * extension of {@see \Smpl\Collections\Contracts\Collection}.

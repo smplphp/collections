@@ -441,11 +441,7 @@ class SortedQueueTest extends TestCase
      */
     public function canRemoveElements(int|string $value, bool $result, bool $contains, int $count, bool $preContains, int $preCount, array $add = [], ?Comparator $comparator = null): void
     {
-        $collection = $this->queue->copy();
-
-        if ($comparator !== null) {
-            $collection->setComparator($comparator);
-        }
+        $collection = $this->queue->copy()->setComparator($comparator);
 
         if (! empty($add)) {
             $collection->addAll($add);
