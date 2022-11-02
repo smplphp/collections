@@ -7,6 +7,27 @@ use InvalidArgumentException as BaseInvalidArgumentException;
 
 final class InvalidArgumentException extends BaseInvalidArgumentException
 {
+    public static function invalidEnum(string $enumClass): InvalidArgumentException
+    {
+        return new InvalidArgumentException(sprintf(
+            'Cannot add elements not of type \'%s\'',
+            $enumClass
+        ));
+    }
+
+    public static function invalidEnumCreation(string $enumClass): InvalidArgumentException
+    {
+        return new InvalidArgumentException(sprintf(
+            'Cannot create a new instance of EnumSet for elements that are not all of the same enum type, expecting %s',
+            $enumClass
+        ));
+    }
+
+    public static function noEnum(): InvalidArgumentException
+    {
+        return new InvalidArgumentException('Cannot create a new instance of EnumSet without providing the enum class');
+    }
+
     public static function notNullable(): InvalidArgumentException
     {
         return new InvalidArgumentException('Null value passed to a collection that does not accept null values');
