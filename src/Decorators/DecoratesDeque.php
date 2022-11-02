@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Smpl\Collections\Decorators;
 
+use Iterator;
 use Smpl\Collections\Contracts\Deque;
 use Smpl\Collections\Contracts\Queue;
 use Smpl\Collections\Contracts\Stack;
-use Iterator;
 
 /**
  * Stack Decorator Concern

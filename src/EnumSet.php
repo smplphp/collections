@@ -274,7 +274,7 @@ final class EnumSet extends BaseCollection implements Contracts\Set
      *
      * @return bool
      *
-     * @infection-ignore-all 
+     * @infection-ignore-all
      */
     protected function isValidEnum(mixed $element): bool
     {
