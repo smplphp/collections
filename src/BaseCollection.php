@@ -38,6 +38,11 @@ abstract class BaseCollection implements Contracts\Collection
     protected int $count = 0;
 
     /**
+     * @var \Smpl\Utils\Support\Range<int>
+     */
+    protected Range $range;
+
+    /**
      * @param iterable<E>|null                         $elements
      * @param \Smpl\Utils\Contracts\Comparator<E>|null $comparator
      *
@@ -45,6 +50,8 @@ abstract class BaseCollection implements Contracts\Collection
      */
     public function __construct(iterable $elements = null, ?Comparator $comparator = null)
     {
+        $this->range = new Range(0, 0);
+
         if ($elements !== null) {
             $this->addAll($elements);
         }
@@ -67,6 +74,7 @@ abstract class BaseCollection implements Contracts\Collection
     protected function setCount(int $count): void
     {
         $this->count = max(0, $count);
+        $this->range->setEnd($this->count);
     }
 
     /**

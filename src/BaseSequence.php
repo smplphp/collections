@@ -35,7 +35,7 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
     public function find(mixed $element, int $index): ?int
     {
         if ($this->isOutsideOfRange($index)) {
-            throw OutOfRangeException::index($index, 0, $this->getMaxIndex());
+            throw OutOfRangeException::fromRange($index, $this->range);
         }
 
         if ($this->isEmpty()) {
@@ -96,7 +96,7 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
         }
 
         if ($this->isOutsideOfRange($index)) {
-            throw OutOfRangeException::index($index, 0, $this->getMaxIndex());
+            throw OutOfRangeException::fromRange($index, $this->range);
         }
 
         if ($this->isEmpty()) {
@@ -261,7 +261,7 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
     public function put(int $index, mixed $element): static
     {
         if ($this->isOutsideOfRange($index, true)) {
-            throw OutOfRangeException::index($index, 0, $this->getMaxIndex());
+            throw OutOfRangeException::fromRange($index, $this->range);
         }
 
         if (! $this->isEmpty()) {
@@ -275,7 +275,7 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
                     $remainingElements
                 );
             }
-            $this->count++;
+            $this->modifyCount(+1);
         }
 
         return $this;
@@ -292,7 +292,7 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
     public function putAll(int $index, iterable $elements): static
     {
         if ($this->isOutsideOfRange($index, true)) {
-            throw OutOfRangeException::index($index, 0, $this->getMaxIndex());
+            throw OutOfRangeException::fromRange($index, $this->range);
         }
 
         if (! $this->isEmpty()) {
@@ -304,7 +304,7 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
 
             foreach ($elements as $element) {
                 $this->elements[] = $element;
-                $this->count++;
+                $this->modifyCount(+1);
             }
 
             if (! empty($remainingElements)) {
@@ -329,7 +329,7 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
     public function set(int $index, mixed $element): static
     {
         if ($this->isOutsideOfRange($index, true)) {
-            throw OutOfRangeException::index($index, 0, $this->getMaxIndex());
+            throw OutOfRangeException::fromRange($index, $this->range);
         }
 
         if (! $this->isEmpty()) {
@@ -337,7 +337,7 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
             $this->elements[$index] = $element;
 
             if ($index > $this->getMaxIndex()) {
-                $this->count++;
+                $this->modifyCount(+1);
             }
         }
 
@@ -355,7 +355,7 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
     public function setAll(int $index, iterable $elements): static
     {
         if ($this->isOutsideOfRange($index, true)) {
-            throw OutOfRangeException::index($index, 0, $this->getMaxIndex());
+            throw OutOfRangeException::fromRange($index, $this->range);
         }
 
         if (! $this->isEmpty()) {
@@ -364,7 +364,7 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
                 $this->elements[$index] = $element;
 
                 if ($index > $this->getMaxIndex()) {
-                    $this->count++;
+                    $this->modifyCount(+1);
                 }
 
                 $index++;
@@ -385,7 +385,7 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
     public function subset(int $index, int $length = null): static
     {
         if ($this->isOutsideOfRange($index)) {
-            throw OutOfRangeException::index($index, 0, $this->getMaxIndex());
+            throw OutOfRangeException::fromRange($index, $this->range);
         }
 
         if ($length !== null) {
@@ -427,7 +427,7 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
     public function unset(int $index): static
     {
         if ($this->isOutsideOfRange($index)) {
-            throw OutOfRangeException::index($index, 0, $this->getMaxIndex());
+            throw OutOfRangeException::fromRange($index, $this->range);
         }
 
         if (! $this->isEmpty()) {
@@ -471,13 +471,11 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
      */
     protected function isOutsideOfRange(int $index, bool $allowNew = false): bool
     {
-        $maxIndex = $this->getMaxIndex();
-
-        if ($allowNew) {
-            ++$maxIndex;
+        if ($this->range->isEmptyRange()) {
+            return $this->range->end() === ($index - 1);
         }
 
-        return $index < 0 || $index > $maxIndex;
+        return $this->range->doesNotCover($index, true, $allowNew);
     }
 
     /**
