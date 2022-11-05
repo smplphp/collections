@@ -15,7 +15,7 @@ use Smpl\Utils\Contracts\Predicate;
  * purpose of convenience, as sometimes you need to worry about the result of an
  * operation, just that it happened.
  *
- * @template I of mixed
+ * @template I of array-key
  * @template E of mixed
  * @extends \Smpl\Collections\Contracts\Collection<I, E>
  */

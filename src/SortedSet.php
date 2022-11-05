@@ -10,7 +10,7 @@ use Smpl\Collections\Contracts\SortedCollection as SortedCollectionContract;
 
 /**
  * @template E of mixed
- * @extends \Smpl\Collections\BaseCollection<E>
+ * @extends \Smpl\Collections\BaseCollection<int, E>
  * @implements \Smpl\Collections\Contracts\SortedCollection<int, E>
  * @implements \Smpl\Collections\Contracts\Set<E>
  */

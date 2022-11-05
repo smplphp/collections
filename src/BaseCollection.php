@@ -11,6 +11,7 @@ use Smpl\Utils\Comparators\IdenticalityComparator;
 use Smpl\Utils\Contracts\Comparator;
 use Smpl\Utils\Contracts\Predicate;
 use Smpl\Utils\Helpers\ComparisonHelper;
+use Smpl\Utils\Support\Range;
 use Traversable;
 
 /**
@@ -19,8 +20,9 @@ use Traversable;
  * This class forms the base for collections, preventing the need to duplicate
  * code and method definitions where inheritance will suffice.
  *
+ * @template I of array-key
  * @template E of mixed
- * @implements \Smpl\Collections\Contracts\Collection<int, E>
+ * @implements \Smpl\Collections\Contracts\Collection<I, E>
  */
 abstract class BaseCollection implements Contracts\Collection
 {
@@ -28,7 +30,7 @@ abstract class BaseCollection implements Contracts\Collection
         NewCollectionOfElements;
 
     /**
-     * @var list<E>
+     * @var array<I, E>
      */
     protected array $elements = [];
 
@@ -129,7 +131,7 @@ abstract class BaseCollection implements Contracts\Collection
     }
 
     /**
-     * @return \Traversable<int, E>
+     * @return \Traversable<I, E>
      */
     public function getIterator(): Traversable
     {
@@ -174,6 +176,8 @@ abstract class BaseCollection implements Contracts\Collection
      * @param E $element
      *
      * @return bool
+     *
+     * @psalm-suppress InvalidPropertyAssignmentValue
      */
     public function add(mixed $element): bool
     {
@@ -220,13 +224,13 @@ abstract class BaseCollection implements Contracts\Collection
      * This method is a helper message to avoid duplicating removal by index
      * functionality.
      *
-     * @param int $index
+     * @param I $index
      *
      * @return void
      *
      * @infection-ignore-all
      */
-    protected function removeElementByIndex(int $index): void
+    protected function removeElementByIndex(mixed $index): void
     {
         unset($this->elements[$index]);
         $this->modifyCount(-1);

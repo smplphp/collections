@@ -5,7 +5,7 @@ namespace Smpl\Collections;
 
 /**
  * @template E of mixed
- * @extends \Smpl\Collections\BaseCollection<E>
+ * @extends \Smpl\Collections\BaseCollection<int, E>
  */
 final class Collection extends BaseCollection
 {

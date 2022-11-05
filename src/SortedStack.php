@@ -15,7 +15,7 @@ use Smpl\Collections\Concerns\SortsCollection;
  * added to the queue are ordered using a comparator.
  *
  * @template E of mixed
- * @extends \Smpl\Collections\BaseCollection<E>
+ * @extends \Smpl\Collections\BaseCollection<int, E>
  * @implements \Smpl\Collections\Contracts\Stack<E>
  * @implements \Smpl\Collections\Contracts\SortedCollection<int, E>
  */

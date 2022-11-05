@@ -17,7 +17,7 @@ use Smpl\Collections\Concerns\PrioritisesElements;
  * added to the queue are ordered using their priority.
  *
  * @template       E of mixed
- * @extends \Smpl\Collections\BaseCollection<E>
+ * @extends \Smpl\Collections\BaseCollection<int, E>
  * @implements \Smpl\Collections\Contracts\PriorityQueue<E>
  *
  * @psalm-suppress MixedArgument

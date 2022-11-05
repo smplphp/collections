@@ -22,7 +22,7 @@ use Smpl\Collections\Iterators\SimpleIterator;
  * This class forms the base of the other Deque classes.
  *
  * @template E of mixed
- * @extends \Smpl\Collections\BaseCollection<E>
+ * @extends \Smpl\Collections\BaseCollection<int, E>
  * @implements \Smpl\Collections\Contracts\Deque<E>
  */
 abstract class BaseDeque extends BaseCollection implements Contracts\Deque

@@ -12,7 +12,7 @@ namespace Smpl\Collections;
  * This is a FIFO (first-in-first-out) implementation.
  *
  * @template E of mixed
- * @extends \Smpl\Collections\BaseCollection<E>
+ * @extends \Smpl\Collections\BaseCollection<int, E>
  * @implements \Smpl\Collections\Contracts\Queue<E>
  */
 final class Queue extends BaseCollection implements Contracts\Queue

@@ -18,7 +18,7 @@ use Smpl\Collections\Support\PrioritisedElement;
  * added to the stack are ordered using their priority.
  *
  * @template       E of mixed
- * @extends \Smpl\Collections\BaseCollection<E>
+ * @extends \Smpl\Collections\BaseCollection<int, E>
  * @implements \Smpl\Collections\Contracts\PriorityStack<E>
  *
  * @psalm-suppress MixedArgument

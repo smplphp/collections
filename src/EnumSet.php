@@ -8,8 +8,13 @@ use Smpl\Collections\Exceptions\InvalidArgumentException;
 use UnitEnum;
 
 /**
+ * Enum Set
+ *
+ * An implementation of the {@see \Smpl\Collections\Contracts\Set} contract
+ * specifically for storing cases of an enum.
+ *
  * @template E of \UnitEnum
- * @extends \Smpl\Collections\BaseCollection<E>
+ * @extends \Smpl\Collections\BaseCollection<int, E>
  * @implements \Smpl\Collections\Contracts\Set<E>
  */
 final class EnumSet extends BaseCollection implements Contracts\Set

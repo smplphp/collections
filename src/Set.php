@@ -10,7 +10,7 @@ namespace Smpl\Collections;
  * except that it does not allow duplicates.
  *
  * @template E of mixed
- * @extends \Smpl\Collections\BaseCollection<E>
+ * @extends \Smpl\Collections\BaseCollection<int, E>
  * @implements \Smpl\Collections\Contracts\Set<E>
  */
 final class Set extends BaseCollection implements Contracts\Set

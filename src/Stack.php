@@ -12,7 +12,7 @@ namespace Smpl\Collections;
  * This is a LIFO (last-in-first-out) implementation.
  *
  * @template E of mixed
- * @extends \Smpl\Collections\BaseCollection<E>
+ * @extends \Smpl\Collections\BaseCollection<int, E>
  * @implements \Smpl\Collections\Contracts\Stack<E>
  */
 final class Stack extends BaseCollection implements Contracts\Stack

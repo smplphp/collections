@@ -16,7 +16,7 @@ use Smpl\Utils\Contracts\Predicate;
  * exists here for maps and other specific collections that do not index
  * by integer.
  *
- * @template I of mixed
+ * @template I of array-key
  * @template E of mixed
  * @extends \Smpl\Collections\Contracts\Enumerable<I, E>
  */

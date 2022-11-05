@@ -10,7 +10,7 @@ parameters:
     - '#^Method Smpl\\Collections\\([A-Za-z]*)\:\:copy\(\) should return Smpl\\Collections\\([A-Za-z]*)\<NE\> but returns Smpl\\Collections\\([A-Za-z]*)\<mixed\>\.$#'
     - '#^Method Smpl\\Collections\\Sorted([A-Za-z]*)\:\:([A-Za-z]*)\(\) should return Smpl\\Collections\\Sorted([A-Za-z]*)\<E\> but returns Smpl\\Collections\\Sorted([A-Za-z]*)\<mixed\>\.$#'
     - '#^Method Smpl\\Collections\\Sorted([A-Za-z]*)\:\:getComparator\(\) should return Smpl\\Utils\\Contracts\\Comparator\<mixed\> but returns Smpl\\Utils\\Contracts\\Comparator\<mixed\>\|null\.$#'
-    - '#^PHPDoc type array\<int, Smpl\\Collections\\Support\\PrioritisedElement\<E\>\> of property Smpl\\Collections\\Priority([A-Za-z]*)\:\:\$elements is not covariant with PHPDoc type array\<int, E\> of overridden property Smpl\\Collections\\BaseCollection\<E\>\:\:\$elements\.$#'
+    - '#^PHPDoc type array\<int, Smpl\\Collections\\Support\\PrioritisedElement\<E\>\> of property Smpl\\Collections\\Priority([A-Za-z]*)\:\:\$elements is not covariant with PHPDoc type array\<int, E\> of overridden property Smpl\\Collections\\BaseCollection\<int,E\>\:\:\$elements\.$#'
     - '#^Method Smpl\\Collections\\([A-Za-z]*)\:\:(ascending|descending)Iterator\(\) should return Iterator\<int, E\> but returns Smpl\\Collections\\Iterators\\SimpleIterator\<int, mixed\>\.$#'
     - '#^Method Smpl\\Collections\\EnumSet\:\:of\(\) should return Smpl\\Collections\\EnumSet\<E of UnitEnum\> but returns Smpl\\Collections\\EnumSet\<UnitEnum\>\.$#'
     - '#^Method Smpl\\Collections\\EnumSet\:\:([A-Za-z]*)Of\(\) should return Smpl\\Collections\\EnumSet\<E of UnitEnum\> but returns Smpl\\Collections\\EnumSet\<NE of UnitEnum\>\.$#'

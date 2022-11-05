@@ -17,7 +17,7 @@ use Smpl\Utils\Contracts\Predicate;
  * exceptions for all methods that would modify this collection.
  *
  * @template       E of mixed
- * @extends \Smpl\Collections\BaseCollection<E>
+ * @extends \Smpl\Collections\BaseCollection<int, E>
  * @psalm-immutable
  * @psalm-suppress MutableDependency
  */

@@ -16,7 +16,7 @@ use function Smpl\Utils\is_sign_equal_to;
  * code and method definitions where inheritance will suffice.
  *
  * @template E of mixed
- * @extends \Smpl\Collections\BaseCollection<E>
+ * @extends \Smpl\Collections\BaseCollection<int, E>
  * @implements \Smpl\Collections\Contracts\Sequence<E>
  */
 abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
