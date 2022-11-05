@@ -50,11 +50,7 @@ trait PrioritisesElements
     {
         $this->flags = $this->normaliseFlags($flags);
 
-        if ($elements !== null) {
-            $this->addAll($elements);
-        }
-
-        $this->setComparator($comparator);
+        parent::__construct($elements, $comparator);
     }
 
     /**
