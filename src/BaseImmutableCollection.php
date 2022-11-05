@@ -21,7 +21,7 @@ use Smpl\Utils\Contracts\Predicate;
  * @psalm-immutable
  * @psalm-suppress MutableDependency
  */
-abstract class BaseImmutableCollection extends BaseCollection
+abstract class BaseImmutableCollection extends BaseCollection implements Contracts\ImmutableCollection
 {
     /**
      * @param iterable<E>|null                         $elements
