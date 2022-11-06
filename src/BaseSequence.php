@@ -27,9 +27,6 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
      *
      * @return int<0,max>|null
      *
-     * @psalm-suppress MoreSpecificReturnType
-     * @psalm-suppress MoreSpecificImplementedParamType
-     *
      * @throws \Smpl\Collections\Exceptions\OutOfRangeException
      */
     public function find(mixed $element, int $index): ?int
@@ -55,7 +52,6 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
             /** @var int<0,max>|false $foundIndex */
             $foundIndex = array_search($element, $elements, true);
 
-            /** @psalm-suppress LessSpecificReturnStatement */
             return is_int($foundIndex) ? $foundIndex : null;
         }
 
@@ -261,7 +257,7 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
     public function put(int $index, mixed $element): static
     {
         if ($this->isOutsideOfRange($index, true)) {
-            throw OutOfRangeException::fromRange($index, $this->range);
+            throw OutOfRangeException::fromRange($index, $this->range, false);
         }
 
         if (! $this->isEmpty()) {
@@ -292,7 +288,7 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
     public function putAll(int $index, iterable $elements): static
     {
         if ($this->isOutsideOfRange($index, true)) {
-            throw OutOfRangeException::fromRange($index, $this->range);
+            throw OutOfRangeException::fromRange($index, $this->range, false);
         }
 
         if (! $this->isEmpty()) {
@@ -329,11 +325,10 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
     public function set(int $index, mixed $element): static
     {
         if ($this->isOutsideOfRange($index, true)) {
-            throw OutOfRangeException::fromRange($index, $this->range);
+            throw OutOfRangeException::fromRange($index, $this->range, false);
         }
 
         if (! $this->isEmpty()) {
-            /** @psalm-suppress PropertyTypeCoercion */
             $this->elements[$index] = $element;
 
             if ($index > $this->getMaxIndex()) {
@@ -355,12 +350,11 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
     public function setAll(int $index, iterable $elements): static
     {
         if ($this->isOutsideOfRange($index, true)) {
-            throw OutOfRangeException::fromRange($index, $this->range);
+            throw OutOfRangeException::fromRange($index, $this->range, false);
         }
 
         if (! $this->isEmpty()) {
             foreach ($elements as $element) {
-                /** @psalm-suppress PropertyTypeCoercion */
                 $this->elements[$index] = $element;
 
                 if ($index > $this->getMaxIndex()) {
@@ -392,9 +386,6 @@ abstract class BaseSequence extends BaseCollection implements Contracts\Sequence
             $lastIndex = $index + $length;
 
             if ($this->isOutsideOfRange($lastIndex, true)) {
-                /**
-                 * @psalm-suppress PossiblyNullArgument
-                 */
                 throw OutOfRangeException::subsetLength($index, $length, 0, $this->getMaxIndex());
             }
         }

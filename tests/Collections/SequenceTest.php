@@ -930,7 +930,7 @@ class SequenceTest extends TestCase
             'The provided index %s is outside the required range of %s <> %s',
             $index,
             0,
-            $sequence->count() - 1
+            $sequence->count()
         ));
         $sequence->put($index, $element);
     }
@@ -989,7 +989,7 @@ class SequenceTest extends TestCase
             'The provided index %s is outside the required range of %s <> %s',
             $index,
             0,
-            $sequence->count() - 1
+            $sequence->count()
         ));
         $sequence->putAll($index, $elements);
     }
@@ -1047,7 +1047,7 @@ class SequenceTest extends TestCase
             'The provided index %s is outside the required range of %s <> %s',
             $index,
             0,
-            $sequence->count() - 1
+            $sequence->count()
         ));
         $sequence->set($index, $element);
     }
@@ -1103,7 +1103,7 @@ class SequenceTest extends TestCase
             'The provided index %s is outside the required range of %s <> %s',
             $index,
             0,
-            $sequence->count() - 1
+            $sequence->count()
         ));
         $sequence->setAll($index, $elements);
     }
@@ -1346,7 +1346,7 @@ class SequenceTest extends TestCase
             'The provided index %s is outside the required range of %s <> %s',
             $index,
             0,
-            $sequence->count() - 1
+            $sequence->count()
         ));
         $sequence[$index] = $element;
     }

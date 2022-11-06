@@ -27,7 +27,7 @@ trait NewCollectionOfElements
      *
      * @param NE ...$elements
      *
-     * @return static
+     * @return static<NE>
      */
     public static function of(mixed ...$elements): static
     {

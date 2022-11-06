@@ -9,45 +9,9 @@ namespace Smpl\Collections\Contracts;
  * that allows you to add elements with a numeric priority.
  *
  * @template E of mixed
- * @extends \Smpl\Collections\Contracts\Collection<int, E>
  */
-interface PrioritisedCollection extends Collection
+interface PrioritisedCollection
 {
-    /**
-     * Prioritise the collection in ascending order.
-     */
-    public final const ASC_ORDER = 1;
-
-    /**
-     * Prioritise the collection in descending order.
-     */
-    public final const DESC_ORDER = 2;
-
-    /**
-     * Prioritise the collection with null values first.
-     */
-    public final const NULL_VALUE_FIRST = 4;
-
-    /**
-     * Prioritise the collection with null values last.
-     */
-    public final const NULL_VALUE_LAST = 8;
-
-    /**
-     * Do not allow null values.
-     */
-    public final const NO_NULL = 16;
-
-    /**
-     * Put elements with no priority first.
-     */
-    public final const NO_PRIORITY_FIRST = 32;
-
-    /**
-     * Put elements with no priority last.
-     */
-    public final const NO_PRIORITY_LAST = 64;
-
     /**
      * Ensure that this collection contains the provided element.
      *
@@ -78,7 +42,7 @@ interface PrioritisedCollection extends Collection
      * Ensure that this collection contains all the provided elements.
      *
      * This method will function exactly like
-     * {@see \Smpl\Collections\Contracts\MutableCollection::add()} except that it
+     * {@see \Smpl\Collections\Contracts\Collection::add()} except that it
      * deals with multiple elements, rather than just one.
      *
      * Because of this, it is possible for this method to return true, even if

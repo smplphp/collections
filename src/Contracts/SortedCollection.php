@@ -18,10 +18,9 @@ use Smpl\Utils\Contracts\ComparesValues;
  *
  * @template I of array-key
  * @template E of mixed
- * @extends \Smpl\Collections\Contracts\Collection<I, E>
  * @extends \Smpl\Utils\Contracts\ComparesValues<E>
  */
-interface SortedCollection extends Collection, ComparesValues
+interface SortedCollection extends ComparesValues
 {
     /**
      * Get the least element greater than or equal to the provided element.

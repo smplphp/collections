@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace Smpl\Collections\Concerns;
 
 use Smpl\Collections\Collection;
-use Smpl\Collections\Contracts\PrioritisedCollection;
 use Smpl\Collections\Exceptions\InvalidArgumentException;
 use Smpl\Collections\Helpers\IterableHelper;
 use Smpl\Collections\Support\PrioritisedElement;
 use Smpl\Collections\Support\PrioritisedElementComparator;
+use Smpl\Collections\Support\PriorityCollectionFlags;
 use Smpl\Collections\Support\PriorityComparator;
 use Smpl\Utils\Comparators\IdenticalityComparator;
 use Smpl\Utils\Contracts\Comparator;
@@ -20,12 +20,13 @@ use function Smpl\Utils\is_sign_equal_to;
 /**
  * @template I of mixed
  * @template E of mixed
+ *
  * @requires \Smpl\Collections\Contracts\PrioritisedCollection<I, E>
  */
 trait PrioritisesElements
 {
     /**
-     * @var \Smpl\Collections\Support\PrioritisedElementComparator|null
+     * @var \Smpl\Collections\Support\PrioritisedElementComparator<E>|null
      */
     protected ?PrioritisedElementComparator $prioritisedElementComparator;
 
@@ -45,11 +46,13 @@ trait PrioritisesElements
      * @param int                                                                        $flags
      *
      * @noinspection PhpDocSignatureInspection
+     * @noinspection PhpMultipleClassDeclarationsInspection
      */
     public function __construct(iterable $elements = null, ?Comparator $comparator = null, int $flags = null)
     {
         $this->flags = $this->normaliseFlags($flags);
 
+        /** @psalm-suppress InvalidArgument */
         parent::__construct($elements, $comparator);
     }
 
@@ -64,7 +67,7 @@ trait PrioritisesElements
     public function add(mixed $element, int|false|null $priority = null): bool
     {
         /** @infection-ignore-all */
-        if (($this->flags & PrioritisedCollection::NO_NULL) && $element === null) {
+        if (($this->flags & PriorityCollectionFlags::NO_NULL) && $element === null) {
             throw InvalidArgumentException::notNullable();
         }
 
@@ -94,7 +97,7 @@ trait PrioritisesElements
 
         foreach ($elements as $element) {
             /** @infection-ignore-all */
-            if (($this->flags & PrioritisedCollection::NO_NULL) && $element === null) {
+            if (($this->flags & PriorityCollectionFlags::NO_NULL) && $element === null) {
                 throw InvalidArgumentException::notNullable();
             }
 
@@ -250,7 +253,7 @@ trait PrioritisesElements
     }
 
     /**
-     * @return \Smpl\Collections\Support\PrioritisedElementComparator
+     * @return \Smpl\Collections\Support\PrioritisedElementComparator<E>
      */
     private function getPrioritisedElementComparator(): PrioritisedElementComparator
     {
@@ -292,35 +295,35 @@ trait PrioritisesElements
         }
 
         // Default to ascending order
-        if (($flags & PrioritisedCollection::ASC_ORDER) === 0 && ($flags & PrioritisedCollection::DESC_ORDER) === 0) {
-            $flags |= PrioritisedCollection::ASC_ORDER;
+        if (($flags & PriorityCollectionFlags::ASC_ORDER) === 0 && ($flags & PriorityCollectionFlags::DESC_ORDER) === 0) {
+            $flags |= PriorityCollectionFlags::ASC_ORDER;
         }
 
         // Default to elements without priority being at the end
-        if (($flags & PrioritisedCollection::NO_PRIORITY_FIRST) === 0 && ($flags & PrioritisedCollection::NO_PRIORITY_LAST) === 0) {
-            $flags |= PrioritisedCollection::NO_PRIORITY_LAST;
+        if (($flags & PriorityCollectionFlags::NO_PRIORITY_FIRST) === 0 && ($flags & PriorityCollectionFlags::NO_PRIORITY_LAST) === 0) {
+            $flags |= PriorityCollectionFlags::NO_PRIORITY_LAST;
         }
 
         // If both ascending and descending order have been provided, error
         if (
-            ($flags & PrioritisedCollection::ASC_ORDER) === PrioritisedCollection::ASC_ORDER
-            && ($flags & PrioritisedCollection::DESC_ORDER) === PrioritisedCollection::DESC_ORDER
+            ($flags & PriorityCollectionFlags::ASC_ORDER) === PriorityCollectionFlags::ASC_ORDER
+            && ($flags & PriorityCollectionFlags::DESC_ORDER) === PriorityCollectionFlags::DESC_ORDER
         ) {
             throw InvalidArgumentException::priorityFlagsOrder();
         }
 
         // If both no priority first and last have been provided, error
         if (
-            ($flags & PrioritisedCollection::NO_PRIORITY_FIRST) === PrioritisedCollection::NO_PRIORITY_FIRST
-            && ($flags & PrioritisedCollection::NO_PRIORITY_LAST) === PrioritisedCollection::NO_PRIORITY_LAST
+            ($flags & PriorityCollectionFlags::NO_PRIORITY_FIRST) === PriorityCollectionFlags::NO_PRIORITY_FIRST
+            && ($flags & PriorityCollectionFlags::NO_PRIORITY_LAST) === PriorityCollectionFlags::NO_PRIORITY_LAST
         ) {
             throw InvalidArgumentException::priorityFlagsPlacement();
         }
 
         // If both null value first and last have been provided, error
         if (
-            ($flags & PrioritisedCollection::NULL_VALUE_FIRST) === PrioritisedCollection::NULL_VALUE_FIRST
-            && ($flags & PrioritisedCollection::NULL_VALUE_LAST) === PrioritisedCollection::NULL_VALUE_LAST
+            ($flags & PriorityCollectionFlags::NULL_VALUE_FIRST) === PriorityCollectionFlags::NULL_VALUE_FIRST
+            && ($flags & PriorityCollectionFlags::NULL_VALUE_LAST) === PriorityCollectionFlags::NULL_VALUE_LAST
         ) {
             throw InvalidArgumentException::priorityFlagsNull();
         }

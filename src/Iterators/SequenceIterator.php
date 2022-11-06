@@ -24,6 +24,7 @@ use Smpl\Collections\Exceptions\OutOfRangeException;
  *
  * @template E of mixed
  * @implements \Iterator<int, E>
+ * @implements \SeekableIterator<int, E>
  */
 final class SequenceIterator implements Iterator, SeekableIterator, Countable
 {
@@ -106,7 +107,6 @@ final class SequenceIterator implements Iterator, SeekableIterator, Countable
             throw OutOfRangeException::index($offset, 0, $this->getMaxIndex());
         }
 
-        /** @psalm-suppress PropertyTypeCoercion */
         $this->index = $offset;
     }
 

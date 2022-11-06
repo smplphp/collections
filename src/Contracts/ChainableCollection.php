@@ -7,7 +7,7 @@ use Smpl\Utils\Contracts\Predicate;
 /**
  * Chainable Collection Contract
  *
- * This contract is an extension of {@see \Smpl\Collections\Contracts\MutableCollection},
+ * This contract is an extension of {@see \Smpl\Collections\Contracts\Collection},
  * providing chainable alternatives to its methods that modify the collection,
  * returning a boolean.
  *
@@ -17,9 +17,8 @@ use Smpl\Utils\Contracts\Predicate;
  *
  * @template I of array-key
  * @template E of mixed
- * @extends \Smpl\Collections\Contracts\Collection<I, E>
  */
-interface ChainableCollection extends Collection
+interface ChainableCollection
 {
     /**
      * Push an element onto this collection.
@@ -27,7 +26,7 @@ interface ChainableCollection extends Collection
      * This method will add the provided element to this collection, if it can be.
      *
      * This method must function identically to
-     * {@see \Smpl\Collections\Contracts\MutableCollection::add()}, except that
+     * {@see \Smpl\Collections\Contracts\Collection::add()}, except that
      * the collection instance is returned regardless of whether the collection
      * was modified.
      *
@@ -37,7 +36,7 @@ interface ChainableCollection extends Collection
      *
      * @throws \Smpl\Collections\Exceptions\InvalidArgumentException
      *
-     * @see \Smpl\Collections\Contracts\MutableCollection::add()
+     * @see \Smpl\Collections\Contracts\Collection::add()
      */
     public function push(mixed $element): static;
 
@@ -48,7 +47,7 @@ interface ChainableCollection extends Collection
      * can be.
      *
      * This method must function identically to
-     * {@see \Smpl\Collections\Contracts\MutableCollection::addAll()}, except that
+     * {@see \Smpl\Collections\Contracts\Collection::addAll()}, except that
      * the collection instance is returned regardless of whether the collection
      * was modified.
      *
@@ -58,7 +57,7 @@ interface ChainableCollection extends Collection
      *
      * @throws \Smpl\Collections\Exceptions\InvalidArgumentException
      *
-     * @see \Smpl\Collections\Contracts\MutableCollection::addAll()
+     * @see \Smpl\Collections\Contracts\Collection::addAll()
      */
     public function pushAll(iterable $elements): static;
 
@@ -69,7 +68,7 @@ interface ChainableCollection extends Collection
      * can be.
      *
      * This method must function identically to
-     * {@see \Smpl\Collections\Contracts\MutableCollection::remove()}, except that
+     * {@see \Smpl\Collections\Contracts\Collection::remove()}, except that
      * the collection instance is returned regardless of whether the collection
      * was modified.
      *
@@ -77,7 +76,7 @@ interface ChainableCollection extends Collection
      *
      * @return static
      *
-     * @see \Smpl\Collections\Contracts\MutableCollection::remove()
+     * @see \Smpl\Collections\Contracts\Collection::remove()
      */
     public function forget(mixed $element): static;
 
@@ -88,7 +87,7 @@ interface ChainableCollection extends Collection
      * they can be.
      *
      * This method must function identically to
-     * {@see \Smpl\Collections\Contracts\MutableCollection::removeAll()}, except that
+     * {@see \Smpl\Collections\Contracts\Collection::removeAll()}, except that
      * the collection instance is returned regardless of whether the collection
      * was modified.
      *
@@ -96,7 +95,7 @@ interface ChainableCollection extends Collection
      *
      * @return static
      *
-     * @see \Smpl\Collections\Contracts\MutableCollection::removeAll()
+     * @see \Smpl\Collections\Contracts\Collection::removeAll()
      */
     public function forgetAll(iterable $elements): static;
 
@@ -107,7 +106,7 @@ interface ChainableCollection extends Collection
      * the provided filter.
      *
      * This method must function identically to
-     * {@see \Smpl\Collections\Contracts\MutableCollection::removeIf()}, except that
+     * {@see \Smpl\Collections\Contracts\Collection::removeIf()}, except that
      * the collection instance is returned regardless of whether the collection
      * was modified.
      *
@@ -115,7 +114,7 @@ interface ChainableCollection extends Collection
      *
      * @return static
      *
-     * @see \Smpl\Collections\Contracts\MutableCollection::removeIf()
+     * @see \Smpl\Collections\Contracts\Collection::removeIf()
      */
     public function forgetIf(Predicate $filter): static;
 
@@ -126,7 +125,7 @@ interface ChainableCollection extends Collection
      * contained in the provided elements.
      *
      * This method must function identically to
-     * {@see \Smpl\Collections\Contracts\MutableCollection::retainAll()}, except that
+     * {@see \Smpl\Collections\Contracts\Collection::retainAll()}, except that
      * the collection instance is returned regardless of whether the collection
      * was modified.
      *
@@ -134,7 +133,7 @@ interface ChainableCollection extends Collection
      *
      * @return static
      *
-     * @see \Smpl\Collections\Contracts\MutableCollection::retainAll()
+     * @see \Smpl\Collections\Contracts\Collection::retainAll()
      */
     public function keepAll(iterable $elements): static;
 }

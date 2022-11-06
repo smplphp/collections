@@ -4,13 +4,15 @@ declare(strict_types=1);
 namespace Smpl\Collections;
 
 use Smpl\Collections\Concerns\HasComparator;
-use Smpl\Collections\Concerns\NewCollectionOfElements;
 use Smpl\Collections\Helpers\IterableHelper;
 use Smpl\Collections\Iterators\SimpleIterator;
 use Smpl\Utils\Comparators\IdenticalityComparator;
 use Smpl\Utils\Contracts\Comparator;
+use Smpl\Utils\Contracts\ComparesValues;
 use Smpl\Utils\Contracts\Predicate;
+use Smpl\Utils\Contracts\Range as RangeContract;
 use Smpl\Utils\Helpers\ComparisonHelper;
+use Smpl\Utils\Support\ImmutableRange;
 use Smpl\Utils\Support\Range;
 use Traversable;
 
@@ -20,14 +22,16 @@ use Traversable;
  * This class forms the base for collections, preventing the need to duplicate
  * code and method definitions where inheritance will suffice.
  *
- * @template I of array-key
- * @template E of mixed
+ * @template            I of array-key
+ * @template            E of mixed
+ *
  * @implements \Smpl\Collections\Contracts\Collection<I, E>
+ * @implements \Smpl\Utils\Contracts\ComparesValues<E>
  */
-abstract class BaseCollection implements Contracts\Collection
+abstract class BaseCollection implements Contracts\Collection, ComparesValues
 {
-    use HasComparator,
-        NewCollectionOfElements;
+    /** @use \Smpl\Collections\Concerns\HasComparator<E> */
+    use HasComparator;
 
     /**
      * @var array<I, E>
@@ -42,7 +46,7 @@ abstract class BaseCollection implements Contracts\Collection
     /**
      * @var \Smpl\Utils\Support\Range<int>
      */
-    protected Range $range;
+    protected RangeContract $range;
 
     /**
      * @param iterable<E>|null                         $elements
@@ -59,6 +63,33 @@ abstract class BaseCollection implements Contracts\Collection
         }
 
         $this->setComparator($comparator);
+    }
+
+    /**
+     * Get the range for this collection.
+     *
+     * This method returns the {@see \Smpl\Utils\Contracts\Range} object being
+     * used to keep track of the collections size.
+     *
+     * @return \Smpl\Utils\Contracts\Range<int>
+     */
+    public function getRange(): RangeContract
+    {
+        return ImmutableRange::from($this->range);
+    }
+
+    /**
+     * Get the collection elements.
+     *
+     * This method returns the main elements array used by this collection.
+     *
+     * @interal
+     *
+     * @return array<I, E>
+     */
+    protected function getElements(): array
+    {
+        return $this->elements;
     }
 
     /**
@@ -166,7 +197,6 @@ abstract class BaseCollection implements Contracts\Collection
     public function toArray(): array
     {
         /**
-         * @psalm-suppress RedundantFunctionCall
          * @infection-ignore-all
          */
         return array_values($this->elements);

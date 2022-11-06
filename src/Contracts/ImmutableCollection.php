@@ -9,6 +9,9 @@ namespace Smpl\Collections\Contracts;
  * as being immutable. This is useful for the handling of collections, allowing
  * you to avoid {@see \Smpl\Collections\Exceptions\UnsupportedOperationException}
  * exceptions.
+ *
+ * @template-covariant  I of array-key
+ * @template            E of mixed
  */
 interface ImmutableCollection
 {

@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnnecessaryStaticReferenceInspection */
 declare(strict_types=1);
 
 namespace Smpl\Collections;
@@ -16,22 +17,33 @@ namespace Smpl\Collections;
 final class Set extends BaseCollection implements Contracts\Set
 {
     /**
+     * @template       NI of array-key
      * @template       NE of mixed
      *
-     * @param iterable<NE|E>|null $elements
+     * @param iterable<NI, NE>|null $elements
      *
-     * @return \Smpl\Collections\Set<NE>
+     * @return static
      *
-     * @psalm-suppress InvalidReturnType
-     * @psalm-suppress InvalidReturnStatement
-     * @psalm-suppress MismatchingDocblockReturnType
+     * @psalm-suppress LessSpecificImplementedReturnType
      *
      * @noinspection   PhpDocSignatureInspection
-     * @noinspection   PhpUnnecessaryStaticReferenceInspection
      */
     public function copy(iterable $elements = null): static
     {
-        return new Set($elements ?? $this->elements, $this->getComparator());
+        /** @psalm-suppress InvalidArgument */
+        return new self($elements ?? $this->getElements(), $this->getComparator());
+    }
+
+    /**
+     * @template NE of mixed
+     *
+     * @param NE ...$elements
+     *
+     * @return static<NE>
+     */
+    public static function of(...$elements): static
+    {
+        return new self($elements);
     }
 
     /**

@@ -16,8 +16,8 @@ use Smpl\Utils\Contracts\Predicate;
  * exists here for maps and other specific collections that do not index
  * by integer.
  *
- * @template I of array-key
- * @template E of mixed
+ * @template-covariant I of array-key
+ * @template           E of mixed
  * @extends \Smpl\Collections\Contracts\Enumerable<I, E>
  */
 interface Collection extends Enumerable
@@ -60,7 +60,7 @@ interface Collection extends Enumerable
      * Ensure that this collection contains all the provided elements.
      *
      * This method will function exactly like
-     * {@see \Smpl\Collections\Contracts\MutableCollection::add()} except that it
+     * {@see \Smpl\Collections\Contracts\Collection::add()} except that it
      * deals with multiple elements, rather than just one.
      *
      * Because of this, it is possible for this method to return true, even if
@@ -113,9 +113,6 @@ interface Collection extends Enumerable
      * Should any of the provided elements not be found in the collection,
      * this method should return false.
      *
-     * If the $comparator argument is provided, the implementor must use it to
-     * determine the equality of elements.
-     *
      * @param iterable<E> $elements
      *
      * @return bool
@@ -131,11 +128,12 @@ interface Collection extends Enumerable
      * If the $elements argument is provided, whether empty or not, the copy
      * of the collection should be populated with those elements.
      *
+     * @template     NI of array-key
      * @template     NE of mixed
      *
-     * @param iterable<NE>|null $elements
+     * @param iterable<NI, NE>|null $elements
      *
-     * @return static
+     * @return static<NI, NE>
      *
      * @noinspection PhpDocSignatureInspection
      */
@@ -176,7 +174,7 @@ interface Collection extends Enumerable
      * This method will remove all elements from the collection that are also
      * contained within the provided elements, returning true if the collection
      * was modified, false otherwise, functioning like
-     * {@see \Smpl\Collections\Contracts\MutableCollection::remove()}, but for
+     * {@see \Smpl\Collections\Contracts\Collection::remove()}, but for
      * multiple elements.
      *
      * Because of this, it is possible for this method to return true, even if
@@ -208,7 +206,7 @@ interface Collection extends Enumerable
      * Remove all elements not in the provided elements.
      *
      * This method will function as the opposite of
-     * {@see \Smpl\Collections\Contracts\MutableCollection::removeAll()}, removing
+     * {@see \Smpl\Collections\Contracts\Collection::removeAll()}, removing
      * all but the elements provided by $elements. This method will return true
      * if the collection was modified, false otherwise.
      *

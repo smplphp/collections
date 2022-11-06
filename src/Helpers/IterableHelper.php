@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Smpl\Collections\Helpers;
 
 use Smpl\Collections\Contracts\Collection;
+use Smpl\Collections\Contracts\Enumerable;
 use Smpl\Utils\Comparators\IdenticalityComparator;
 use Smpl\Utils\Contracts\Comparator;
 use Smpl\Utils\Helpers\ComparisonHelper;
@@ -154,8 +155,6 @@ final class IterableHelper
      *
      * @return iterable<E>
      *
-     * @psalm-suppress InvalidReturnType
-     *
      * @psalm-pure
      * @phpstan-pure
      *
@@ -167,10 +166,7 @@ final class IterableHelper
     public static function getImpureSafeIterable(iterable $elements): iterable
     {
         if ($elements instanceof Collection) {
-            /**
-             * @psalm-suppress InvalidReturnStatement
-             * @psalm-suppress ImpureMethodCall
-             */
+            /** @psalm-suppress ImpureMethodCall */
             return $elements->toArray();
         }
 
@@ -180,5 +176,33 @@ final class IterableHelper
 
         /** @psalm-suppress RedundantCastGivenDocblockType */
         return (array)$elements;
+    }
+
+    /**
+     * Turn an iterable into an array.
+     *
+     * This method will take an iterable and return an array. If the provided
+     * iterable is a collection, the {@see \Smpl\Collections\Contracts\Collection::toArray()}
+     * method will be called, otherwise it will use {@see \iterator_to_array()}.
+     *
+     * @template       I of array-key
+     * @template       E of mixed
+     *
+     * @param iterable<I, E> $keys
+     *
+     * @return array<I, E>
+     */
+    public static function iterableToArray(iterable $keys): array
+    {
+        /** @infection-ignore-all  */
+        if ($keys instanceof Enumerable) {
+            return $keys->toArray();
+        }
+
+        if ($keys instanceof Traversable) {
+            return iterator_to_array($keys);
+        }
+
+        return $keys;
     }
 }

@@ -22,7 +22,7 @@ use UnitEnum;
 class EnumSetTest extends TestCase
 {
     /**
-     * @var int[]
+     * @var TestEnum1[]
      */
     private array $elements = [];
 

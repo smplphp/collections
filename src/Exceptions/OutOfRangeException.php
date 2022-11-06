@@ -11,18 +11,24 @@ final class OutOfRangeException extends BaseOutOfRangeException
     /**
      * @template T of int|string|float
      *
-     * @param T                            $value
+     * @param int|string|float             $value
      * @param \Smpl\Utils\Support\Range<T> $range
+     * @param bool                         $exclusive
      *
      * @return \Smpl\Collections\Exceptions\OutOfRangeException
      */
-    public static function fromRange(int|string|float $value, Range $range): OutOfRangeException
+    public static function fromRange(int|string|float $value, Range $range, bool $exclusive = true): OutOfRangeException
     {
-        /** @psalm-suppress PossiblyInvalidArgument */
-        return self::index($value, $range->start(), $range->end() - 1);
+        $end = $range->end();
+
+        if (is_int($end) && $exclusive) {
+            --$end;
+        }
+
+        return self::index($value, $range->start(), $end);
     }
 
-    public static function index(int $index, int $min, int $max): OutOfRangeException
+    public static function index(int|string|float $index, int|string|float $min, int|string|float $max): OutOfRangeException
     {
         return new self(sprintf(
             'The provided index %s is outside the required range of %s <> %s',

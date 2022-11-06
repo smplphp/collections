@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnnecessaryStaticReferenceInspection */
 declare(strict_types=1);
 
 namespace Smpl\Collections;
@@ -10,23 +11,32 @@ namespace Smpl\Collections;
 final class Collection extends BaseCollection
 {
     /**
+     * @template       NI of array-key
      * @template       NE of mixed
      *
-     * @param iterable<NE|E>|null $elements
+     * @param iterable<NI, NE>|null $elements
      *
-     * @return \Smpl\Collections\Collection<NE>
+     * @return static
      *
-     * @psalm-suppress InvalidReturnType
-     * @psalm-suppress InvalidReturnStatement
-     * @psalm-suppress MismatchingDocblockReturnType
+     * @psalm-suppress LessSpecificImplementedReturnType
      *
      * @noinspection   PhpDocSignatureInspection
-     * @noinspection   PhpUnnecessaryStaticReferenceInspection
      */
     public function copy(iterable $elements = null): static
     {
-        $elements ??= $this->elements;
+        /** @psalm-suppress InvalidArgument */
+        return new self($elements ?? $this->getElements(), $this->getComparator());
+    }
 
-        return new Collection($elements, $this->getComparator());
+    /**
+     * @template NE of mixed
+     *
+     * @param NE ...$elements
+     *
+     * @return static<NE>
+     */
+    public static function of(...$elements): static
+    {
+        return new self($elements);
     }
 }

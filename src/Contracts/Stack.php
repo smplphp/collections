@@ -12,6 +12,7 @@ namespace Smpl\Collections\Contracts;
  * though this will vary between implementations.
  *
  * @template E of mixed
+ *
  * @extends \Smpl\Collections\Contracts\Collection<int, E>
  */
 interface Stack extends Collection

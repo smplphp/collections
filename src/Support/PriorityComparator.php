@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Smpl\Collections\Support;
 
-use Smpl\Collections\Contracts\PrioritisedCollection;
 use Smpl\Utils\Comparators\BaseComparator;
 use Smpl\Utils\Helpers\ComparisonHelper;
 use function Smpl\Utils\get_sign;
@@ -101,7 +100,7 @@ class PriorityComparator extends BaseComparator
      */
     private function nullShouldBeFirst(): bool
     {
-        return ($this->flags & PrioritisedCollection::NULL_VALUE_FIRST) === PrioritisedCollection::NULL_VALUE_FIRST;
+        return ($this->flags & PriorityCollectionFlags::NULL_VALUE_FIRST) === PriorityCollectionFlags::NULL_VALUE_FIRST;
     }
 
     /**
@@ -111,7 +110,7 @@ class PriorityComparator extends BaseComparator
      */
     private function nullShouldBeLast(): bool
     {
-        return ($this->flags & PrioritisedCollection::NULL_VALUE_LAST) === PrioritisedCollection::NULL_VALUE_LAST;
+        return ($this->flags & PriorityCollectionFlags::NULL_VALUE_LAST) === PriorityCollectionFlags::NULL_VALUE_LAST;
     }
 
     /**
@@ -121,7 +120,7 @@ class PriorityComparator extends BaseComparator
      */
     private function isDescendingOrder(): bool
     {
-        return ($this->flags & PrioritisedCollection::DESC_ORDER) === PrioritisedCollection::DESC_ORDER;
+        return ($this->flags & PriorityCollectionFlags::DESC_ORDER) === PriorityCollectionFlags::DESC_ORDER;
     }
 
     /**
@@ -131,7 +130,7 @@ class PriorityComparator extends BaseComparator
      */
     private function noPriorityFirst(): bool
     {
-        return ($this->flags & PrioritisedCollection::NO_PRIORITY_FIRST) === PrioritisedCollection::NO_PRIORITY_FIRST;
+        return ($this->flags & PriorityCollectionFlags::NO_PRIORITY_FIRST) === PriorityCollectionFlags::NO_PRIORITY_FIRST;
     }
 
     /**
@@ -141,6 +140,6 @@ class PriorityComparator extends BaseComparator
      */
     private function noPriorityLast(): bool
     {
-        return ($this->flags & PrioritisedCollection::NO_PRIORITY_LAST) === PrioritisedCollection::NO_PRIORITY_LAST;
+        return ($this->flags & PriorityCollectionFlags::NO_PRIORITY_LAST) === PriorityCollectionFlags::NO_PRIORITY_LAST;
     }
 }

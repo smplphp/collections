@@ -12,6 +12,7 @@
         <ignoreFiles>
             <directory name="vendor"/>
             <directory name="tests"/>
+            <directory name="src/Concerns"/>
         </ignoreFiles>
     </projectFiles>
 

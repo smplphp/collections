@@ -12,8 +12,8 @@ use IteratorAggregate;
  * The enumerable contract provides baseline functionality for collections that
  * make them enumerable, ie, countable and iterable.
  *
- * @template I of mixed
- * @template E of mixed
+ * @template-covariant  I of array-key
+ * @template            E of mixed
  * @extends  \IteratorAggregate<I, E>
  */
 interface Enumerable extends Countable, IteratorAggregate

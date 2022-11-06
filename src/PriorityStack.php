@@ -27,6 +27,7 @@ use Smpl\Collections\Support\PrioritisedElement;
  */
 final class PriorityStack extends BaseCollection implements Contracts\PriorityStack
 {
+    /** @use \Smpl\Collections\Concerns\PrioritisesElements<int, E> */
     use PrioritisesElements;
 
     /**
@@ -34,6 +35,18 @@ final class PriorityStack extends BaseCollection implements Contracts\PrioritySt
      * @psalm-suppress NonInvariantDocblockPropertyType
      */
     protected array $elements;
+
+    /**
+     * @template NE of mixed
+     *
+     * @param NE ...$elements
+     *
+     * @return static<NE>
+     */
+    public static function of(...$elements): static
+    {
+        return new self($elements);
+    }
 
     /**
      * @return E|null
@@ -61,22 +74,20 @@ final class PriorityStack extends BaseCollection implements Contracts\PrioritySt
     }
 
     /**
+     * @template       NI of array-key
      * @template       NE of mixed
      *
-     * @param iterable<NE>|null $elements
-     * @param int|null          $flags
+     * @param iterable<NI, NE>|null $elements
+     * @param int|null              $flags
      *
-     * @return \Smpl\Collections\PriorityStack<NE|E>
+     * @return static
      *
-     * @psalm-suppress InvalidReturnType
-     * @psalm-suppress InvalidReturnStatement
-     * @psalm-suppress MismatchingDocblockReturnType
+     * @psalm-suppress LessSpecificImplementedReturnType
      *
      * @noinspection   PhpDocSignatureInspection
-     * @noinspection   PhpUnnecessaryStaticReferenceInspection
      */
     public function copy(iterable $elements = null, ?int $flags = null): static
     {
-        return new PriorityStack($elements ?? $this->toArray(), $this->getComparator(), $flags ?? $this->flags);
+        return new self($elements ?? $this->getElements(), $this->getComparator(), $flags ?? $this->flags());
     }
 }

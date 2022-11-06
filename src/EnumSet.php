@@ -38,22 +38,20 @@ final class EnumSet extends BaseCollection implements Contracts\Set
     }
 
     /**
+     * @template       NI of array-key
      * @template       NE of \UnitEnum
      *
-     * @param iterable<NE|E>|null $elements
+     * @param iterable<NI, NE>|null $elements
      *
-     * @return \Smpl\Collections\EnumSet<NE>
+     * @return static
      *
-     * @psalm-suppress InvalidReturnType
-     * @psalm-suppress InvalidReturnStatement
-     * @psalm-suppress MismatchingDocblockReturnType
+     * @psalm-suppress ImplementedReturnTypeMismatch
      *
      * @noinspection   PhpDocSignatureInspection
-     * @noinspection   PhpUnnecessaryStaticReferenceInspection
      */
     public function copy(iterable $elements = null): static
     {
-        return new EnumSet($this->enumClass, $elements ?? $this->elements);
+        return self::of(...($elements ?? $this->elements));
     }
 
     /**
@@ -65,8 +63,6 @@ final class EnumSet extends BaseCollection implements Contracts\Set
      *
      * @throws \Smpl\Collections\Exceptions\InvalidArgumentException
      *
-     * @psalm-suppress MethodSignatureMismatch
-     * @psalm-suppress DocblockTypeContradiction
      * @psalm-suppress MoreSpecificImplementedParamType
      */
     public static function of(mixed ...$elements): static
@@ -99,7 +95,7 @@ final class EnumSet extends BaseCollection implements Contracts\Set
      * {@see \Smpl\Collections\Exceptions\InvalidArgumentException} will be
      * thrown.
      *
-     * @template NE of UnitEnum
+     * @template NE of \UnitEnum
      *
      * @param class-string<NE> $enumClass
      *
@@ -126,7 +122,7 @@ final class EnumSet extends BaseCollection implements Contracts\Set
      * {@see \Smpl\Collections\Exceptions\InvalidArgumentException} will be
      * thrown.
      *
-     * @template NE of UnitEnum
+     * @template NE of \UnitEnum
      *
      * @param class-string<NE> $enumClass
      *

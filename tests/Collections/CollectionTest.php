@@ -92,6 +92,18 @@ class CollectionTest extends TestCase
         self::assertEquals(0, $collection->countOf(1));
     }
 
+    /**
+     * @test
+     */
+    public function emptyCollectionsHaveMatchingStartAndEndForRange(): void
+    {
+        $collection = new Collection();
+        $range      = $collection->getRange();
+
+        self::assertSame(0, $range->start());
+        self::assertSame(0, $range->end());
+    }
+
     public function collectionContainsProvider(): array
     {
         return [

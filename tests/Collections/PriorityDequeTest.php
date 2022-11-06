@@ -6,12 +6,10 @@ namespace Smpl\Collections\Tests\Collections;
 use ArrayIterator;
 use PHPUnit\Framework\TestCase;
 use Smpl\Collections\Collection;
-use Smpl\Collections\Contracts\PrioritisedCollection;
-use Smpl\Collections\Contracts\PriorityQueue as PriorityDequeContract;
 use Smpl\Collections\Exceptions\InvalidArgumentException;
 use Smpl\Collections\Iterators\SimpleIterator;
 use Smpl\Collections\PriorityDeque;
-use Smpl\Collections\PriorityQueue;
+use Smpl\Collections\Support\PriorityCollectionFlags;
 use Smpl\Utils\Comparators\BaseComparator;
 use Smpl\Utils\Comparators\EqualityComparator;
 use Smpl\Utils\Comparators\IdenticalityComparator;
@@ -657,8 +655,8 @@ class PriorityDequeTest extends TestCase
             'Add 11 at 0 (new)'                          => [11, 0, 0, true, true, 1],
             'Add 12 at -100 (new)'                       => [12, -100, -100, true, true, 1],
             'Add 13 at 100 (new)'                        => [13, 100, 100, true, true, 1],
-            'Add 10 at 3 (duplicate, no priority first)' => [10, 3, null, true, true, 2, PrioritisedCollection::NO_PRIORITY_FIRST],
-            'Add 10 at 3 (duplicate, no priority last)'  => [10, 3, 3, true, true, 2, PrioritisedCollection::NO_PRIORITY_LAST],
+            'Add 10 at 3 (duplicate, no priority first)' => [10, 3, null, true, true, 2, PriorityCollectionFlags::NO_PRIORITY_FIRST],
+            'Add 10 at 3 (duplicate, no priority last)'  => [10, 3, 3, true, true, 2, PriorityCollectionFlags::NO_PRIORITY_LAST],
         ];
     }
 
@@ -687,8 +685,8 @@ class PriorityDequeTest extends TestCase
             'Add [11, 12, 13] at 0 (new)'                          => [[11, 12, 13], 0, 0, true, true, 1, 13],
             'Add [12, 13, 14] at -100 (new)'                       => [[12, 13, 14], -100, -100, true, true, 1, 13],
             'Add [13, 14, 15] at 100 (new)'                        => [[13, 14, 15], 100, 100, true, true, 1, 13],
-            'Add [10, 10, 10] at 3 (duplicate, no priority first)' => [[10, 10, 10], 3, null, true, true, 4, 13, PriorityDeque::NO_PRIORITY_FIRST],
-            'Add [10, 10, 10] at 3 (duplicate, no priority last)'  => [[10, 10, 10], 3, 3, true, true, 4, 13, PriorityDeque::NO_PRIORITY_LAST],
+            'Add [10, 10, 10] at 3 (duplicate, no priority first)' => [[10, 10, 10], 3, null, true, true, 4, 13, PriorityCollectionFlags::NO_PRIORITY_FIRST],
+            'Add [10, 10, 10] at 3 (duplicate, no priority last)'  => [[10, 10, 10], 3, 3, true, true, 4, 13, PriorityCollectionFlags::NO_PRIORITY_LAST],
         ];
     }
 
@@ -716,42 +714,42 @@ class PriorityDequeTest extends TestCase
     public function priorityQueueFlagsProvider(): array
     {
         return [
-            'Ascending Order'                     => [PriorityQueue::ASC_ORDER, [1 => 3, 2 => 0, 10 => 100, 8 => -4500, 9 => null, null => 200], [8, 2, 1, 10, null, 9], false],
-            'Ascending Order, no null'            => [PriorityQueue::ASC_ORDER | PriorityDeque::NO_NULL, [1 => 3, 2 => 0, 10 => 100, 8 => -4500, 9 => null, null => 200], [8, 2, 1, 10], true],
-            'Ascending Order, null first'         => [PriorityQueue::ASC_ORDER | PriorityDeque::NULL_VALUE_FIRST,
+            'Ascending Order'                     => [PriorityCollectionFlags::ASC_ORDER, [1 => 3, 2 => 0, 10 => 100, 8 => -4500, 9 => null, null => 200], [8, 2, 1, 10, null, 9], false],
+            'Ascending Order, no null'            => [PriorityCollectionFlags::ASC_ORDER | PriorityCollectionFlags::NO_NULL, [1 => 3, 2 => 0, 10 => 100, 8 => -4500, 9 => null, null => 200], [8, 2, 1, 10], true],
+            'Ascending Order, null first'         => [PriorityCollectionFlags::ASC_ORDER | PriorityCollectionFlags::NULL_VALUE_FIRST,
                                                       [1 => 3, 2 => 0, 10 => 100, 8 => -4500, 9 => null, null => 200],
                                                       [null, 8, 2, 1, 10, 9],
                                                       false],
-            'Ascending Order, null last'          => [PriorityQueue::ASC_ORDER | PriorityDeque::NULL_VALUE_LAST,
+            'Ascending Order, null last'          => [PriorityCollectionFlags::ASC_ORDER | PriorityCollectionFlags::NULL_VALUE_LAST,
                                                       [1 => 3, 2 => 0, 10 => 100, 8 => -4500, 9 => null, null => 200],
                                                       [8, 2, 1, 10, 9, null],
                                                       false],
-            'Ascending Order, no priority first'  => [PriorityQueue::ASC_ORDER | PriorityDeque::NO_PRIORITY_FIRST,
+            'Ascending Order, no priority first'  => [PriorityCollectionFlags::ASC_ORDER | PriorityCollectionFlags::NO_PRIORITY_FIRST,
                                                       [1 => 3, 2 => 0, 10 => 100, 8 => -4500, 9 => null, null => 200],
                                                       [9, 8, 2, 1, 10, null],
                                                       false],
-            'Ascending Order, no priority last'   => [PriorityQueue::ASC_ORDER | PriorityDeque::NO_PRIORITY_LAST,
+            'Ascending Order, no priority last'   => [PriorityCollectionFlags::ASC_ORDER | PriorityCollectionFlags::NO_PRIORITY_LAST,
                                                       [1 => 3, 2 => 0, 10 => 100, 8 => -4500, 9 => null, null => 200],
                                                       [8, 2, 1, 10, null, 9],
                                                       false],
-            'Descending Order'                    => [PriorityQueue::DESC_ORDER, [1 => 3, 2 => 0, 10 => 100, 8 => -4500, 9 => null, null => 200], [null, 10, 1, 2, 8, 9], false],
-            'Descending Order, no null'           => [PriorityQueue::DESC_ORDER | PriorityDeque::NO_NULL,
+            'Descending Order'                    => [PriorityCollectionFlags::DESC_ORDER, [1 => 3, 2 => 0, 10 => 100, 8 => -4500, 9 => null, null => 200], [null, 10, 1, 2, 8, 9], false],
+            'Descending Order, no null'           => [PriorityCollectionFlags::DESC_ORDER | PriorityCollectionFlags::NO_NULL,
                                                       [1 => 3, 2 => 0, 10 => 100, 8 => -4500, 9 => null, null => 200],
                                                       [null, 10, 1, 2, 8, 9],
                                                       true],
-            'Descending Order, null first'        => [PriorityQueue::DESC_ORDER | PriorityDeque::NULL_VALUE_FIRST,
+            'Descending Order, null first'        => [PriorityCollectionFlags::DESC_ORDER | PriorityCollectionFlags::NULL_VALUE_FIRST,
                                                       [1 => 3, 2 => 0, 10 => 100, 8 => -4500, 9 => null, null => 200],
                                                       [null, 10, 1, 2, 8, 9],
                                                       false],
-            'Descending Order, null last'         => [PriorityQueue::DESC_ORDER | PriorityDeque::NULL_VALUE_LAST,
+            'Descending Order, null last'         => [PriorityCollectionFlags::DESC_ORDER | PriorityCollectionFlags::NULL_VALUE_LAST,
                                                       [1 => 3, 2 => 0, 10 => 100, 8 => -4500, 9 => null, null => 200],
                                                       [10, 1, 2, 8, 9, null],
                                                       false],
-            'Descending Order, no priority first' => [PriorityQueue::DESC_ORDER | PriorityDeque::NO_PRIORITY_FIRST,
+            'Descending Order, no priority first' => [PriorityCollectionFlags::DESC_ORDER | PriorityCollectionFlags::NO_PRIORITY_FIRST,
                                                       [1 => 3, 2 => 0, 10 => 100, 8 => -4500, 9 => null, null => 200],
                                                       [9, null, 10, 1, 2, 8],
                                                       false],
-            'Descending Order, no priority last'  => [PriorityQueue::DESC_ORDER | PriorityDeque::NO_PRIORITY_LAST,
+            'Descending Order, no priority last'  => [PriorityCollectionFlags::DESC_ORDER | PriorityCollectionFlags::NO_PRIORITY_LAST,
                                                       [1 => 3, 2 => 0, 10 => 100, 8 => -4500, 9 => null, null => 200],
                                                       [null, 10, 1, 2, 8, 9],
                                                       false],
@@ -785,15 +783,15 @@ class PriorityDequeTest extends TestCase
     {
         return [
             'Ascending & Descending order'             => [
-                PriorityDeque::ASC_ORDER | PriorityDeque::DESC_ORDER,
+                PriorityCollectionFlags::ASC_ORDER | PriorityCollectionFlags::DESC_ORDER,
                 'Invalid PrioritisedCollection flags, cannot be ordered both descending as ascending',
             ],
             'No priority first & No priority last'     => [
-                PriorityDeque::NO_PRIORITY_FIRST | PriorityDeque::NO_PRIORITY_LAST,
+                PriorityCollectionFlags::NO_PRIORITY_FIRST | PriorityCollectionFlags::NO_PRIORITY_LAST,
                 'Invalid PrioritisedCollection flags, cannot have no priority items at the start and end',
             ],
             'Null elements first & Null elements last' => [
-                PriorityDeque::NULL_VALUE_FIRST | PriorityDeque::NULL_VALUE_LAST,
+                PriorityCollectionFlags::NULL_VALUE_FIRST | PriorityCollectionFlags::NULL_VALUE_LAST,
                 'Invalid PrioritisedCollection flags, cannot have null items at the start and end',
             ],
         ];
@@ -841,7 +839,7 @@ class PriorityDequeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Null value passed to a collection that does not accept null values');
 
-        $deque = $this->deque->copy(flags: PrioritisedCollection::NO_NULL);
+        $deque = $this->deque->copy(flags: PriorityCollectionFlags::NO_NULL);
         $deque->add(null);
     }
 
@@ -853,7 +851,7 @@ class PriorityDequeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Null value passed to a collection that does not accept null values');
 
-        $deque = $this->deque->copy(flags: PrioritisedCollection::NO_NULL);
+        $deque = $this->deque->copy(flags: PriorityCollectionFlags::NO_NULL);
         $deque->addAll([1, 3, null, 5, null, 10]);
     }
 
@@ -864,8 +862,8 @@ class PriorityDequeTest extends TestCase
     {
         $deque = new PriorityDeque();
 
-        self::assertSame(($deque->flags() & PrioritisedCollection::ASC_ORDER), PrioritisedCollection::ASC_ORDER);
-        self::assertSame(($deque->flags() & PrioritisedCollection::NO_PRIORITY_LAST), PrioritisedCollection::NO_PRIORITY_LAST);
+        self::assertSame(($deque->flags() & PriorityCollectionFlags::ASC_ORDER), PriorityCollectionFlags::ASC_ORDER);
+        self::assertSame(($deque->flags() & PriorityCollectionFlags::NO_PRIORITY_LAST), PriorityCollectionFlags::NO_PRIORITY_LAST);
     }
 
     /**

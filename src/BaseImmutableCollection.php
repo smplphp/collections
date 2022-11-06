@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Smpl\Collections;
 
 use Smpl\Collections\Exceptions\UnsupportedOperationException;
+use Smpl\Collections\Helpers\IterableHelper;
 use Smpl\Utils\Contracts\Comparator;
 use Smpl\Utils\Contracts\Predicate;
 
@@ -16,15 +17,19 @@ use Smpl\Utils\Contracts\Predicate;
  * This class throws {@see \Smpl\Collections\Exceptions\UnsupportedOperationException}
  * exceptions for all methods that would modify this collection.
  *
- * @template       E of mixed
- * @extends \Smpl\Collections\BaseCollection<int, E>
+ * @template                  I of array-key
+ * @template                  E of mixed
+ *
+ * @extends \Smpl\Collections\BaseCollection<I, E>
+ * @implements \Smpl\Collections\Contracts\ImmutableCollection<I, E>
+ *
  * @psalm-immutable
- * @psalm-suppress MutableDependency
+ * @psalm-suppress            MutableDependency
  */
 abstract class BaseImmutableCollection extends BaseCollection implements Contracts\ImmutableCollection
 {
     /**
-     * @param iterable<E>|null                         $elements
+     * @param iterable<I, E>|null                      $elements
      * @param \Smpl\Utils\Contracts\Comparator<E>|null $comparator
      *
      * @noinspection MagicMethodsValidityInspection
@@ -34,10 +39,8 @@ abstract class BaseImmutableCollection extends BaseCollection implements Contrac
     public function __construct(iterable $elements = null, ?Comparator $comparator = null)
     {
         if ($elements !== null) {
-            foreach ($elements as $element) {
-                $this->elements[] = $element;
-                $this->count++;
-            }
+            $this->elements = IterableHelper::iterableToArray($elements);
+            $this->count    = count($this->elements);
         }
 
         $this->comparator = $comparator;

@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpMultipleClassDeclarationsInspection */
 declare(strict_types=1);
 
 namespace Smpl\Collections\Concerns;
@@ -17,10 +18,10 @@ use function Smpl\Utils\get_sign;
  * to simplify its usage, as the implementation will pretty much be the same
  * in all cases.
  *
- * @template I of mixed
- * @template E of mixed
+ * @template-covariant  I of mixed
+ * @template            E of mixed
+ *
  * @requires \Smpl\Collections\Contracts\SortedCollection<I, E>
- * @mixin \Smpl\Collections\Contracts\Collection<I, E>
  */
 trait SortsCollection
 {
@@ -31,7 +32,6 @@ trait SortsCollection
      */
     public function add(mixed $element): bool
     {
-        /** @psalm-suppress MixedArgument */
         $result = parent::add($element);
 
         $this->sort();
@@ -41,10 +41,6 @@ trait SortsCollection
 
     /**
      * @return \Smpl\Utils\Contracts\Comparator<E>
-     *
-     * @psalm-suppress InvalidReturnStatement
-     * @psalm-suppress InvalidReturnType
-     * @psalm-suppress InvalidNullableReturnType
      */
     public function getComparator(): Comparator
     {
@@ -59,8 +55,6 @@ trait SortsCollection
      * @param \Smpl\Utils\Contracts\Comparator<E>|null $comparator
      *
      * @return static
-     *
-     * @psalm-suppress MethodSignatureMismatch
      */
     public function setComparator(?Comparator $comparator = null): static
     {

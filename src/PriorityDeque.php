@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnnecessaryStaticReferenceInspection */
 /** @noinspection TraitsPropertiesConflictsInspection */
 declare(strict_types=1);
 
@@ -24,6 +25,7 @@ use Smpl\Collections\Support\PrioritisedElement;
  */
 final class PriorityDeque extends BaseDeque implements Contracts\PriorityDeque
 {
+    /** @use \Smpl\Collections\Concerns\PrioritisesElements<int, E> */
     use PrioritisesElements;
 
     /**
@@ -31,6 +33,18 @@ final class PriorityDeque extends BaseDeque implements Contracts\PriorityDeque
      * @psalm-suppress NonInvariantDocblockPropertyType
      */
     protected array $elements;
+
+    /**
+     * @template NE of mixed
+     *
+     * @param NE ...$elements
+     *
+     * @return static<NE>
+     */
+    public static function of(...$elements): static
+    {
+        return new self($elements);
+    }
 
     /**
      * @param E              $element
@@ -57,24 +71,21 @@ final class PriorityDeque extends BaseDeque implements Contracts\PriorityDeque
     }
 
     /**
+     * @template       NI of array-key
      * @template       NE of mixed
      *
-     * @param iterable<NE|E>|null $elements
-     * @param int|null            $flags
+     * @param iterable<NI, NE>|null $elements
+     * @param int|null              $flags
      *
-     * @return \Smpl\Collections\PriorityDeque<NE>
+     * @return static
      *
-     * @psalm-suppress InvalidReturnType
-     * @psalm-suppress InvalidReturnStatement
-     * @psalm-suppress MismatchingDocblockReturnType
-     * @psalm-suppress InvalidArgument
+     * @psalm-suppress LessSpecificImplementedReturnType
      *
      * @noinspection   PhpDocSignatureInspection
-     * @noinspection   PhpUnnecessaryStaticReferenceInspection
      */
     public function copy(iterable $elements = null, ?int $flags = null): static
     {
-        return new PriorityDeque($elements ?? $this->elements, $this->getComparator(), $flags ?? $this->flags());
+        return new self($elements ?? $this->getElements(), $this->getComparator(), $flags ?? $this->flags());
     }
 
     /**
@@ -150,7 +161,6 @@ final class PriorityDeque extends BaseDeque implements Contracts\PriorityDeque
     /**
      * @return \Smpl\Collections\Contracts\PriorityQueue
      *
-     * @psalm-suppress ImplementedReturnTypeMismatch
      * @psalm-suppress InvalidArgument
      */
     public function asPriorityQueue(): Contracts\PriorityQueue
@@ -161,7 +171,6 @@ final class PriorityDeque extends BaseDeque implements Contracts\PriorityDeque
     /**
      * @return \Smpl\Collections\Contracts\PriorityStack
      *
-     * @psalm-suppress ImplementedReturnTypeMismatch
      * @psalm-suppress InvalidArgument
      */
     public function asPriorityStack(): Contracts\PriorityStack

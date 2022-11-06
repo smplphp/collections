@@ -1,34 +1,45 @@
 <?php
+/** @noinspection PhpUnnecessaryStaticReferenceInspection */
 declare(strict_types=1);
 
 namespace Smpl\Collections;
 
 /**
  * @template E of mixed
- * @extends \Smpl\Collections\BaseImmutableCollection<E>
+ *
+ * @extends \Smpl\Collections\BaseImmutableCollection<int, E>
+ *
  * @psalm-immutable
  */
 final class ImmutableCollection extends BaseImmutableCollection
 {
     /**
+     * @template       NI of int
      * @template       NE of mixed
      *
-     * @param iterable<NE|E>|null $elements
+     * @param iterable<NI, NE>|null $elements
      *
-     * @return \Smpl\Collections\ImmutableCollection<NE>
+     * @return static
      *
-     * @psalm-suppress InvalidReturnType
-     * @psalm-suppress InvalidReturnStatement
-     * @psalm-suppress MismatchingDocblockReturnType
-     * @psalm-suppress ImpureMethodCall
+     * @psalm-suppress LessSpecificImplementedReturnType
      *
      * @noinspection   PhpDocSignatureInspection
-     * @noinspection   PhpUnnecessaryStaticReferenceInspection
      */
     public function copy(iterable $elements = null): static
     {
-        $elements ??= $this->elements;
+        /** @psalm-suppress InvalidArgument */
+        return new self($elements ?? $this->getElements(), $this->getComparator());
+    }
 
-        return new ImmutableCollection($elements, $this->getComparator());
+    /**
+     * @template NE of mixed
+     *
+     * @param NE ...$elements
+     *
+     * @return static<NE>
+     */
+    public static function of(mixed ...$elements): static
+    {
+        return new self(array_values($elements));
     }
 }
